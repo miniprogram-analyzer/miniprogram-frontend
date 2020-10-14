@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script async="" src="/utils/validator/xmlparser/res/js"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-80202630-2');
+    </script>
+
+    <title>Fast WXML Parser</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/utils/validator/xmlparser/res/font-awesome.min.css">
+    <link rel="stylesheet" href="/utils/validator/xmlparser/res/bootstrap.min.css">
+    <link rel="stylesheet" href="/utils/validator/xmlparser/res/mobile.css">
+    <link rel="stylesheet" href="/utils/validator/xmlparser/res/prettify.min.css">
+    <link rel="stylesheet" href="/utils/validator/xmlparser/res/jquery-confirm.min.css">
+    <link rel="stylesheet" href="/utils/validator/xmlparser/res/xmlparser.css">
+    <link rel="stylesheet" type="text/css" href="/utils/validator/xmlparser/res/codemirror.css">
+
+    <script src="/jquery/jquery.min.js"></script>
+    <script src="/utils/validator/xmlparser/res/codemirror.js"></script>
+    <script src="/utils/validator/xmlparser/res/bootstrap.min.js"></script>
+    <script src="/utils/validator/xmlparser/res/prettify.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/utils/validator/xmlparser/res/animate3.5.2.min.css">
+    <script src="/utils/codemirror-5.56.0/mode/xml/xml.js"></script>
+    <link rel="stylesheet" href="/utils/codemirror-5.56.0/theme/material-darker.css" />
+
+    <script src="/utils/validator/xmlparser/res/parser.js"></script>
+    <script src="/utils/validator/xmlparser/res/jquery-confirm.min.js"></script>
+    <style>
+        ::-webkit-scrollbar{background:#1d1e1c;width:8px}::-webkit-scrollbar-thumb{background:#ccc;border-radius:4px}::-webkit-scrollbar-thumb:hover{background:#888;border-radius:4px}::-webkit-scrollbar-corner{background:#1d1e1c}
+
+        .CodeMirror {
+            height: 100%;
+            width: 100%;
+        }
+
+        .CodeMirror-linenumber,
+        .cm-comment {
+            color: #999 !important;
+        }
+    </style>
+</head>
+
+<body role="document" style="background-color: #1d1e1c;">
+
+
+    <div class="container-fluid">
+
+
+        <div class="row" style="height: calc(100vh - 50px);">
+            <div class="col-md-4" style="flex-basis:70%;max-width: 70%;">
+                <span class="float-right" style="color: white"> <span id="lengthxml" style="margin:5px">0</span>
+                    bytes</span>
+                <textarea id="txtXml" name="xml" style="width: 100%; height: 100%" class="form-control"
+                    placeholder="Paste XML to parse in JS/JSON"></textarea>
+            </div>
+            <div class="col-md-4" style="color: white;flex-basis:30%;max-width:30%;max-height:calc(100vh - 30px);overflow: hidden;">
+                <div style="margin: 5px; padding: 5px;">
+                    <!-- <a href="https://github.com/NaturalIntelligence/fast-xml-parser"><img class="bring-up" style="position: absolute; top: 0; left: -15px; border: 0; z-index: 1" src="/utils/validator/xmlparser/res/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a> -->
+                    <h3 style="color:white;" class="text-center">Fast WXML Parser<span></span></h3>
+                    <h6 style="color:white;" class="text-center">请在左侧输入待核查的WXML代码<span></span></h6>
+                    <!-- <p style="color:white;" class="text-center">The fastest parser for browsers Place this tag where you want the button to render. -->
+                    <!-- </p> -->
+                </div>
+                <span class="float-right" style="color: white"><span id="lengthoutput" style="margin:5px"></span></span>
+                <div class="text-center">
+                    <p>验证结果</p>
+                </div>
+                <textarea id="result" style="width: 100%; height: 100%;" class="form-control"
+                    placeholder="" readonly></textarea>
+                <div class="text-center">
+                    <button id="validate" class="btn btn-primary" type="button" style="position: fixed;right:10px;bottom:25px;z-index:10000">Validate XML &gt;&gt; </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="/utils/validator/xmlparser/res/nimn-schema-builder.js"></script>
+
+    <script>
+        var highlightedLine = null;
+        var editor;
+
+        function updateLength() {
+            var xmlData = editor.getValue();
+            $("#lengthxml")[0].innerText = xmlData.replace(/>\s*</g, "><").length;
+        }
+
+        function onChange() {
+            highlightLine();
+            updateLength();
+        }
+
+        function highlightLine(n) {
+            if (n) {
+                unhighlightLine();
+                highlightedLine = editor.addLineClass(n - 1, 'background', 'alert-danger');
+                editor.setCursor(n);
+            } else {
+                unhighlightLine()
+            }
+        }
+
+        function unhighlightLine() {
+            if (highlightedLine) {
+                editor.removeLineClass(highlightedLine, 'background', 'alert-danger');
+                highlightedLine = null;
+            }
+        }
+
+        $(document).ready(function () {
+            //var parser = require("parser");
+            editor = CodeMirror.fromTextArea(document.getElementById("txtXml"), {
+                mode: "application/xml",
+                styleActiveLine: true,
+                lineNumbers: true,
+                lineWrapping: true,
+                foldGutter: true,
+                autofocus: true,
+                theme: "material-darker",
+                gutters: ["CodeMirror-foldgutter"]
+            });
+
+            // when user types something, remove highlighting from "bad" line
+            editor.on('change', () => onChange());
+            editor.on('drop', () => onChange());
+
+            /* $('#txtXml').on('input', function(){
+                updateLength();
+            }); */
+
+            $('#toJson').on('click', function () {
+                $('#result').val('');
+                var result = parser.parse(editor.getValue(), buildParsingConfig());
+                updateOutputLength(JSON.stringify(result));
+                $('#result').val(JSON.stringify(result, null, 4));
+            });
+
+            $('#toXml').on('click', function () {
+                editor.setValue('');
+                var result = buildJ2XParser().parse(JSON.parse($('#result').val()));
+                editor.setValue('<?xml version="1.0"?>\n' + result);
+            });
+
+            $('#toNimn').on('click', function () {
+                $('#result').val('');
+
+                var jsonData = parser.parse(editor.getValue(), buildParsingConfig());
+                var schema = nimnSchemaBuilder.build(jsonData);
+                var result = parser.parseToNimn(editor.getValue(), schema, buildParsingConfig());
+                updateOutputLength(result);
+                $('#result').val(result);
+            });
+
+            $('#validate').on('click', function () {
+                $('#result').val('');
+                var config = {
+                    allowBooleanAttributes: $("#allowBooleanAttributes_v").prop("checked"),
+                    localeRange: $("#localeRange_v").val() === "" ? "a-zA-Z" : $("#cdataTagName")
+                        .val(),
+                };
+                var val = parser.validate(editor.getValue(), config);
+                if (val === true) {
+                    $('#result').val("WXML通过验证");
+                } else {
+                    if (val.err.line) {
+                        highlightLine(val.err.line);
+                    }
+                    var result = "行" + val.err.line + "\n错误类型: " + val.err.code + "\n详细信息: " + val.err.msg
+                    $('#result').val(result);
+                }
+            });
+
+            optionsLogic();
+            $('#ignoreAttributes').on('change', function () {
+                optionsLogic();
+            });
+
+            function buildParsingConfig() {
+                var config = {
+                    attributeNamePrefix: "@_",
+                    attrNodeName: $("#attrNodeName").prop("checked") ? "@" : false,
+                    textNodeName: "#text",
+                    ignoreAttributes: $("#ignoreAttributes").prop("checked"),
+                    ignoreNameSpace: $("#ignoreNameSpace").prop("checked"),
+                    parseNodeValue: $("#parseNodeValue").prop("checked"),
+                    parseAttributeValue: $("#parseAttributeValue").prop("checked"),
+                    allowBooleanAttributes: $("#allowBooleanAttributes").prop("checked"),
+                    trimValues: $('#trimValues').prop("checked"), //Trim string values of tag and attributes
+                    decodeHTMLchar: false,
+                    cdataTagName: $("#cdataTagName").val() === "" ? false : $("#cdataTagName").val(),
+                    cdataPositionChar: "\\c",
+                    localeRange: $("#localeRange_v").val(),
+                    //arrayMode : $("#arrayMode").prop("checked")
+                };
+
+                return config;
+            }
+
+            function buildJ2XParser() {
+                var defaultOptions = {
+                    attributeNamePrefix: "@_",
+                    attrNodeName: $("#attrNodeName").prop("checked") ? "@" : false,
+                    textNodeName: "#text",
+                    ignoreAttributes: $("#ignoreAttributes").prop("checked"),
+                    cdataTagName: $("#cdataTagName").val() === "" ? false : $("#cdataTagName").val(),
+                    cdataPositionChar: "\\c",
+                    format: true,
+                    indentBy: "  ",
+                    supressEmptyNode: false,
+                }
+
+                return new parser.j2xParser(defaultOptions);
+            }
+
+            function optionsLogic() {
+                var ignoreAttr = $('#ignoreAttributes').prop('checked');
+                if (ignoreAttr) {
+                    $('#attrNodeName').prop('checked', !ignoreAttr);
+                    $('#ParseAttributeValue').prop('checked', !ignoreAttr);
+                    $('#allowBooleanAttributes').prop('checked', !ignoreAttr);
+                }
+                $('#attrNodeName').attr('disabled', ignoreAttr);
+                $('#ParseAttributeValue').attr('disabled', ignoreAttr);
+                $('#allowBooleanAttributes').attr('disabled', ignoreAttr);
+
+                return;
+            }
+
+
+
+            function updateOutputLength(data) {
+                $("#lengthoutput")[0].innerText = data.length;
+            }
+
+            editor.setValue(`<!--请键入代码：-->`);
+            updateLength();
+        });
+    </script>
+    <script async="" defer="" src="/utils/validator/xmlparser/res/buttons.js"></script>
+
+
+
+</body>
+
+</html>

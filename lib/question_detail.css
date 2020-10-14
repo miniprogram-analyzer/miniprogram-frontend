@@ -1,0 +1,241 @@
+#page.bb {
+  display: flex;
+  justify-content: space-between;
+}
+
+#content {
+  width: 810px;
+}
+
+#content>div.loading {
+  background-image: url(/img/loading.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  height: calc(100vh - 200px);
+}
+
+#content>div>h1 {
+  width: 300px;
+  line-height: 54px;
+  padding-top: 36px;
+  padding-left: 16px;
+  font-weight: 500;
+  border-bottom: 2px solid #ec672f;
+}
+
+#content>div>p {
+  font-size: 16px;
+  line-height: 30px;
+}
+
+#content span {
+  display: inline-block;
+  line-height: 20px;
+  padding: 5px 16px;
+  margin: 0 8px;
+  border: 1px solid #ec672f;
+  border-radius: 5px;
+  background: #eee;
+  transition: all .2s ease;
+}
+
+body.night #content span {
+  background: #444;
+  transition: all .2s ease;
+}
+
+#RetryGetQ {
+  text-align: center;
+}
+
+#RetryGetQ>a {
+  color: #c00;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#RetryGetQ>a:hover {
+  color: #ec672f;
+  cursor: pointer;
+}
+
+#ReturnHome {
+  text-align: center;
+}
+
+#ReturnHome>a {
+  color: #888;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#ReturnHome>a:hover {
+  color: #ec672f;
+  cursor: pointer;
+}
+
+#recommend {
+  width: 350px;
+  font-size:14px;
+}
+
+.bdr {
+  background: #fafafa;
+  padding: 15px;
+  padding-top: 1px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  transition: all .2s ease;
+}
+
+body.night .bdr{background: #303030;transition:all .2s ease}
+
+#recommend>div {
+  padding: 15px;
+  padding-bottom: 0;
+  font-size: 16px;
+  background: #fafafa;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+  transition: all .2s ease;
+}
+
+#recommend>div>span {
+  display: inline-block;
+  padding: 2px 16px;
+  margin-bottom: 4px;
+  border-left: 4px solid #ec672f;
+}
+
+body.night #recommend>div{background: #303030;transition:all .2s ease}
+
+#recommend>.bdr li {
+  display: flex;
+  width: 320px;
+  height: 20px;
+  line-height: 20px;
+  margin-top: 16px;
+}
+
+#recommend>.bdr li a {
+  display: inline-block;
+  float: left;
+  margin-left: 10px;
+  width: 285px;
+  height: 20px;
+  line-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+#recommend>.bdr li:before {
+  float: left;
+  height: 20px;
+  width: 18px;
+  border-radius: 3px;
+  display: inline-block;
+  background: #afb2b7;
+  font-size: 12px;
+  text-align: center;
+  color: #fff;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  transition: all .2s ease-in-out;
+}
+
+body.night #recommend>.bdr li:before {
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  transition: all .2s ease-in-out;
+}
+
+
+@media screen and (min-width:1520px) {
+  #content {
+    width: 950px;
+  }
+
+  #content>div>h1 {
+    width: 350px;
+    line-height: 60px;
+    padding-top: 40px;
+  }
+
+  #RetryGetQ>a {
+    font-size: 18px;
+  }
+
+  #ReturnHome>a {
+    font-size: 18px;
+  }
+
+  #recommend {
+    width: 410px;
+  }
+
+  #recommend>.bdr li {
+    width: 380px;
+    height: 24px;
+    line-height: 24px;
+    margin-top: 16px;
+  }
+
+  #recommend>.bdr li a {
+    width: 340px;
+    height: 24px;
+    line-height: 24px;
+  }
+
+  #recommend>.bdr li:before {
+    height: 24px;
+    width: 22px;
+    border-radius: 4px;
+    line-height: 24px;
+  }
+}
+
+@media screen and (max-width:1320px) {
+  #content {
+    width: 680px;
+  }
+
+  #content>div>h1 {
+    width: 250px;
+    line-height: 48px;
+    padding-top: 32px;
+  }
+
+  #RetryGetQ>a {
+    font-size: 14px;
+  }
+
+  #ReturnHome>a {
+    font-size: 14px;
+  }
+
+  #recommend {
+    width: 300px;
+    font-size:12px;
+  }
+  #recommend > .bdr li {
+    width: 270px;
+    height: 18px;
+    line-height: 18px;
+    margin-top: 14px;
+  }
+  #recommend > .bdr li a {
+    width: 240px;
+    height: 18px;
+    line-height: 18px;
+  }
+  #recommend > .bdr li:before {
+    height: 18px;
+    width: 16px;
+    border-radius: 2px;
+    line-height: 18px;
+  }
+}
+
+#recommend>.bdr li:nth-child(1):before{content:'1';background:#ec672f!important}#recommend>.bdr li:nth-child(2):before{content:'2';background:#ec672f!important}#recommend>.bdr li:nth-child(3):before{content:'3';background:#ec672f!important}#recommend>.bdr li:nth-child(4):before{content:'4'}#recommend>.bdr li:nth-child(5):before{content:'5'}#recommend>.bdr li:nth-child(6):before{content:'6'}#recommend>.bdr li:nth-child(7):before{content:'7'}#recommend>.bdr li:nth-child(8):before{content:'8'}#recommend>.bdr li:nth-child(9):before{content:'9'}#recommend>.bdr li:nth-child(10):before{content:'10'}#recommend>.bdr li:nth-child(11):before{content:'11'}#recommend>.bdr li:nth-child(12):before{content:'12'}
