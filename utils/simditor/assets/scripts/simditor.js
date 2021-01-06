@@ -3746,7 +3746,7 @@ OrderListButton = (function(superClass) {
     if (this.editor.util.os.mac) {
       this.title = this.title + ' ( Cmd + / )';
     } else {
-      this.title = this.title + ' ( ctrl + / )';
+      this.title = this.title + ' ( Ctrl + / )';
       this.shortcut = 'ctrl+/';
     }
     return OrderListButton.__super__._init.call(this);

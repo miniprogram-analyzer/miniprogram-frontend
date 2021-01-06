@@ -14,34 +14,42 @@
     <meta name="format-detection" content="telephone=no" />
     <link href="/lib/site.min.css" rel="stylesheet" type="text/css" />
     <link href="/lib/index.min.css" rel="stylesheet" type="text/css" />
+    <link href="/lib/style.min.css" rel="stylesheet" type="text/css" />
     <link href="/lib/navis.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
     <script src="/lib/darkmode.js"></script>
     <script src="/lib/navigation.js"></script>
-    <script>const nav_id = 2;</script>
+    <script>const nav_id = 3;</script>
 
     <div class="bb" style="margin-top: 106px;">
         <div id="navis">
             <ul class="bar">
-                <li data-id="1" id="b-1" class="sel"><a href="#buglist">常见问题</a></li>
-                <li data-id="2" id="b-2" class=""><a href="#course">优秀教程</a></li>
+                <li data-id="1" id="b-1" class="sel"><a href="#buglist">问题列表</a></li>
+                <li data-id="2" id="b-2" class=""><a href="#faq">问题详情</a></li>
+                <!--<li data-id="3" id="b-3" class=""><a href="#exp">经验分享</a></li>-->
                 <span class="extra-bar">
-                    <a>创建你的心得体会</a>
+                    <a href="/pages/asking.html">去提问</a>
+                    <!--<a href="/pages/asking_richtext.html">去提问(富文本)</a>-->
                 </span>
             </ul>
             <div class="bd sel" id="d-1">
-                <iframe class="vue-iframe" id="vue-buglist" src="/pages/vue_search.html" scrolling="no"
-                    style="height:700px"></iframe>
+                <iframe class="vue-iframe" id="vue-buglist" src="/pages_test/vue_discuss.html" scrolling="no"
+                    style="height:1000px"></iframe>
             </div>
             <div class="bd" id="d-2">
-                <iframe class="vue-iframe" id="vue-exp" src="/utils/pdfjs-2.6.347/web/viewer.html?file=/attachment/%E8%8F%9C%E9%B8%9F%E6%95%99%E7%A8%8B.pdf"
-                    style="height:700px"></iframe>
+                <iframe class="vue-iframe" id="vue-buglist" src="/pages_test/vue_discussion.html" scrolling="no"
+                    style="height:1000px"></iframe>
             </div>
+            <!--<div class="bd" id="d-2">
+                <img src="\img\building.jpg" style="width:100%">
+            </div>
+            <div class="bd" id="d-3">
+                <img src="\img\building.jpg" style="width:100%">
+            </div>-->
         </div>
     </div>
-
 
     <script src="/jquery/jquery.min.js"></script>
     <script>
@@ -62,8 +70,9 @@
     <script src="/lib/site.js"></script>
     <script>
         var para = window.location.hash
-        const pages = ["buglist", "course"]
+        const pages = ["buglist", "faq", "exp"]
         var page = pages.indexOf(para.split("#")[1]) + 1
+        console.log(page)
         if (page <= 0) {
             page = 1;
         }
@@ -81,11 +90,10 @@
             $("#navis .bd").removeClass("sel");
             $(id).addClass("sel");
         });
-        $("#vue-exp").on("load", function () {
-            $("#vue-exp").css("background-image","none");
-        })
+        /*$("#vue-buglist").on("load", function () {
+            $("#vue-buglist").css("background-image", "none");
+        })*/
         if (nightMode) {
-            $("#vue-exp").attr("src","/utils/pdfjs-2.6.347/web/viewer.html?file=/attachment/%E8%8F%9C%E9%B8%9F%E6%95%99%E7%A8%8B.pdf&night=1")
             $("#vue-buglist").attr("src","/pages/vue_search.html?night=1")
         }
     </script>

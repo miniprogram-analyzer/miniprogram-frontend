@@ -20,7 +20,7 @@
   padding-top: 36px;
   padding-left: 16px;
   font-weight: 500;
-  border-bottom: 2px solid #ec672f;
+  border-bottom: 2px solid #F4204E;
 }
 
 #content>div>p {
@@ -33,7 +33,7 @@
   line-height: 20px;
   padding: 5px 16px;
   margin: 0 8px;
-  border: 1px solid #ec672f;
+  border: 1px solid #F4204E;
   border-radius: 5px;
   background: #eee;
   transition: all .2s ease;
@@ -55,7 +55,7 @@ body.night #content span {
 }
 
 #RetryGetQ>a:hover {
-  color: #ec672f;
+  color: #F4204E;
   cursor: pointer;
 }
 
@@ -70,7 +70,7 @@ body.night #content span {
 }
 
 #ReturnHome>a:hover {
-  color: #ec672f;
+  color: #F4204E;
   cursor: pointer;
 }
 
@@ -104,7 +104,7 @@ body.night .bdr{background: #303030;transition:all .2s ease}
   display: inline-block;
   padding: 2px 16px;
   margin-bottom: 4px;
-  border-left: 4px solid #ec672f;
+  border-left: 4px solid #F4204E;
 }
 
 body.night #recommend>div{background: #303030;transition:all .2s ease}
@@ -133,22 +133,13 @@ body.night #recommend>div{background: #303030;transition:all .2s ease}
 #recommend>.bdr li:before {
   float: left;
   height: 20px;
-  width: 18px;
+  width: 20px;
   border-radius: 3px;
   display: inline-block;
   background: #afb2b7;
   font-size: 12px;
   text-align: center;
   color: #fff;
-  border-top: 1px solid transparent;
-  border-bottom: 1px solid transparent;
-  transition: all .2s ease-in-out;
-}
-
-body.night #recommend>.bdr li:before {
-  border-top: 1px solid transparent;
-  border-bottom: 1px solid transparent;
-  transition: all .2s ease-in-out;
 }
 
 
@@ -190,7 +181,7 @@ body.night #recommend>.bdr li:before {
 
   #recommend>.bdr li:before {
     height: 24px;
-    width: 22px;
+    width: 24px;
     border-radius: 4px;
     line-height: 24px;
   }
@@ -232,10 +223,10 @@ body.night #recommend>.bdr li:before {
   }
   #recommend > .bdr li:before {
     height: 18px;
-    width: 16px;
+    width: 18px;
     border-radius: 2px;
     line-height: 18px;
   }
 }
 
-#recommend>.bdr li:nth-child(1):before{content:'1';background:#ec672f!important}#recommend>.bdr li:nth-child(2):before{content:'2';background:#ec672f!important}#recommend>.bdr li:nth-child(3):before{content:'3';background:#ec672f!important}#recommend>.bdr li:nth-child(4):before{content:'4'}#recommend>.bdr li:nth-child(5):before{content:'5'}#recommend>.bdr li:nth-child(6):before{content:'6'}#recommend>.bdr li:nth-child(7):before{content:'7'}#recommend>.bdr li:nth-child(8):before{content:'8'}#recommend>.bdr li:nth-child(9):before{content:'9'}#recommend>.bdr li:nth-child(10):before{content:'10'}#recommend>.bdr li:nth-child(11):before{content:'11'}#recommend>.bdr li:nth-child(12):before{content:'12'}
+#recommend>.bdr li:nth-child(1):before{content:'1';background:#F4204E!important}#recommend>.bdr li:nth-child(2):before{content:'2';background:#F4204E!important}#recommend>.bdr li:nth-child(3):before{content:'3';background:#F4204E!important}#recommend>.bdr li:nth-child(4):before{content:'4'}#recommend>.bdr li:nth-child(5):before{content:'5'}#recommend>.bdr li:nth-child(6):before{content:'6'}#recommend>.bdr li:nth-child(7):before{content:'7'}#recommend>.bdr li:nth-child(8):before{content:'8'}#recommend>.bdr li:nth-child(9):before{content:'9'}#recommend>.bdr li:nth-child(10):before{content:'10'}#recommend>.bdr li:nth-child(11):before{content:'11'}#recommend>.bdr li:nth-child(12):before{content:'12'}

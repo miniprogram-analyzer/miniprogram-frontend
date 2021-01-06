@@ -786,6 +786,8 @@ body.night .simditor .simditor-popover .settings-field select,body.night .simdit
 .simditor .simditor-body img, .editor-style img {
   margin: 0 5px;
   vertical-align: middle;
+  max-width: calc(100% - 10px);
+  height: auto;
 }
 
 pre > div{margin:0 !important;padding:0 !important}

@@ -41,7 +41,7 @@
 }
 
 #navis .bar li.sel {
-  border-bottom: 2px solid #ec672f;
+  border-bottom: 2px solid #F4204E;
   line-height: 50px;
   transition: border .2s ease;
 }
@@ -60,7 +60,7 @@
 }
 
 #navis .bar > .extra-bar a:hover{
-  color: #ec672f;
+  color: #F4204E;
 }
 
 #navis .bar > .extra-bar a:not(:last-child):after{
@@ -81,7 +81,7 @@
 }
 
 #navis a:hover {
-  color: #ec672f;
+  color: #F4204E;
 }
 
 #navis .bd {

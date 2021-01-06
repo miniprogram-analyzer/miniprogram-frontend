@@ -14,36 +14,101 @@
     <meta name="format-detection" content="telephone=no" />
     <link href="/lib/site.min.css" rel="stylesheet" type="text/css" />
     <link href="/lib/index.min.css" rel="stylesheet" type="text/css" />
+    <link href="/lib/discussion.css" rel="stylesheet" type="text/css" />
     <link href="/lib/navis.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
     <script src="/lib/darkmode.js"></script>
-    <script src="/lib/navigation_answering.js"></script>
+    <script src="/lib/navigation.js"></script>
+    <script>const nav_id = 3;</script>
 
     <div class="bb" style="margin-top: 106px;">
-        <div id="navis">
-            <ul class="bar">
-                <li data-id="1" id="b-1" class=""><a href="#buglist">常见问题</a></li>
-                <!--<li data-id="2" id="b-2" class=""><a href="#faq">已解决问题</a></li>
-                <li data-id="3" id="b-3" class=""><a href="#exp">经验分享</a></li>-->
-                <span class="extra-bar">
-                    <a href="/pages/asking.html">去提问</a>
-                    <!--<a href="/pages/asking_richtext.html">去提问(富文本)</a>-->
-                </span>
-            </ul>
-            <div class="bd" id="d-1">
-                <iframe class="vue-iframe" id="vue-buglist" src="/pages/vue_search.html" scrolling="no"
-                    style="height:700px"></iframe>
+        <div id="con">
+             <div class="div_con">
+                <div class="main">
+                   <div class="thread">
+                        <div class="contrl">
+                            <a href="/pages/asking.html" class="new_post">发表新帖</a>
+                        </div>
+                        <div class="t_list">
+                            <ul>
+                                <li>
+                                    <div class="postimg"><a><div class="t_head"></div></a></div>
+                                    <div class="title">
+                                        <div class="t_title">
+                                            <span class="t_cate">
+                                                <img src="/img/toppest.svg" width="45" />
+                                            </span>
+                                            <a target="_blank" href="#replace" class="t_cate_title">
+                                                讨论前必读！
+                                            </a>
+                                            </div>
+                                        <div class="t_info">
+                                            <a>Admin</a>
+                                            <span>2020/10/26发表</span>
+                                            <span>测试</span>
+                                            <span class="numb"><img src="/img/like.svg" />0</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="thread" style="margin-top:15px">
+                        <div class="t_list" id="discussion_content">
+                            <div class="loading" style="background-image:url(/img/loading.svg);background-repeat:no-repeat;background-position:center;height:300px;"></div>
+                            <!--<ul>
+                                <li>
+                                    <div class="postimg"><a><div class="t_head"></div></a></div>
+                                    <div class="title">
+                                        <div class="t_title">
+                                            <span class="t_cate">[iPhone]</span>
+                                            <a target="_blank" href="#replace" class="t_cate_title">
+                                                讨论前必读！
+                                            </a>
+                                            </div>
+                                        <div class="t_info">
+                                            <a>Admin</a>
+                                            <span>2020/10/26发表</span>
+                                            <span>测试</span>
+                                            <span class="numb"><img src="/img/like.svg" />0</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>-->
+                        </div>
+                        <!--<div class="page_nav">
+                            <span class="page_num">
+                                <!--<script type="text/javascript"
+                                    src="/WebResource.axd?d=n928DxjxzRk_1ZkW1oDbUBhs1xmpnzvICu66uJfeBtMl2C_AB0GpEGoylcNfozEjc9leZlqQ29CdCYRxRmM_37XUXJRfLdYxhtDTddVgGgh526z5TsC-n0AYUAygxCqz0&t=635827501227819993">
+                                </script>
+                                <div id="Pager" class="pagenew" ShowInputBox="Always"
+                                    style="font-size:12px;font-weight:normal;text-decoration:none;">
+                                    <div style="width:;float:left;"></div>
+                                    <div class="pagenew" style="float:left;">
+                                        <a disabled="disabled" style="margin-right:5px;"><</a>
+                                        <span class="current" style="margin-right:5px;">1</span>
+                                        <a href="/thread/2/" style="margin-right:5px;">2</a>
+                                        <a href="/thread/3/" style="margin-right:5px;">3</a>
+                                        <a href="/thread/4/" style="margin-right:5px;">4</a>
+                                        <a href="/thread/5/" style="margin-right:5px;">5</a>
+                                        <a href="/thread/6/" style="margin-right:5px;">6</a>
+                                        <a href="/thread/7/" style="margin-right:5px;">7</a>
+                                        <a href="/thread/8/" style="margin-right:5px;">...</a>
+                                        <a href="/thread/2/" style="margin-right:5px;">></a>&nbsp;&nbsp;
+                                        <input type="text" value="1" name="Pager_input" id="Pager_input" onkeydown="ANP_keydown(event,'Pager_btn');"onkeyup="ANP_keyup('Pager_input');" style="width:30px;" />
+                                        <input type="button" value="  " name="Pager" id="Pager_btn" onclick="if(ANP_checkInput('Pager_input',10645,'页索引超出范围！','页索引不是有效的数值！')){ANP_goToPage('Pager_input','page','/thread/1/','/thread/{page}/','',10645,false);};return false;" />
+                                    </div>
+                                </div>
+                            </span>
+                        </div>-->
+                    </div>
+                </div>
             </div>
-            <!--<div class="bd" id="d-2">
-                <img src="\img\building.jpg" style="width:100%">
-            </div>
-            <div class="bd" id="d-3">
-                <img src="\img\building.jpg" style="width:100%">
-            </div>-->
         </div>
     </div>
+
 
     <script src="/jquery/jquery.min.js"></script>
     <script>
@@ -63,7 +128,7 @@
     <script src="/lib/popwin.js"></script>
     <script src="/lib/site.js"></script>
     <script>
-        var para = window.location.hash
+        /*var para = window.location.hash
         const pages = ["buglist", "faq", "exp"]
         var page = pages.indexOf(para.split("#")[1]) + 1
         console.log(page)
@@ -83,14 +148,90 @@
             var id = "#d-" + $(this).parent().data("id");
             $("#navis .bd").removeClass("sel");
             $(id).addClass("sel");
-        });
-        /*$("#vue-buglist").on("load", function () {
-            $("#vue-buglist").css("background-image", "none");
-        })*/
-        if (nightMode) {
-            $("#vue-buglist").attr("src","/pages/vue_search.html?night=1")
+        });*/
+        var time_change = function(e){
+            var now = new Date()
+            var today = new Date(now.getFullYear(),now.getMonth(),now.getDate())
+            var delta = today - e
+            if(delta <= 0){
+                var d2 = now - e
+                if (d2 < 60000){
+                    return "刚刚"
+                }
+                else if(d2 < 3600000){
+                    return (Math.floor(d2/60000)+"分钟前")
+                }
+                else{
+                    return (Math.floor(d2/3600000)+"小时前")
+                }
+            }
+            else if(delta <= 86400000){
+                return "昨天"
+            }
+            else if(delta <= 864000000){
+                return (Math.ceil(delta/86400000)+"天前")
+            }
+            else{
+                return (e.getFullYear() + '/' + (e.getMonth()+1) + '/' + e.getDate())
+            }
         }
+        $.ajax({
+            type: 'POST',
+            url: '/api/printList',
+            data: {
+                choice: "discuss"
+            },
+            success: function (res) {
+                const con_re = new RegExp("<.+?>","g");
+                if(res.successFlag === "Y"){
+                    var list_html = "<ul>"
+                    for (var i=0;i<res.msg.length;i++){
+                        list_html += '<li><div class="postimg"><a><div class="t_head"></div></a></div>'
+                        list_html += '<div class="title"><div class="t_title"><span class="t_cate">['
+                        list_html += res.msg[i].partition
+                        list_html += ']</span><a target="_blank" href="/pages/discussion.html?id='
+                        list_html += res.msg[i].serial
+                        list_html += '" class="t_cate_title">'
+                        list_html += res.msg[i].title
+                        list_html += '</a></div><div class="t_info"><a>'
+                        list_html += res.msg[i].guestid
+                        list_html += '</a><span>'
+                        var time = new Date(res.msg[i].time)
+                        list_html += time_change(time) + '发表'
+                        list_html += '</span><span>'
+                        list_html += res.msg[i].content.replace(con_re,'').substring(0,30)
+                        list_html += '...</span><span class="numb"><img src="/img/like.svg" />'
+                        list_html += res.msg[i].numof
+                        list_html += '</span></div></div></li>'
+                    }
+                    list_html += "</ul>"
+                }
+                $("#discussion_content").html(list_html);
+                /*var len = Math.min(12, res.msg.length)
+                var homeQ = ""
+                if (len == 0) {
+                    homeQ =
+                        "<div class=\"tips\"><p><a target=\"_blank\" href=\"/pages/asking.html\">还没有问题，我来提问</a></p></div>"
+                } else {
+                    for (var i = 0; i < len; i++) {
+                        var tempQ =
+                            "<li><a target=\"_blank\" href=\"/pages/question_detail.html?Qid=" + res
+                            .msg[i].serial + "\">" + res.msg[i].detail + "</a></li>"
+                        homeQ += tempQ
+                    }
+                }
+                $("#d-2 .bdr").html(homeQ);
+                if (window.localStorage) {
+                    var storage = window.localStorage;
+                    storage.setItem("homeQ", homeQ);
+                }*/
+            },
+            error: function(err){
+                console.log(err)
+            }
+        });
     </script>
+    <script src="/lib/footer.js"></script>
 </body>
 
 </html>

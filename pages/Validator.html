@@ -19,7 +19,8 @@
 
 <body>
     <script src="/lib/darkmode.js"></script>
-    <script src="/lib/navigation_home.js"></script>
+    <script src="/lib/navigation.js"></script>
+    <script>const nav_id = 1;</script>
 
     <div class="bb" style="margin-top: 106px;">
         <div id="validator">
@@ -39,7 +40,6 @@
             </div>
         </div>
     </div>
-    <div style="height:2000px;"></div>
 
 
     <script src="/jquery/jquery.min.js"></script>
@@ -72,15 +72,17 @@
         $("#navis .bd").removeClass("sel");
         $(idb).addClass("sel");
         $(idd).addClass("sel");
-        $("#navis .bar li a").click(function () {
-            $("#navis .bar li").removeClass("sel");
+        $("#validator .bar li a").click(function () {
+            console.log("test001")
+            $("#validator .bar li").removeClass("sel");
             $(this).parent().addClass("sel");
 
             var id = "#d-" + $(this).parent().data("id");
-            $("#navis .bd").removeClass("sel");
+            $("#validator .bd").removeClass("sel");
             $(id).addClass("sel");
         });
     </script>
+    <script src="/lib/footer.js"></script>
 </body>
 
 </html>

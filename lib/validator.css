@@ -46,7 +46,7 @@
 }
 
 #validator .bar li.sel {
-  border-bottom: 2px solid #ec672f;
+  border-bottom: 2px solid #F4204E;
   line-height: 50px;
   transition: border .2s ease;
 }
@@ -57,7 +57,7 @@
 }
 
 #validator a:hover {
-  color: #ec672f;
+  color: #F4204E;
 }
 
 #validator .bd {

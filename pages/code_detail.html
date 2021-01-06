@@ -19,15 +19,20 @@
 
 <body>
     <script src="/lib/darkmode.js"></script>
-    <script src="/lib/navigation_exercising.js"></script>
+    <script src="/lib/navigation.js"></script>
+    <script>const nav_id = 4;</script>
 
     <div id="page" class="bb" style="margin-top: 106px;">
         <div id="content">
             <div>
                 <h1 style="padding-top:0">小程序页面</h1>
-                <table class="data-table" id="miniprogram-pages"></table>
+                <table class="data-table" id="miniprogram-pages">
+                    <tr><td><div class="loading"></div></td></tr>
+                </table>
                 <h1>组件使用状况</h1>
-                <div id="miniprogram-components"></div>
+                <div class="data-table" id="miniprogram-components">
+                    <div class="loading"></div>
+                </div>
             </div>
         </div>
         <div id="overall">
@@ -54,6 +59,7 @@
     <script src="/lib/popwin.js"></script>
     <script src="/lib/site.js"></script>
     <script src="/lib/code_detail.js"></script>
+    <script src="/lib/footer.js"></script>
 </body>
 
 </html>

@@ -63,7 +63,12 @@ var uploadHandler = function (file, num) {
         processData: false,
         data: formData,
         success: function (res) {
-            startPercent($(list.find('li .progress')[num]), 99, 100, 50);
+            if(res.successFlag === "Y"){
+                startPercent($(list.find('li .progress')[num]), 99, 100, 50);
+            }
+            else {
+                alert(res.errorMsg || "网络异常，请稍后重试")
+            }
         },
         error: function (err) {
             alert(err.errorMsg || "网络异常，请稍后重试")
@@ -440,6 +445,6 @@ function bytesToSize(bytes) {
         return '0 Byte';
     }
     let i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024))),
-        sizes = ['Bytes', 'Kb', 'Mb', 'Gb', 'Tb'];
+        sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
     return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 }
