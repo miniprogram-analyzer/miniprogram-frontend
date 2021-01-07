@@ -30,7 +30,7 @@
                 <li data-id="2" id="b-2" class=""><a href="#faq">问题详情</a></li>
                 <!--<li data-id="3" id="b-3" class=""><a href="#exp">经验分享</a></li>-->
                 <span class="extra-bar">
-                    <a href="/pages/asking.html">去提问</a>
+                    <a href="/asking">去提问</a>
                     <!--<a href="/pages/asking_richtext.html">去提问(富文本)</a>-->
                 </span>
             </ul>
