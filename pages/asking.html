@@ -37,6 +37,17 @@
     <script>const nav_id = 3;</script>
 
     <div class="bb" style="margin-top: 106px;">
+        <input></input>
+        <select>
+            <option value="wxml">布局设计</option>
+            <option value="wxss">样式美化</option>
+            <option value="js">本地功能逻辑</option>
+            <option value="framework">文件结构</option>
+            <option value="component">组件</option>
+            <option value="api">API调用</option>
+            <option value="wxcloud">云开发</option>
+            <option value="other">其他</option>
+        </select>
         <section id="simditor-richtext"><textarea id="txt-content" style="display:none" data-autosave="editor-content" required></textarea></section>
     </div>
 
@@ -73,6 +84,10 @@
     <script type="text/javascript" src="/utils/simditor/assets/extensions/mark/lib/simditor-mark.js"></script>
     <script type="text/javascript" src="/utils/simditor/assets/extensions/simditor-undo.js"></script>
     <script src="/utils/highlight.js-10.1.2/highlight.pack.js"></script>
+
+    <script>
+        var toolbar = ['undo', 'redo', '|', 'bold', 'italic', 'underline', 'color', 'mark', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent', 'alignment'];
+    </script>
 
     <script type="text/javascript" src="/lib/simditor_loading.js"></script>
     <script src="/lib/footer.js"></script>
