@@ -14,7 +14,12 @@
     <meta name="format-detection" content="telephone=no" />
     <link href="/lib/site.min.css" rel="stylesheet" type="text/css" />
     <link href="/lib/index.min.css" rel="stylesheet" type="text/css" />
-    <link href="/lib/navis.css" rel="stylesheet" type="text/css" />
+    <link href="/lib/asking.css" rel="stylesheet" type="text/css" />
+
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>-->
+    <script src="/vue/vue.js"></script>
+    <script src="/vue/element.js"></script>
+    <link rel="stylesheet" href="/vue/element.css">
 
     <link media="all" rel="stylesheet" type="text/css" href="/utils/simditor/assets/styles/app.css" />
     <link media="all" rel="stylesheet" type="text/css" href="/utils/simditor/assets/styles/simditor.css" />
@@ -37,18 +42,39 @@
     <script>const nav_id = 3;</script>
 
     <div class="bb" style="margin-top: 106px;">
-        <input></input>
-        <select>
-            <option value="wxml">布局设计</option>
-            <option value="wxss">样式美化</option>
-            <option value="js">本地功能逻辑</option>
-            <option value="framework">文件结构</option>
-            <option value="component">组件</option>
-            <option value="api">API调用</option>
-            <option value="wxcloud">云开发</option>
-            <option value="other">其他</option>
-        </select>
-        <section id="simditor-richtext"><textarea id="txt-content" style="display:none" data-autosave="editor-content" required></textarea></section>
+      <div class="sub_nav">
+        <a href="/answering">讨论区</a> &nbsp;&gt;&nbsp; <a href="/asking">提问</a>
+      </div>
+      <div id="Qinfo">
+        <template>
+          <div id="vm">
+            <el-form label-width="100px" class="demo-ruleForm" style="margin:16px;width:calc(100% - 65px)">
+              <!-- 问题简述 -->
+              <el-form-item label="问题描述" prop="question">
+                <el-input v-model="ruleForm.question" placeholder="说说你遇到的问题" minlength="3" maxlength="40"
+                  show-word-limit />
+              </el-form-item>
+
+              <!-- 问题分类，必填 -->
+              <el-form-item label="问题分类" prop="classify">
+                <el-select v-model="ruleForm.classify" clearable filterable default-first-option
+                  placeholder="在什么方面遇到了问题？" style="width:100%">
+                  <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+                </el-select>
+              </el-form-item>
+
+              <el-form-item label="详细信息" prop="detail">
+
+              </el-form-item>
+
+            </el-form>
+          </div>
+        </template>
+      </div>
+
+      <section id="simditor-richtext">
+        <textarea id="txt-content" style="display:none" data-autosave="editor-content" required></textarea>
+      </section>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.0/dist/jquery.min.js"></script>
@@ -86,7 +112,31 @@
     <script src="/utils/highlight.js-10.1.2/highlight.pack.js"></script>
 
     <script>
-        var toolbar = ['undo', 'redo', '|', 'bold', 'italic', 'underline', 'color', 'mark', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent', 'alignment'];
+        var toolbar = ['undo', 'redo', '|', 'bold', 'italic', 'underline', 'color', 'mark', '|', 'ol', 'ul', 'blockquote', 'code', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'];
+        var Main = {
+          data() {
+            return {
+              ruleForm: {
+                question: "",
+                classify: [],
+                tag: [],
+                detail: "",
+              },
+              options: [{value:"wxml",label:"布局设计"},
+                        {value:"wxss",label:"样式美化"},
+                        {value:"js",label:"本地功能逻辑"},
+                        {value:"framework",label:"文件结构"},
+                        {value:"component",label:"组件"},
+                        {value:"api",label:"API调用"},
+                        {value:"wxcloud",label:"云开发"},
+                        {value:"other",label:"其他"}],
+              hasSubmit: false,
+              fileList: [],
+            };
+          },
+        }
+        var Ctor = Vue.extend(Main)
+        new Ctor().$mount('#Qinfo')
     </script>
 
     <script type="text/javascript" src="/lib/simditor_loading.js"></script>
