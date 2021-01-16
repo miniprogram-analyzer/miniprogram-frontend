@@ -282,7 +282,7 @@ body.night .post_page .wrap .t_title h1 {
 }
 
 .post_page .wrap .title a.fav:hover {
-  background-color: #ec8155
+  background-color: #FF6F61
 }
 
 .post_page .wrap .title a.fav:active {
@@ -356,6 +356,6 @@ pre{font-size:14px;line-height:24px}.hljs{background-color: #eee!important}body.
 
 .comment{clear:both}.comment .comm_title{padding:0 20px;height:42px;background:#f7f7f7;line-height:42px}body.night .comment .comm_title{background:#303030}.comment ul.comm_list{padding:5px 30px 5px 30px;font-size:16px}.comment ul.comm_list li.commt_entry{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #ededed}body.night .comment ul.comm_list li.commt_entry{border-bottom:1px solid #777}.comment .answer{margin:0 20px 30px;padding:20px 0}
 
-a.answer_inpt{float:right;display:block;margin-top:10px;width:90px;height:40px;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;background:#F4204E;color:#fff;text-align:center;text-decoration:none;line-height:40px}a.answer_inpt:hover{background-color:#ec8155}a.answer_inpt:active{background-color:#F4204E}
+a.answer_inpt{float:right;display:block;margin-top:10px;width:90px;height:40px;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;background:#F4204E;color:#fff;text-align:center;text-decoration:none;line-height:40px}a.answer_inpt:hover{background-color:#FF6F61}a.answer_inpt:active{background-color:#F4204E}
 
 .hide {margin:0!important;padding:0!important}

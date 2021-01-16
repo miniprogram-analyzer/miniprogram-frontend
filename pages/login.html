@@ -1,0 +1,307 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>登录到试剑亭</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+  <meta name="description" />
+  <meta name="keywords" />
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+  <meta http-equiv="expires" content="0">
+  <meta name="format-detection" content="telephone=no" />
+  <!--
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+  <script src="https://cdn.bootcss.com/element-ui/2.14.1/index.js"></script>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/element-ui/2.14.1/theme-chalk/index.css">
+  -->
+  <script src="/vue/vue.js"></script>
+  <script src="/vue/element.js"></script>
+  <link rel="stylesheet" href="/vue/element.css">
+
+  <link rel="stylesheet" href="/vue/index.css">
+  <link rel="stylesheet" href="/lib/login.css">
+</head>
+
+<body>
+  <div id="svg-icon" style="display:none"></div>
+  <div id="login">
+    <template>
+      <div class="login-container">
+        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
+          label-position="left" v-loading="loading">
+          <div class="title-container">
+            <h3 class="title">登录到代码分析平台</h3>
+          </div>
+
+          <el-form-item prop="username">
+            <span class="svg-container">
+              <svg-icon icon-class="user" />
+            </span>
+            <el-input ref="username" v-model="loginForm.username" id="username" placeholder="用户名/学号" name="username"
+              type="text" tabindex="1" autocomplete="on" />
+          </el-form-item>
+
+          <el-tooltip v-model="capsTooltip" content="大写锁定已打开" placement="right" manual>
+            <el-form-item prop="password">
+              <span class="svg-container">
+                <svg-icon icon-class="password" />
+              </span>
+              <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType"
+                placeholder="密码" name="password" id="password" tabindex="2" autocomplete="on"
+                @keyup.native="checkCapslock" @blur="capsTooltip = false" @keyup.enter.native="handleLogin" />
+              <span class="show-pwd" @click="showPwd" :style="'display:'+isMSEdge">
+                <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+              </span>
+            </el-form-item>
+          </el-tooltip>
+
+          <el-button :loading="loading" type="primary" style="width:100%;margin-top:30px;"
+            @click.native.prevent="handleLogin">登录</el-button>
+          <el-link type="primary" :href="'/pages/vue_register.html'+params"
+            style="display:table;text-align:center;margin: 16px auto;">没有账号？点此注册</el-link>
+        </el-form>
+
+        <el-dialog title="Or connect with" :visible.sync="showDialog">
+          Can not be simulated on local, so please combine you own business simulation! ! !
+          <br />
+          <br />
+          <br />
+          <social-sign />
+        </el-dialog>
+      </div>
+    </template>
+  </div>
+  <script src="/vue/icon.js"></script>
+  
+  <script type="module">
+    // register globally
+    import { validUsername, isExternal } from "../vue/utils/validate.js";
+    import API from "../vue/api/api.js";
+    
+    //const req = require.context('../vue/icons/svg', false, /\.svg$/)
+    //const requireAll = requireContext => requireContext.keys().map(requireContext)
+    //requireAll(req)
+
+    Vue.component('svg-icon', {
+  name: 'SvgIcon',
+  template: '<div><div v-if="isExternal" :style="styleExternalIcon" class="svg-external-icon svg-icon" v-on="$listeners" /><svg v-else :class="svgClass" aria-hidden="true" v-on="$listeners"><use :xlink:href="iconName" /></svg></div>',
+  props: {
+    iconClass: {
+      type: String,
+      required: true
+    },
+    className: {
+      type: String,
+      default: ''
+    }
+  },
+  computed: {
+    isExternal() {
+      return isExternal(this.iconClass)
+    },
+    iconName() {
+      return `#icon-${this.iconClass}`
+    },
+    svgClass() {
+      if (this.className) {
+        return 'svg-icon ' + this.className
+      } else {
+        return 'svg-icon'
+      }
+    },
+    styleExternalIcon() {
+      return {
+        mask: `url(${this.iconClass}) no-repeat 50% 50%`,
+        '-webkit-mask': `url(${this.iconClass}) no-repeat 50% 50%`
+      }
+    }
+  }
+})
+
+    var Main = {
+      data() {
+        const validateUsername = (rule, value, callback) => {
+          if (value === "" || value === null) {
+            callback(new Error("用户名/学号不能为空"));
+          } else if (
+            !isNaN(parseInt(value.substring(0, 1))) &&
+            parseInt(value).toString() !== value
+          ) {
+            callback(new Error("用户名不能以数字开头"));
+          } else if (value.length != 10 && parseInt(value).toString() === value) {
+            callback(new Error("学号有误！"));
+          } else {
+            callback();
+          }
+        };
+        const validatePassword = (rule, value, callback) => {
+          if (value.length < 8 || value.length > 20) {
+            callback(new Error("请输入8~20位的账户密码"));
+          } else {
+            callback();
+          }
+        };
+        return {
+          loginForm: {
+            username: "",
+            password: "",
+          },
+          loginRules: {
+            username: [{
+              required: true,
+              trigger: "blur",
+              validator: validateUsername
+            }, ],
+            password: [{
+              required: true,
+              trigger: "blur",
+              validator: validatePassword
+            }, ],
+          },
+          passwordType: "password",
+          capsTooltip: false,
+          loading: false,
+          showDialog: false,
+          redirect: undefined,
+          otherQuery: {},
+          isMSEdge: "none",
+          loading: false,
+          params: ""
+        };
+      },
+      created() {
+        if (location.search.indexOf("night=1") > 0) {
+          document.documentElement.setAttribute("class", "dark");
+        } else if (location.search.indexOf("night=0") > 0) {
+          document.documentElement.setAttribute("class", "light");
+        }
+        this.params = location.search
+        var ua = navigator.userAgent;
+        if (
+          ua.indexOf("Edge") === -1 &&
+          ua.indexOf("Edg") === -1 &&
+          ua.indexOf("Trident") === -1
+        ) {
+          this.isMSEdge = "";
+        }
+      },
+      mounted() {
+        if (this.loginForm.username === "") {
+          this.$refs.username.focus();
+        } else if (this.loginForm.password === "") {
+          this.$refs.password.focus();
+        }
+      },
+      methods: {
+        checkCapslock(e) {
+          const {
+            key,
+            shiftKey
+          } = e;
+          if (key.length === 1) {
+            this.capsTooltip =
+              key &&
+              ((key >= "A" && key <= "Z" && !shiftKey) ||
+                (key >= "a" && key <= "z" && shiftKey));
+          }
+        },
+        showPwd() {
+          if (this.passwordType === "password") {
+            this.passwordType = "";
+          } else {
+            this.passwordType = "password";
+          }
+          this.$nextTick(() => {
+            this.$refs.password.focus();
+          });
+        },
+        handleLogin() {
+          var nameOrid = document.getElementById("username").value;
+          var password = document.getElementById("password").value;
+          if (nameOrid === "" || nameOrid === null) {
+            this.$message({
+              message: "用户名/学号不能为空",
+              center: true,
+              type: "error",
+            });
+          } else if (
+            !isNaN(parseInt(nameOrid.substring(0, 1))) &&
+            parseInt(nameOrid).toString() !== nameOrid
+          ) {
+            this.$message({
+              message: "用户名不能以数字开头",
+              center: true,
+              type: "error",
+            });
+          } else if (
+            nameOrid.length != 10 &&
+            parseInt(nameOrid).toString() === nameOrid
+          ) {
+            this.$message({
+              message: "学号有误！",
+              center: true,
+              type: "error",
+            });
+          } else if (password.length < 8 || password.length > 20) {
+            this.$message({
+              message: "请输入8~20位的账户密码",
+              center: true,
+              type: "error",
+            });
+          } else {
+            this.loading = true;
+            API.login({
+                nameOrid,
+                password
+              })
+              .then((res) => {
+                this.loading = false;
+                if (window.localStorage) {
+                  var storage = window.localStorage;
+                  storage.setItem("username", res.data.userInfo.username);
+                  storage.setItem("id", res.data.userInfo.id);
+                  storage.setItem("identity", res.data.userInfo.identity || "同学");
+                }
+                this.$message({
+                  message: "登陆成功！页面即将刷新",
+                  center: true,
+                  type: "success",
+                  duration: 750,
+                  onClose: () => {
+                    if (location.search.indexOf("source") > 0) {
+                      window.location.replace(
+                        location.search.substring(
+                          location.search.indexOf("source") + 7
+                        )
+                      );
+                    } else {
+                      window.parent.location.reload();
+                    }
+                  },
+                });
+              })
+              .catch((err) => {
+                this.loading = false;
+                alert(err.errorMsg || "用户名或密码错误");
+              });
+          }
+        },
+        getOtherQuery(query) {
+          return Object.keys(query).reduce((acc, cur) => {
+            if (cur !== "redirect") {
+              acc[cur] = query[cur];
+            }
+            return acc;
+          }, {});
+        },
+      },
+    }
+    var Ctor = Vue.extend(Main)
+    new Ctor().$mount('#login')
+  </script>
+</body>
+
+</html>

@@ -3,7 +3,7 @@ section#simditor-richtext .simditor{
 }
 
 section#simditor-richtext{
-  margin: 0 50px 50px;
+  margin: 0 50px 25px;
 }
 
 .sub_nav {
@@ -26,3 +26,10 @@ body.night .el-select-dropdown__item
 {color:#ccc;background-color:#202020}
 
 body.night .el-select-dropdown__item.hover,body.night .el-select-dropdown__item:hover{background-color:#444}
+
+a.answer_inpt{display:block;width:90px;height:40px;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;background:#F4204E;color:#fff;text-align:center;text-decoration:none;line-height:40px}a.answer_inpt:hover{background-color:#FF6F61}a.answer_inpt:active{background-color:#F4204E}
+#submit {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 50px 25px;
+}

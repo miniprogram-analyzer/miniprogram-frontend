@@ -1,0 +1,112 @@
+div#login {
+  --highlightBg: #e5e5e5;
+  --cursor: #333;
+  --bg: #fff;
+  --svg: #888;
+}
+@supports (-webkit-mask: none) and (not (cater-color: var(--cursor))) {
+  div#login .login-container .el-input input {
+    color: var(--cursor);
+  }
+}
+div#login .login-container {
+  height: 100%;
+}
+div#login .login-container .el-input {
+  display: inline-block;
+  height: 47px;
+  width: 85%;
+}
+div#login .login-container .el-input input {
+  background: transparent;
+  border: 0px;
+  -webkit-appearance: none;
+  border-radius: 0px;
+  padding: 12px 5px 12px 15px;
+  color: var(--cursor);
+  height: 47px;
+  caret-color: var(--cursor);
+}
+div#login .login-container .el-input input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px var(--highlightBg) inset !important;
+  -webkit-text-fill-color: var(--cursor) !important;
+}
+div#login .login-container .el-form-item {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  color: #454545;
+}
+div#login .login-container {
+  max-height: calc(100vh - 16px);
+  width: 100%;
+  background-color: var(--bg);
+  overflow: hidden;
+}
+div#login .login-container .login-form {
+  position: relative;
+  width: 400px;
+  max-width: 100%;
+  padding: calc(50vh - 200px) 20px calc(50vh - 100px);
+  margin: 0 auto;
+  overflow: hidden;
+}
+div#login .login-container .tips {
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+div#login .login-container .tips span:first-of-type {
+  margin-right: 16px;
+}
+div#login .login-container .svg-container {
+  padding: 6px 5px 6px 15px;
+  color: var(--svg);
+  vertical-align: middle;
+  width: 30px;
+  display: inline-block;
+}
+div#login .login-container .title-container {
+  position: relative;
+}
+div#login .login-container .title-container .title {
+  font-size: 26px;
+  color: var(--cursor);
+  margin: 0px auto 40px auto;
+  text-align: center;
+  font-weight: bold;
+}
+div#login .login-container .show-pwd {
+  position: absolute;
+  right: 10px;
+  top: 7px;
+  font-size: 16px;
+  color: var(--svg);
+  cursor: pointer;
+  user-select: none;
+}
+div#login .login-container .thirdparty-button {
+  position: absolute;
+  right: 0;
+  bottom: 6px;
+}
+div#login .login-container .introduction {
+  font-size: 15px;
+  color: azure;
+  margin-left: 800px;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not(.light) div#login {
+    --highlightBg: #1d1d1d;
+    --cursor: #ccc;
+    --bg: #202020;
+    --svg: #aaa;
+  }
+}
+html.dark:not(.light) div#login {
+  --highlightBg: #1d1d1d;
+  --cursor: #ccc;
+  --bg: #202020;
+  --svg: #aaa;
+}
