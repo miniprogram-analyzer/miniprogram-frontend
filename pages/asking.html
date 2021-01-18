@@ -16,9 +16,12 @@
     <link href="/lib/index.min.css" rel="stylesheet" type="text/css" />
     <link href="/lib/asking.css" rel="stylesheet" type="text/css" />
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
     <script src="https://cdn.bootcss.com/element-ui/2.14.1/index.js"></script>
-    <link rel="stylesheet" href="https://cdn.bootcss.com/element-ui/2.14.1/theme-chalk/index.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/element-ui/2.14.1/theme-chalk/index.css">-->
+  <script src="/vue/vue.js"></script>
+  <script src="/vue/element.js"></script>
+  <link rel="stylesheet" href="/vue/element.css">
 
     <link media="all" rel="stylesheet" type="text/css" href="/utils/simditor/assets/styles/app.css" />
     <link media="all" rel="stylesheet" type="text/css" href="/utils/simditor/assets/styles/simditor.css" />
@@ -40,6 +43,13 @@
     <script src="/lib/navigation.js"></script>
     <script>const nav_id = 3;</script>
 
+    
+    <div id="warning-tip">
+      <template>
+        <el-alert :title="tip_value" :type="tip_type" center show-icon @close="closeTip">
+        </el-alert>
+      </template>
+    </div>
     <div class="bb" style="margin-top: 106px;">
       <div class="sub_nav">
         <a href="/answering">讨论区</a> &nbsp;&gt;&nbsp; <a href="/asking">提问</a>
@@ -47,7 +57,7 @@
       <div id="Qinfo">
         <template>
           <div id="vm">
-            <el-form label-width="100px" class="demo-ruleForm" style="margin:16px;width:calc(100% - 65px)">
+            <el-form :model="ruleForm" :rules="rules" label-width="100px" class="demo-ruleForm" style="margin:16px;width:calc(100% - 65px)">
               <!-- 问题简述 -->
               <el-form-item label="问题描述" prop="question">
                 <el-input v-model="ruleForm.question" placeholder="说说你遇到的问题" minlength="3" maxlength="40"
@@ -63,7 +73,8 @@
               </el-form-item>
 
               <el-form-item label="详细信息" prop="detail">
-
+                <el-input type="textarea" v-model="ruleForm.detail" style="display: none">
+                </el-input>
               </el-form-item>
 
             </el-form>
@@ -109,35 +120,9 @@
     <script type="text/javascript" src="/utils/simditor/assets/extensions/html/lib/simditor-html.js"></script>
     <script type="text/javascript" src="/utils/simditor/assets/extensions/mark/lib/simditor-mark.js"></script>
     <script type="text/javascript" src="/utils/simditor/assets/extensions/simditor-undo.js"></script>
-    <script src="/utils/highlight.js-10.1.2/highlight.pack.js"></script>
+    <script type="text/javascript" src="/utils/highlight.js-10.1.2/highlight.pack.js"></script>
 
-    <script>
-        var toolbar = ['undo', 'redo', '|', 'bold', 'italic', 'underline', 'color', 'mark', '|', 'ol', 'ul', 'blockquote', 'code', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'];
-        var Main = {
-          data() {
-            return {
-              ruleForm: {
-                question: "",
-                classify: [],
-                tag: [],
-                detail: "",
-              },
-              options: [{value:"wxml",label:"布局设计"},
-                        {value:"wxss",label:"样式美化"},
-                        {value:"js",label:"本地功能逻辑"},
-                        {value:"framework",label:"文件结构"},
-                        {value:"component",label:"组件"},
-                        {value:"api",label:"API调用"},
-                        {value:"wxcloud",label:"云开发"},
-                        {value:"other",label:"其他"}],
-              hasSubmit: false,
-              fileList: [],
-            };
-          },
-        }
-        var Ctor = Vue.extend(Main)
-        new Ctor().$mount('#Qinfo')
-    </script>
+    <script type="text/javascript" src="/lib/asking.js"></script>
 
     <script type="text/javascript" src="/lib/simditor_loading.js"></script>
     <script src="/lib/footer.js"></script>

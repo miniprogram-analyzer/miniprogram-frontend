@@ -1,6 +1,6 @@
-section#simditor-richtext .simditor{
-  box-shadow: none !important;
-}
+section#simditor-richtext .simditor{box-shadow:none!important;transition:all .2s ease;border-radius:6px;overflow:hidden}
+section#simditor-richtext .simditor.is-error{border-color:#f56c6c}
+section#simditor-richtext .simditor.is-focus{border-color:#409eff}
 
 section#simditor-richtext{
   margin: 0 50px 25px;
@@ -32,4 +32,11 @@ a.answer_inpt{display:block;width:90px;height:40px;-webkit-border-radius:2px;-mo
   display: flex;
   justify-content: flex-end;
   margin: 0 50px 25px;
+}
+
+#warning-tip {
+  width: 400px;
+  position: fixed;
+  z-index: 1000;
+  margin: 0 calc(50vw - 200px);
 }
