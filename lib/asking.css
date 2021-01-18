@@ -40,3 +40,9 @@ a.answer_inpt{display:block;width:90px;height:40px;-webkit-border-radius:2px;-mo
   z-index: 1000;
   margin: 0 calc(50vw - 200px);
 }
+
+.el-alert--success,.el-alert--info,.el-alert--warning,.el-alert--error{transition:all .2s ease}
+body.night .el-alert--success{background-color:#67c23a;color:#fff}
+body.night .el-alert--info{background-color:#909399;color:#fff}
+body.night .el-alert--warning{background-color:#e6a23c;color:#fff}
+body.night .el-alert--error{background-color:#f56c6c;color:#fff}
