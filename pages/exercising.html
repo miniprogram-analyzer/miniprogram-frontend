@@ -15,7 +15,8 @@
     <link href="/lib/site.min.css" rel="stylesheet" type="text/css" />
     <link href="/lib/index.min.css" rel="stylesheet" type="text/css" />
     <link href="/lib/navis.css" rel="stylesheet" type="text/css" />
-    <link href="/utils/uploader/style.css" rel="stylesheet" type="text/css" />
+    <link href="/lib/exercising.css" rel="stylesheet" type="text/css" />
+    <!--<link href="/utils/uploader/style.css" rel="stylesheet" type="text/css" />-->
 </head>
 
 <body>
@@ -24,7 +25,8 @@
     <script>const nav_id = 4;</script>
 
     <div class="bb" style="margin-top: 106px;">
-        <div id="navis">
+        <table class="data-table" id="problems-list"></table>
+        <!--<div id="navis">
             <ul class="bar">
                 <li data-id="1" id="b-1" class="sel"><a href="#uploadcode">上传代码包</a></li>
                 <li data-id="2" id="b-2" class=""><a href="#exercisehistory">练习历史</a></li>
@@ -61,7 +63,7 @@
             <div class="bd" id="d-2">
                 
             </div>
-        </div>
+        </div>-->
     </div>
 
 
@@ -84,9 +86,9 @@
     <script src="/lib/popwin.js"></script>
     <script src="/lib/site.js"></script>
 
-    <script src='/utils/uploader/TweenMax.min.js'></script>
-    <script src="/utils/uploader/script.js"></script>
-    <script>
+    <!--<script src='/utils/uploader/TweenMax.min.js'></script>
+    <script src="/utils/uploader/script.js"></script>-->
+    <!--<script>
         var para = window.location.hash
         const pages = ["uploadcode", "exercisehistory"]
         var page = pages.indexOf(para.split("#")[1]) + 1
@@ -107,7 +109,8 @@
             $("#navis .bd").removeClass("sel");
             $(id).addClass("sel");
         });
-    </script>
+    </script>-->
+    <script src="/lib/exercising.js"></script>
     <script src="/lib/footer.js"></script>
 
 </body>

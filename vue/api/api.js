@@ -1,6 +1,5 @@
 //处理异步
 import apiConfig from './api_config.js'
-//import axios from 'axios'
 
 axios.defaults.withCredentials = true
 const obj = {}

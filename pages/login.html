@@ -12,14 +12,15 @@
   <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
   <meta http-equiv="expires" content="0">
   <meta name="format-detection" content="telephone=no" />
-  <!--
+  
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
   <script src="https://cdn.bootcss.com/element-ui/2.14.1/index.js"></script>
   <link rel="stylesheet" href="https://cdn.bootcss.com/element-ui/2.14.1/theme-chalk/index.css">
-  -->
+  <!--
   <script src="/vue/vue.js"></script>
   <script src="/vue/element.js"></script>
   <link rel="stylesheet" href="/vue/element.css">
+  -->
 
   <link rel="stylesheet" href="/vue/index.css">
   <link rel="stylesheet" href="/lib/login.css">
@@ -35,7 +36,8 @@
         <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
           label-position="left" v-loading="loading">
           <div class="title-container">
-            <h3 class="title">登录到代码分析平台</h3>
+            <img src="/img/logo.png" />
+            <h3 class="title">登录到试剑亭</h3>
           </div>
 
           <el-form-item prop="username">
@@ -62,7 +64,7 @@
 
           <el-button :loading="loading" type="primary" style="width:100%;margin-top:30px;"
             @click.native.prevent="handleLogin">登录</el-button>
-          <el-link type="primary" :href="'/pages/vue_register.html'+params"
+          <el-link v-if="nav_link" type="primary" :href="'/register/'+params"
             style="display:table;text-align:center;margin: 16px auto;">没有账号？点此注册</el-link>
         </el-form>
 
