@@ -2,94 +2,203 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>代码分析平台</title>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
-    <meta name="description" />
-    <meta name="keywords" />
-    <meta http-equiv="pragma" content="no-cache">
-    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
-    <meta http-equiv="expires" content="0">
-    <meta name="format-detection" content="telephone=no" />
-    <link href="/lib/site.min.css" rel="stylesheet" type="text/css" />
-    <link href="/lib/index.min.css" rel="stylesheet" type="text/css" />
-    <link href="/lib/navis.css" rel="stylesheet" type="text/css" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>代码分析平台</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+  <meta name="description" />
+  <meta name="keywords" />
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+  <meta http-equiv="expires" content="0">
+  <meta name="format-detection" content="telephone=no" />
+  <link href="/lib/site.min.css" rel="stylesheet" type="text/css" />
+  <link href="/lib/index.min.css" rel="stylesheet" type="text/css" />
+  <link href="/lib/navis.css" rel="stylesheet" type="text/css" />
+
+  <!--<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+  <script src="https://cdn.bootcss.com/element-ui/2.14.1/index.js"></script>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/element-ui/2.14.1/theme-chalk/index.css">-->
+  
+  <script src="/vue/vue.js"></script>
+  <script src="/vue/element.js"></script>
+  <link rel="stylesheet" href="/vue/element.css">
+
+  <link href="/lib/search.css" rel="stylesheet" type="text/css" />
+  <script src="/vue/axios.min.js"></script>
 </head>
 
 <body>
-    <script src="/lib/darkmode.js"></script>
-    <script src="/lib/navigation.js"></script>
-    <script>const nav_id = 2;</script>
+  <script src="/lib/darkmode.js"></script>
+  <script src="/lib/navigation.js"></script>
+  <script>
+    const nav_id = 2;
+  </script>
 
-    <div class="bb" style="margin-top: 106px;">
-        <div id="navis">
-            <ul class="bar">
-                <li data-id="1" id="b-1" class="sel"><a href="#buglist">常见问题</a></li>
-                <li data-id="2" id="b-2" class=""><a href="#course">优秀教程</a></li>
-                <span class="extra-bar">
-                    <a>创建你的心得体会</a>
-                </span>
-            </ul>
-            <div class="bd sel" id="d-1">
-                <iframe class="vue-iframe" id="vue-buglist" src="/pages/vue_search.html" scrolling="no"
-                    style="height:700px"></iframe>
-            </div>
-            <div class="bd" id="d-2">
-                <iframe class="vue-iframe" id="vue-exp" src="/utils/pdfjs-2.6.347/web/viewer.html?file=/attachment/%E8%8F%9C%E9%B8%9F%E6%95%99%E7%A8%8B.pdf"
-                    style="height:700px"></iframe>
-            </div>
-        </div>
+  <div class="bb" style="margin-top: 106px;">
+    <div id="navis">
+      <ul class="bar">
+        <li data-id="1" id="b-1" class="sel"><a href="#buglist">常见问题</a></li>
+        <li data-id="2" id="b-2" class=""><a href="#course">优秀教程</a></li>
+        <span class="extra-bar">
+          <a>创建你的心得体会</a>
+        </span>
+      </ul>
+      <div class="bd sel" id="d-1">
+        <!--<iframe class="vue-iframe" id="vue-buglist" src="/pages/vue_search.html" scrolling="no"
+                    style="height:700px"></iframe>-->
+        <template>
+          <div id="search">
+            <!-- 提问框 -->
+            <el-autocomplete v-model="state" :fetch-suggestions="querySearchAsync"
+              placeholder="遇到了什么问题？" :hide-loading="true" :autofocus="true" :trigger-on-focus="false" clearable
+              style="width: calc(var(--content-width) - 160px);margin: 16px;border-radius: 30px;overflew: hidden"
+              @select="handleSelect" @change="handleChange" @keyup.enter.native="search" />
+            <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="search">搜一搜</el-button>
+            <!--  -->
+
+            <!-- 搜索推荐 -->
+            <h4 v-if="seen" style="margin:16px">看看你的问题是不是这些，其他同学也遇到了哟</h4>
+            <el-table :data="tableData" style="width: calc(var(--content-width) - 32px); margin: 16px" max-height="500"
+              :row-key="getRowKeys" :expand-row-keys="expands" :stripe="true" empty-text="暂时找不到内容哟"
+              @row-click="clickRowHandle">
+              <el-table-column type="expand">
+                <template slot-scope="props">
+                  <el-form label-position="left" inline class="demo-table-expand">
+                    <el-form-item v-if="props.row.reasons !== ''" label="原因">
+                      <span>{{ props.row.reasons }}</span>
+                    </el-form-item>
+                    <el-form-item label="解决方案">
+                      <span>{{ props.row.solve }}</span>
+                    </el-form-item>
+                  </el-form>
+                </template>
+              </el-table-column>
+              <el-table-column label="问题描述" prop="value" width="calc(var(--content-width) - 400px)" />
+              <el-table-column prop="tag" label="标签" align="right" width="300">
+                <template slot-scope="scope" class="tag-group">
+                  <el-tag v-for="item in scope.row.tag" :key="item" type="primary" size="small" disable-transitions
+                    style="margin:4px">{{ item }}</el-tag>
+                </template>
+              </el-table-column>
+              <!-- 操作  -->
+              <!-- 以下部分最好设定权限 -->
+              <!-- <el-table-column label="操作" align="left" width="230" class-name="small-padding fixed-width">
+                            <template slot-scope="{row,$index}">
+                            <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(row)">编辑内容</el-button>
+                            <el-button
+                                v-if="row.status!='deleted'"
+                                :before-remove="beforeRemove"
+                                size="mini"
+                                type="danger"
+                                icon="el-icon-delete"
+                                @click="handleDelete(row,$index)"
+                            >删除记录</el-button>
+                            </template>
+                        </el-table-column>-->
+            </el-table>
+            <!--  -->
+
+            <!-- 这部分是一个编辑bug库的内容的表单 -->
+            <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+              <el-form ref="deltaForm" :rules="rules" :model="temp" label-position="left" label-width="85px"
+                style="width: 500px; margin-left:16px;">
+                <el-form-item label="问题简述" prop="value">
+                  <el-input v-model="temp.value" />
+                </el-form-item>
+                <el-form-item label="原因" prop="reasons">
+                  <el-input v-model="temp.reasons" :autosize="{ minRows: 2, maxRows: 6}" type="textarea"
+                    placeholder="Please input" />
+                </el-form-item>
+                <el-form-item label="解决方案" prop="solve">
+                  <el-input v-model="temp.solve" :autosize="{ minRows: 2, maxRows: 6}" type="textarea"
+                    placeholder="Please input" />
+                </el-form-item>
+              </el-form>
+              <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">取消</el-button>
+                <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">提交</el-button>
+              </div>
+            </el-dialog>
+
+            <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
+              <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
+                <el-table-column prop="key" label="Channel" />
+                <el-table-column prop="pv" label="Pv" />
+              </el-table>
+              <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="dialogPvVisible = false">Confirm</el-button>
+              </span>
+            </el-dialog>
+            <!--  -->
+            <p v-if="unfindResult" style="font-size:14px;margin:16px">
+              找不到解答？
+              上
+              <el-link type="primary" href="/pages/asking.html">提问区</el-link>问问吧！
+            </p>
+            <p style="font-size:14px;margin:16px">发现错误？想参与编辑？联系我们！</p>
+          </div>
+        </template>
+      </div>
+      <div class="bd" id="d-2">
+        <iframe class="vue-iframe" id="vue-exp"
+          src="/utils/pdfjs-2.6.347/web/viewer.html?file=/attachment/%E8%8F%9C%E9%B8%9F%E6%95%99%E7%A8%8B.pdf"
+          style="height:700px"></iframe>
+      </div>
     </div>
+  </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.0/dist/jquery.min.js"></script>
-    <script>
-        (window.jQuery || document.write("<script src='https:\/\/cdn.jsdelivr.net\/npm\/jquery@3.4.0\/dist\/jquery.min.js'><\/script>"));
-    </script>
-    <script src="/jquery/jquery.cookie.min.js"></script>
-    <script>
-        (window.jQuery && window.jQuery.fn && window.jQuery.fn.cookie || document.write(
-            "\u003Cscript src=\u0022/jquery/jquery.cookie.min.js\u0022\u003E\u003C\/script\u003E"));
-    </script>
-    <script src="/jquery/jquery.lazyload.min.js"></script>
-    <script>
-        (window.jQuery && window.jQuery.fn && window.jQuery.fn.lazyload || document.write(
-            "\u003Cscript src=\u0022/jquery/jquery.lazyload.min.js\u0022\u003E\u003C\/script\u003E"
-        ));
-    </script>
-    <script src="/lib/popwin.js"></script>
-    <script src="/lib/site.js"></script>
-    <script>
-        var para = window.location.hash
-        const pages = ["buglist", "course"]
-        var page = pages.indexOf(para.split("#")[1]) + 1
-        if (page <= 0) {
-            page = 1;
-        }
-        var idb = "#b-" + page
-        var idd = "#d-" + page
-        $("#navis .bar li").removeClass("sel");
-        $("#navis .bd").removeClass("sel");
-        $(idb).addClass("sel");
-        $(idd).addClass("sel");
-        $("#navis .bar li a").click(function () {
-            $("#navis .bar li").removeClass("sel");
-            $(this).parent().addClass("sel");
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.0/dist/jquery.min.js"></script>
+  <script>
+    (window.jQuery || document.write(
+      "<script src='https:\/\/cdn.jsdelivr.net\/npm\/jquery@3.4.0\/dist\/jquery.min.js'><\/script>"));
+  </script>
+  <script src="/jquery/jquery.cookie.min.js"></script>
+  <script>
+    (window.jQuery && window.jQuery.fn && window.jQuery.fn.cookie || document.write(
+      "\u003Cscript src=\u0022/jquery/jquery.cookie.min.js\u0022\u003E\u003C\/script\u003E"));
+  </script>
+  <script src="/jquery/jquery.lazyload.min.js"></script>
+  <script>
+    (window.jQuery && window.jQuery.fn && window.jQuery.fn.lazyload || document.write(
+      "\u003Cscript src=\u0022/jquery/jquery.lazyload.min.js\u0022\u003E\u003C\/script\u003E"
+    ));
+  </script>
+  <script src="/lib/popwin.js"></script>
+  <script src="/lib/site.js"></script>
+  <script type="module" src="/lib/search.js"></script>
+  <script>
+    var para = window.location.hash
+    const pages = ["buglist", "course"]
+    var page = pages.indexOf(para.split("#")[1]) + 1
+    if (page <= 0) {
+      page = 1;
+    }
+    var idb = "#b-" + page
+    var idd = "#d-" + page
+    $("#navis .bar li").removeClass("sel");
+    $("#navis .bd").removeClass("sel");
+    $(idb).addClass("sel");
+    $(idd).addClass("sel");
+    $("#navis .bar li a").click(function () {
+      $("#navis .bar li").removeClass("sel");
+      $(this).parent().addClass("sel");
 
-            var id = "#d-" + $(this).parent().data("id");
-            $("#navis .bd").removeClass("sel");
-            $(id).addClass("sel");
-        });
-        $("#vue-exp").on("load", function () {
-            $("#vue-exp").css("background-image","none");
-        })
-        if (nightMode) {
-            $("#vue-exp").attr("src","/utils/pdfjs-2.6.347/web/viewer.html?file=/attachment/%E8%8F%9C%E9%B8%9F%E6%95%99%E7%A8%8B.pdf&night=1")
-            $("#vue-buglist").attr("src","/pages/vue_search.html?night=1")
-        }
-    </script>
-    <script src="/lib/footer.js"></script>
+      var id = "#d-" + $(this).parent().data("id");
+      $("#navis .bd").removeClass("sel");
+      $(id).addClass("sel");
+    });
+    $("#vue-exp").on("load", function () {
+      $("#vue-exp").css("background-image", "none");
+    })
+    if (nightMode) {
+      $("#vue-exp").attr("src",
+        "/utils/pdfjs-2.6.347/web/viewer.html?file=/attachment/%E8%8F%9C%E9%B8%9F%E6%95%99%E7%A8%8B.pdf&night=1")
+      $("#vue-buglist").attr("src", "/pages/vue_search.html?night=1")
+    }
+  </script>
+  <script src="/lib/footer.js"></script>
 </body>
 
 </html>

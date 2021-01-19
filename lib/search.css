@@ -1,0 +1,76 @@
+#d-1 {
+  min-height: calc(100vh - 370px);
+}
+
+div#search {
+  --content-width: 1200px;
+  /*background: var(--bg);*/
+  color: var(--fg);
+  --bg: #fff;
+  --fg: #606266;
+  --bg2: #FAFAFA;
+  --fg2: #666;
+  --fg3: #C0C4CC;
+  --hover: #F5F7FA;
+  --color-mode: light;
+  transition: all .2s ease;
+}
+body.night div#search{
+  --bg: #242424;
+  --fg: #ccc;
+  --bg2: #303030;
+  --fg2: #aaa;
+  --fg3: #ccc;
+  --hover: #444;
+  --color-mode: dark;
+}
+div#search input {
+  color: var(--fg3);
+  background: var(--bg);
+}
+div#search .el-table {
+  color: var(--fg);
+  background-color: var(--bg);
+}
+div#search .el-table tr {
+  background-color: var(--bg);
+}
+div#search .el-table--striped .el-table__body tr.el-table__row--striped td {
+  background-color: var(--bg2);
+}
+div#search .el-table__expand-icon {
+  color: var(--fg2);
+}
+div#search .el-table,
+div#search .el-table__expanded-cell {
+  background-color: transparent !important;
+}
+div#search .el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: var(--hover);
+}
+div#search .el-table__header th {
+  background-color: var(--bg);
+}
+
+body.night .el-scrollbar {
+  color: #ccc;
+  background: #303030;
+}
+body.night li {
+  color: #ccc;
+}
+body.night li:hover {
+  background: #666;
+}
+
+@media screen and (min-width:1520px) {
+  div#search {
+    --content-width: 1400px;
+  }
+}
+
+@media screen and (max-width:1320px) {
+  div#search {
+    --content-width: 1000px;
+  }
+}
