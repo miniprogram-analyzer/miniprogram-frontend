@@ -3,7 +3,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>登录到试剑亭</title>
+  <title>在试剑亭上注册</title>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
   <meta name="description" />
@@ -23,29 +23,37 @@
   -->
 
   <link rel="stylesheet" href="/vue/index.css">
-  <link rel="stylesheet" href="/lib/login.css">
+  <link rel="stylesheet" href="/lib/register.css">
   <script src="/vue/axios.min.js"></script>
 </head>
 
 <body>
   <div id="svg-icon" style="display:none"></div>
   <script src="/lib/login_check.js"></script>
-  <div id="login">
+  <div id="register">
     <template>
       <div class="login-container">
         <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
           label-position="left" v-loading="loading">
           <div class="title-container">
             <img src="/img/logo.png" />
-            <h3 class="title">登录到试剑亭</h3>
+            <h3 class="title">在试剑亭上注册</h3>
           </div>
+
+          <el-form-item prop="number">
+            <span class="svg-container">
+              <svg-icon icon-class="guide" />
+            </span>
+            <el-input ref="number" v-model="loginForm.number" placeholder="输入学号" name="number" id="number" type="text"
+              tabindex="1" autocomplete="on" />
+          </el-form-item>
 
           <el-form-item prop="username">
             <span class="svg-container">
               <svg-icon icon-class="user" />
             </span>
-            <el-input ref="username" v-model="loginForm.username" id="username" placeholder="用户名/学号" name="username"
-              type="text" tabindex="1" autocomplete="on" />
+            <el-input ref="username" v-model="loginForm.username" placeholder="输入用户名" name="username" id="username"
+              type="text" tabindex="2" autocomplete="on" />
           </el-form-item>
 
           <el-tooltip v-model="capsTooltip" content="大写锁定已打开" placement="right" manual>
@@ -54,7 +62,7 @@
                 <svg-icon icon-class="password" />
               </span>
               <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType"
-                placeholder="密码" name="password" id="password" tabindex="2" autocomplete="on"
+                placeholder="输入密码" id="password" name="password" tabindex="3" autocomplete="on"
                 @keyup.native="checkCapslock" @blur="capsTooltip = false" @keyup.enter.native="handleLogin" />
               <span class="show-pwd" @click="showPwd" :style="'display:'+isMSEdge">
                 <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
@@ -62,25 +70,31 @@
             </el-form-item>
           </el-tooltip>
 
-          <el-button :loading="loading" type="primary" style="width:100%;margin-top:40px;"
-            @click.native.prevent="handleLogin">登录</el-button>
-          <el-link v-if="nav_link" type="primary" :href="'/register'+params"
-            style="display:table;text-align:center;margin: 16px auto;">没有账号？点此注册</el-link>
-        </el-form>
+          <el-tooltip v-model="capsTooltip" content="大写锁定已打开" placement="right" manual>
+            <el-form-item prop="password2">
+              <span class="svg-container">
+                <svg-icon icon-class="password" />
+              </span>
+              <el-input :key="passwordType" ref="password2" v-model="loginForm.password2" :type="passwordType"
+                placeholder="确认密码" name="password2" id="password2" tabindex="4" autocomplete="on"
+                @keyup.native="checkCapslock" @blur="capsTooltip = false" @keyup.enter.native="handleLogin" />
+              <span class="show-pwd" @click="showPwd" :style="'display:'+isMSEdge">
+                <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+              </span>
+            </el-form-item>
+          </el-tooltip>
 
-        <el-dialog title="Or connect with" :visible.sync="showDialog">
-          Can not be simulated on local, so please combine you own business simulation! ! !
-          <br />
-          <br />
-          <br />
-          <social-sign />
-        </el-dialog>
+          <el-button :loading="loading" type="primary" style="width:100%;margin-top:2px;"
+            @click.native.prevent="handleLogin">注册</el-button>
+          <el-link v-if="nav_link" type="primary" :href="'/pages/vue_login.html'+params"
+            style="display:table;text-align:center;margin: 16px auto;">已有账号？点此登录</el-link>
+        </el-form>
       </div>
     </template>
   </div>
   <script src="/vue/icon.js"></script>
   
-  <script type="module" src="/lib/login.js"></script>
+  <script type="module" src="/lib/register.js"></script>
 </body>
 
 </html>
