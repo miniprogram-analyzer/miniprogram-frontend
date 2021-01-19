@@ -75,51 +75,52 @@
     </template>
   </div>
   <script src="/vue/icon.js"></script>
+
+  <script src="/vue/axios.min.js"></script>
   
   <script type="module">
     // register globally
-    import { validUsername, isExternal } from "../vue/utils/validate.js";
+    import {
+      validUsername,
+      isExternal
+    } from "../vue/utils/validate.js";
     import API from "../vue/api/api.js";
-    
-    //const req = require.context('../vue/icons/svg', false, /\.svg$/)
-    //const requireAll = requireContext => requireContext.keys().map(requireContext)
-    //requireAll(req)
 
     Vue.component('svg-icon', {
-  name: 'SvgIcon',
-  template: '<div><div v-if="isExternal" :style="styleExternalIcon" class="svg-external-icon svg-icon" v-on="$listeners" /><svg v-else :class="svgClass" aria-hidden="true" v-on="$listeners"><use :xlink:href="iconName" /></svg></div>',
-  props: {
-    iconClass: {
-      type: String,
-      required: true
-    },
-    className: {
-      type: String,
-      default: ''
-    }
-  },
-  computed: {
-    isExternal() {
-      return isExternal(this.iconClass)
-    },
-    iconName() {
-      return `#icon-${this.iconClass}`
-    },
-    svgClass() {
-      if (this.className) {
-        return 'svg-icon ' + this.className
-      } else {
-        return 'svg-icon'
+      name: 'SvgIcon',
+      template: '<div><div v-if="isExternal" :style="styleExternalIcon" class="svg-external-icon svg-icon" v-on="$listeners" /><svg v-else :class="svgClass" aria-hidden="true" v-on="$listeners"><use :xlink:href="iconName" /></svg></div>',
+      props: {
+        iconClass: {
+          type: String,
+          required: true
+        },
+        className: {
+          type: String,
+          default: ''
+        }
+      },
+      computed: {
+        isExternal() {
+          return isExternal(this.iconClass)
+        },
+        iconName() {
+          return `#icon-${this.iconClass}`
+        },
+        svgClass() {
+          if (this.className) {
+            return 'svg-icon ' + this.className
+          } else {
+            return 'svg-icon'
+          }
+        },
+        styleExternalIcon() {
+          return {
+            mask: `url(${this.iconClass}) no-repeat 50% 50%`,
+            '-webkit-mask': `url(${this.iconClass}) no-repeat 50% 50%`
+          }
+        }
       }
-    },
-    styleExternalIcon() {
-      return {
-        mask: `url(${this.iconClass}) no-repeat 50% 50%`,
-        '-webkit-mask': `url(${this.iconClass}) no-repeat 50% 50%`
-      }
-    }
-  }
-})
+    })
 
     var Main = {
       data() {
