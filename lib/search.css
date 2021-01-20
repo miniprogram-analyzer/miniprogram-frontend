@@ -8,7 +8,7 @@ div#search {
   color: var(--fg);
   --bg: #fff;
   --fg: #606266;
-  --bg2: #FAFAFA;
+  --bg2: rgba(249,249,249,.8);
   --fg2: #666;
   --fg3: #C0C4CC;
   --hover: #F5F7FA;
@@ -18,7 +18,7 @@ div#search {
 body.night div#search{
   --bg: #242424;
   --fg: #ccc;
-  --bg2: #303030;
+  --bg2: rgba(51,51,51,.8);
   --fg2: #aaa;
   --fg3: #ccc;
   --hover: #444;
@@ -26,14 +26,14 @@ body.night div#search{
 }
 div#search input {
   color: var(--fg3);
-  background: var(--bg);
+  background: transparent;
 }
 div#search .el-table {
   color: var(--fg);
-  background-color: var(--bg);
+  background-color: transparent;
 }
 div#search .el-table tr {
-  background-color: var(--bg);
+  background-color: transparent;
 }
 div#search .el-table--striped .el-table__body tr.el-table__row--striped td {
   background-color: var(--bg2);
@@ -49,7 +49,7 @@ div#search .el-table--enable-row-hover .el-table__body tr:hover > td {
   background-color: var(--hover);
 }
 div#search .el-table__header th {
-  background-color: var(--bg);
+  background-color: transparent;
 }
 
 body.night .el-scrollbar {
