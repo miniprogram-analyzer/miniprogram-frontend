@@ -19,7 +19,7 @@
   <!--<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
   <script src="https://cdn.bootcss.com/element-ui/2.14.1/index.js"></script>
   <link rel="stylesheet" href="https://cdn.bootcss.com/element-ui/2.14.1/theme-chalk/index.css">-->
-  
+
   <script src="/vue/vue.js"></script>
   <script src="/vue/element.js"></script>
   <link rel="stylesheet" href="/vue/element.css">
@@ -51,8 +51,8 @@
         <template>
           <div id="search">
             <!-- 提问框 -->
-            <el-autocomplete v-model="state" :fetch-suggestions="querySearchAsync"
-              placeholder="遇到了什么问题？" :hide-loading="true" :autofocus="true" :trigger-on-focus="false" clearable
+            <el-autocomplete v-model="state" :fetch-suggestions="querySearchAsync" placeholder="遇到了什么问题？"
+              :hide-loading="true" :autofocus="true" :trigger-on-focus="false" clearable
               style="width: calc(var(--content-width) - 160px);margin: 16px;border-radius: 30px;overflew: hidden"
               @select="handleSelect" @change="handleChange" @keyup.enter.native="search"></el-autocomplete>
             <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="search">搜一搜</el-button>
@@ -60,7 +60,7 @@
 
             <!-- 搜索推荐 -->
             <h4 v-if="seen" style="margin:16px">看看你的问题是不是这些，其他同学也遇到了哟</h4>
-            <el-table :data="tableData" style="width: calc(var(--content-width) - 32px); margin: 16px" max-height="500"
+            <el-table :data="tableData" style="width: calc(var(--content-width) - 32px); margin: 16px"
               :row-key="getRowKeys" :expand-row-keys="expands" :stripe="true" empty-text="暂时找不到内容哟"
               @row-click="clickRowHandle">
               <el-table-column type="expand">
