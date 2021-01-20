@@ -53,7 +53,7 @@
             <el-autocomplete v-model="state" :fetch-suggestions="querySearchAsync"
               placeholder="遇到了什么问题？" :hide-loading="true" :autofocus="true" :trigger-on-focus="false" clearable
               style="width: calc(var(--content-width) - 160px);margin: 16px;border-radius: 30px;overflew: hidden"
-              @select="handleSelect" @change="handleChange" @keyup.enter.native="search" />
+              @select="handleSelect" @change="handleChange" @keyup.enter.native="search"></el-autocomplete>
             <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="search">搜一搜</el-button>
             <!--  -->
 
@@ -74,7 +74,7 @@
                   </el-form>
                 </template>
               </el-table-column>
-              <el-table-column label="问题描述" prop="value" width="calc(var(--content-width) - 400px)" />
+              <el-table-column label="问题描述" prop="value" width="calc(var(--content-width) - 400px)"></el-table-column>
               <el-table-column prop="tag" label="标签" align="right" width="300">
                 <template slot-scope="scope" class="tag-group">
                   <el-tag v-for="item in scope.row.tag" :key="item" type="primary" size="small" disable-transitions
@@ -104,15 +104,15 @@
               <el-form ref="deltaForm" :rules="rules" :model="temp" label-position="left" label-width="85px"
                 style="width: 500px; margin-left:16px;">
                 <el-form-item label="问题简述" prop="value">
-                  <el-input v-model="temp.value" />
+                  <el-input v-model="temp.value"></el-input>
                 </el-form-item>
                 <el-form-item label="原因" prop="reasons">
                   <el-input v-model="temp.reasons" :autosize="{ minRows: 2, maxRows: 6}" type="textarea"
-                    placeholder="Please input" />
+                    placeholder="Please input"></el-input>
                 </el-form-item>
                 <el-form-item label="解决方案" prop="solve">
                   <el-input v-model="temp.solve" :autosize="{ minRows: 2, maxRows: 6}" type="textarea"
-                    placeholder="Please input" />
+                    placeholder="Please input"></el-input>
                 </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer">
@@ -123,8 +123,8 @@
 
             <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
               <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-                <el-table-column prop="key" label="Channel" />
-                <el-table-column prop="pv" label="Pv" />
+                <el-table-column prop="key" label="Channel"></el-table-column>
+                <el-table-column prop="pv" label="Pv"></el-table-column>
               </el-table>
               <span slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="dialogPvVisible = false">Confirm</el-button>
