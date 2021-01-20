@@ -1,5 +1,3 @@
-import './waves.css'
-
 const context = '@@wavesContext'
 
 function handleClick(el, binding) {
