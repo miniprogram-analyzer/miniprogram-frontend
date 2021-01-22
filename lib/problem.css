@@ -1,23 +1,34 @@
-.header {
+
+.header{
   margin: 16px;
   border: 1px
 }
 
-.abstract {
+.abstract{
   margin: 16px;
   font-size: 16px;
 }
 
 .abs-text {
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  color:#494949;
+  font-size:11pt;
 }
 
-.example {
+.example{
   margin: 16px;
   font-size: 16px
 }
 
-.command {
+.exp-text {
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  color:#494949;
+  font-size:11pt;
+  background-color:rgb(216, 213, 213);
+  width: 60vw
+}
+
+.command{
   margin: 16px;
   font-size: 16px;
   font-weight: bolder;

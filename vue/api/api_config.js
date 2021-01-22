@@ -1,95 +1,99 @@
 //示例
 export default {
   login: {
-    url: '/api/login',
+    url: api_login,
     method: 'post',
   },
   register: {
-    url: '/api/register',
+    url: api_register,
     method: 'post',
   },
-  getdebugslist: {
-    url: '/api/getList',
+  getList: {
+    url: api_getList,
     method: 'post'
   },
   updateList: {
-    url: '/api/updateList',
+    url: api_updateList,
     method: 'post'
   },
   uploadPicture: {
-    url: '/api/uploadPicture',
+    url: api_uploadPicture,
     method: 'post'
   },
-  questionSubmit: {
-    url: '/api/submitQue',
+  submitQue: {
+    url: api_submitQue,
     method: 'post'
   },
   getUserinfo: {
-    url: '/api/getUserinfo',
+    url: api_getUserinfo,
     method: 'post'
   },
   loginOut: {
-    url: '/api/loginOut',
+    url: api_loginOut,
     method: 'post'
   },
   getLikestatus: {
-    url: '/api/getLikestatus',
+    url: api_getLikestatus,
     method: 'post'
   },
   getLikenum: {
-    url: '/api/getLikenum',
+    url: api_getLikenum,
     method: 'post'
   },
   like: {
-    url: '/api/like',
+    url: api_like,
     method: 'post'
   },
   modifyUserinfo: {
-    url: '/api/modifyUserinfo',
+    url: api_modifyUserinfo,
     method: 'post'
   },
   getReplyorComment: {
-    url: '/api/getReplyorComment',
+    url: api_getReplyorComment,
     method: 'post'
   },
   submitComment: {
-    url: '/api/submitComment',
+    url: api_submitComment,
     method: 'post'
   },
   submitReply: {
-    url: '/api/submitReply',
+    url: api_submitReply,
     method: 'post'
   },
   getUserinteract: {
-    url: '/api/getUserinteract',
+    url: api_getUserinteract,
     method: 'post'
   },
   submitFeedback: {
-    url: '/api/submitFeedback',
+    url: api_submitFeedback,
     method: 'post'
   },
   printList: {
-    url: '/dev/api/printList',
+    url: api_printList,
     method: 'post'
   },
   uploadFile: {
-    url: '/api/uploadFile',
+    url: api_uploadFile,
     method: 'post'
   },
   printProblem: {
-    url: '/dev/api/printProblem',
+    url: api_printProblem,
     method: 'post'
   },
   saveProblem: {
-    url: '/dev/api/saveProblem',
+    url: api_saveProblem,
     method: 'post'
   },
   submitDiscuss: {
-    url: '/dev/api/submitDiscuss',
+    url: api_submitDiscuss,
     method: 'post'
   },
   submitShare: {
-    url: '/dev/api/submitShare',
+    url: api_submitShare,
+    method: 'post'
+  },
+  getProblem: {
+    url: api_getProblem,
     method: 'post'
   }
 }

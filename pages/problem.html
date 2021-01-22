@@ -19,9 +19,15 @@
   <link href="/lib/problem.css" rel="stylesheet" type="text/css" />
   <link href="/lib/navis.css" rel="stylesheet" type="text/css" />
 
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
   <script src="https://cdn.bootcss.com/element-ui/2.14.1/index.js"></script>
-  <link rel="stylesheet" href="https://cdn.bootcss.com/element-ui/2.14.1/theme-chalk/index.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/element-ui/2.14.1/theme-chalk/index.css">-->
+
+  <script src="/vue/vue.js"></script>
+  <script src="/vue/element.js"></script>
+  <link href="/vue/element.css" rel="stylesheet" type="text/css" />
+
+  <script src="/lib/api_url.js"></script>
 
   <script src="/vue/axios.min.js"></script>
   
@@ -52,12 +58,11 @@
                 <div class="postcontent">
                   <div id="Pcontent">
                     <template>
-                      <div v-for="item in problem" class="item"> 
-                        <dl v-html="item.content">
-                          {{ item.content }}
-                        </dl>
+                      <div class="item">
+                        <div v-html="detail">
+                          {{ detail }}
+                        </div>
                       </div>
-                      <!--<p>hello world</p>-->
                     </template>
                   </div>
                 </div>

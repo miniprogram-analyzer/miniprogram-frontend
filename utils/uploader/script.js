@@ -58,7 +58,7 @@ var uploadHandler = function (file, num) {
     formData.append("", file);
     $.ajax({
         type: 'POST',
-        url: '/api/uploadFile',
+        url: api_uploadFile,
         contentType: false,
         processData: false,
         data: formData,
