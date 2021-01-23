@@ -21,6 +21,7 @@
             window.location.replace("/mindex.html");
         }
     </script>
+    <script src="/lib/api_url.js"></script>
 </head>
 
 <body>
@@ -251,7 +252,7 @@
         var getList = function () {
             $.ajax({
                 type: 'POST',
-                url: '/api/getList',
+                url: api_getList,
                 data: {
                     option: 1,
                     isentire: 0,
