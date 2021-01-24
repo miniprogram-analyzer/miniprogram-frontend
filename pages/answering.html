@@ -15,7 +15,6 @@
   <link href="/lib/site.min.css" rel="stylesheet" type="text/css" />
   <link href="/lib/index.min.css" rel="stylesheet" type="text/css" />
   <link href="/lib/discussion.css" rel="stylesheet" type="text/css" />
-  <link href="/lib/navis.css" rel="stylesheet" type="text/css" />
   <link href="/lib/answering.css" rel="stylesheet" type="text/css" />
   <script src="/lib/api_url.js"></script>
 </head>
@@ -33,6 +32,25 @@
         <div class="main">
           <div class="thread">
             <div class="contrl">
+              <div class="classify-nav">
+                <div class="nav disabled" id="nav-left">◀</div>
+                <div class="classify-box">
+                  <table class="classify">
+                    <tbody><tr>
+                      <td class="classify_item current" id="classify-all"><a href="#all">全部</a></td>
+                      <td class="classify_item" id="classify-wxml"><a href="#wxml">页面设计</a></td>
+                      <td class="classify_item" id="classify-wxss"><a href="#wxss">样式美化</a></td>
+                      <td class="classify_item" id="classify-js"><a href="#js">功能逻辑</a></td>
+                      <td class="classify_item" id="classify-framework"><a href="#framework">文件结构</a></td>
+                      <td class="classify_item" id="classify-component"><a href="#component">组件</a></td>
+                      <td class="classify_item" id="classify-api"><a href="#api">API调用</a></td>
+                      <td class="classify_item" id="classify-wxcloud"><a href="#wxcloud">云开发</a></td>
+                      <td class="classify_item" id="classify-other"><a href="#other">其他</a></td>
+                    </tr></tbody>
+                  </table>
+                </div>
+                <div class="nav" id="nav-right">▶</div>
+              </div>
               <a class="new_post">发表新帖</a>
             </div>
             <div class="t_list">
