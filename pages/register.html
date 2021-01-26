@@ -84,6 +84,7 @@
             @click.native.prevent="handleLogin">注册</el-button>
           <el-link v-if="nav_link" type="primary" :href="'/login'+params"
             style="display:table;text-align:center;margin: 16px auto;">已有账号？点此登录</el-link>
+          <i class="el-icon-loading" style="display:none"></i>
         </el-form>
       </div>
     </template>

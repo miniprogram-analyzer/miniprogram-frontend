@@ -21,10 +21,20 @@
             window.location.replace("/mindex.html");
         }
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <script src="https://cdn.bootcss.com/element-ui/2.14.1/index.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/element-ui/2.14.1/theme-chalk/index.css">
+
+    <!--<script src="/vue/vue.js"></script>
+    <script src="/vue/element.js"></script>
+    <link href="/vue/element.css" rel="stylesheet" type="text/css" />-->
+
     <script src="/lib/api_url.js"></script>
 </head>
 
 <body>
+    <div id="svg-icon" style="display:none"></div>
     <script src="/lib/darkmode.js"></script>
     <script src="/lib/navigation.js"></script>
     <script>const nav_id = 1;</script>
@@ -201,15 +211,7 @@
                 </ul>
             </div>
         </div>
-        <div class="home-r" id="personal">
-            <!--<div class="info-row">
-                <div id="avatar"></div>
-                <div id="username">
-                    <a class="login title">点此登录</a>
-                    <a class="register">还没有账号？点此注册</a>
-                </div>
-            </div>-->
-        </div>
+        <div class="home-r" id="personal"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.0/dist/jquery.min.js"></script>
