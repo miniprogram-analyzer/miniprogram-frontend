@@ -1,10 +1,10 @@
-.sub_nav{width:100%;box-sizing:border-box}.main .post_page{width:100%}
+.sub_nav{width:initial;box-sizing:border-box}.main .post_page{width:initial}
 .post_page .wrap .t_title h1{width:calc(100% - 50px)}
 
 @media screen and (min-width:1520px) {
-  .sub_nav{width:100%}.main .post_page{width:100%}
+  .sub_nav{width:initial}.main .post_page{width:initial}
 }
 
 @media screen and (max-width:1320px) {
-  .sub_nav{width:100%}.main .post_page{width:100%}
+  .sub_nav{width:initial}.main .post_page{width:initial}
 }
