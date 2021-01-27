@@ -8,24 +8,3 @@
 @media screen and (max-width:1320px) {
   .sub_nav{width:initial}.main .post_page{width:initial}
 }
-body,h1,h2,h3,h4,h5,input,li,p,textarea,ul{margin:initial;padding:initial}
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, .simditor pre,
-a, abbr, acronym, address, big, cite, .simditor code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: initial;
-  padding: initial;
-  border: initial;
-  font-size: initial;
-  font: initial;
-  vertical-align: initial;
-}
