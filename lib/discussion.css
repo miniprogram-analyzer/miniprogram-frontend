@@ -1,4 +1,4 @@
-body,h1,h2,h3,h4,h5,input,li,p,textarea,ul{margin:0;padding:0}h1,h2,h3,h4,h5{font-weight:400}body{font-size:14px;background:#f1f2f6}body.night{background:#111}li{list-style:none}
+body,h1,h2,h3,h4,h5,input,li,p,textarea,ul{margin:0;padding:0}h1,h2,h3,h4,h5{font-weight:400}body.night{background:#111}li{list-style:none}
 section#simditor-richtext .simditor{box-shadow:none}
 
 .u_info a{font-size:12px}
