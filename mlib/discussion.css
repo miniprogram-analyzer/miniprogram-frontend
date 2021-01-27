@@ -8,3 +8,6 @@
 @media screen and (max-width:1320px) {
   .sub_nav{width:initial}.main .post_page{width:initial}
 }
+.tab .tab-box .hd-tab .swiper-container {
+  line-height: normal;
+}
