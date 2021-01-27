@@ -1,17 +1,28 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="zh" sml:lang="zh">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
     <title>讨论 - 代码分析平台</title>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
-    <meta name="description" />
-    <meta name="keywords" />
-    <meta http-equiv="pragma" content="no-cache">
-    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
-    <meta http-equiv="expires" content="0">
+    <meta name="theme-color" content="#fff" />
     <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <!--<meta property="og:image" content="https://img.ithome.com/m/images/logo.png" />-->
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!--<link rel="apple-touch-icon" href="//www.ithome.com/img/t.png" />
+    <link rel="icon" href="https://m.ithome.com/favicon.ico" mce_href="https://m.ithome.com/favicon.ico"
+        type="image/x-icon">-->
+    <link rel="stylesheet" type="text/css" href="/mlib/common/common.min.css">
+    <!--<link rel="manifest" href="https://m.ithome.com/json/manifest.json?v=1.0.200902" type="application/manifest+json">-->
+    <link rel="stylesheet" type="text/css" href="/mlib/common_swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="/mlib/common_news-list.min.css">
+    <link rel="stylesheet" type="text/css" href="/mlib/common_comment.min.css">
+    <link rel="stylesheet" type="text/css" href="/mlib/common_user-menu.min.css">
+    <link rel="stylesheet" type="text/css" href="/mlib/index.min.css">
+    <link rel="stylesheet" type="text/css" href="/mlib/content.css">
+    <script src="/mlib/common/common-head.min.js"></script>
 
     <link media="all" rel="stylesheet" type="text/css" href="/utils/simditor/assets/styles/app.css" />
     <link media="all" rel="stylesheet" type="text/css" href="/utils/simditor/assets/styles/simditor.css" />
@@ -39,66 +50,111 @@
 </head>
 
 <body>
-    <script src="/lib/darkmode.js"></script>
-    <script>const nav_id = 3;</script>
-
-    <div class="main">
-        <div class="sub_nav">
-            <a href="/answering">讨论区</a> &nbsp;&gt;&nbsp; 
+    <script>
+        switch (window.localStorage.getItem("PageBsType")) {
+            case "blog":
+                break;
+            case "b-speedy":
+                document.body.className = "b-speedy";
+                break;
+        }
+    </script>
+    <div class="index-box"><a id="page-data" class="hide" name="mao-top" href="###" data-tag="course" data-news-tag=""></a>
+        <div class="head" onselectstart="return false">
+            <div class="hd" role="navigation"><a class="ithome-logo" role="button" aria-label="首页"
+                    href="/mindex.html"></a>
+                <div class="brand-column">
+                    <a class="brand-column-item brand-column-wxml" role="button"
+                        href="/mobile/wxml.html">WXML</a>
+                    <a class="brand-column-item brand-column-wxss" role="button"
+                        href="/mobile/wxss.html">WXSS</a>
+                    <a class="brand-column-item brand-column-js" role="button"
+                        href="/mobile/js.html">JS</a>
+                    <button class="brand-column-item brand-column-user-btn" aria-label="我"
+                        aria-haspopup="true"></button>
+                </div>
+            </div>
+            <div class="tab">
+                <div class="tab-box">
+                    <div class="hd-tab">
+                        <div class="swiper-container hide">
+                            <div class="swiper-wrapper" role="menubar">
+                                <div data-tag="mindex">首页</div>
+                                <!--<div data-tag="doc">文档学习</div>-->
+                                <div data-tag="course">优秀教程</div>
+                                <div data-tag="buglist">常见问题</div>
+                                <!--<div data-tag="faq">已解决问题</div>
+                                <div data-tag="exp">经验分享</div>
+                                <div data-tag="discuss">讨论</div>-->
+                            </div>
+                        </div><button class="arrow" aria-label="展开所有栏目"></button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="post_page">
-            <div class="wrap">
-                <div class="t_title"><h1></h1></div>
-                <div id="PostTitle" class="title">
-                    <div class="postimg">
-                        <a><div class="t_head"></div></a>
-                        <div class="level" id="owner-identity"><span></span></div>
-                    </div>
-                    <div class="t_info">
-                        <div class="fl">
-                            <a class="nickname postauthor"></a>
-                            <span class="mf">发帖人</span>
+        <div class="content">
+            <div class="main">
+                <div class="sub_nav">
+                    <a href="/answering">讨论区</a> &nbsp;&gt;&nbsp; 
+                </div>
+                <div class="post_page">
+                    <div class="wrap">
+                        <div class="t_title"><h1></h1></div>
+                        <div id="PostTitle" class="title">
+                            <div class="postimg">
+                                <a><div class="t_head"></div></a>
+                                <div class="level" id="owner-identity"><span></span></div>
+                            </div>
+                            <div class="t_info">
+                                <div class="fl">
+                                    <a class="nickname postauthor"></a>
+                                    <span class="mf">发帖人</span>
+                                </div>
+                                <div><span class="posandtime"></span></div>
+                            </div>
                         </div>
-                        <div><span class="posandtime"></span></div>
+                        <div class="post" id="content">
+                            <div class="postcontent"></div>
+                            <div></div>
+                            <div id="PostAnswer" style="padding-bottom: 15px;">
+                                <a class="goanswer">回复</a>
+                            </div>
+                        </div>
+                        <div id="ReplyList" class="comment">
+                            <div class="comm_title">
+                                <div class="l">0 个回复</div>
+                            </div>
+                            <ul class="comm_list" id="ulcommentlist">
+                                <div style=""></div>
+                            </ul>
+                            <div class="answer hide" id="divanswer"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="post" id="content">
-                    <div class="postcontent"></div>
-                    <div></div>
-                    <div id="PostAnswer" style="padding-bottom: 15px;">
-                        <a class="goanswer">回复</a>
-                    </div>
-                </div>
-                <div id="ReplyList" class="comment">
-                    <div class="comm_title">
-                        <div class="l">0 个回复</div>
-                    </div>
-                    <ul class="comm_list" id="ulcommentlist">
-                        <div style=""></div>
-                    </ul>
-                    <div class="answer hide" id="divanswer"></div>
                 </div>
             </div>
         </div>
     </div>
-
-
+    <script>
+        var config = {
+            version: "v=1.0.200902"
+        };
+    </script>
+    <script src="/mlib/pwa/sw-registration.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.0/dist/jquery.min.js"></script>
     <script>
-        (window.jQuery || document.write("<script src='https:\/\/cdn.jsdelivr.net\/npm\/jquery@3.4.0\/dist\/jquery.min.js'><\/script>"));
+        (window.jQuery || document.write(
+            "<script src='https://cdn.jsdelivr.net/npm/jquery@3.4.0/dist/jquery.min.js'><\/script>"));
     </script>
-    <script src="/jquery/jquery.cookie.min.js"></script>
-    <script>
-        (window.jQuery && window.jQuery.fn && window.jQuery.fn.cookie || document.write(
-            "\u003Cscript src=\u0022/jquery/jquery.cookie.min.js\u0022\u003E\u003C\/script\u003E"));
-    </script>
-    <script src="/jquery/jquery.lazyload.min.js"></script>
-    <script>
-        (window.jQuery && window.jQuery.fn && window.jQuery.fn.lazyload || document.write(
-            "\u003Cscript src=\u0022/jquery/jquery.lazyload.min.js\u0022\u003E\u003C\/script\u003E"
-        ));
-    </script>
-    <script src="/lib/site.js"></script>
+    <script src="/mlib/common/common.min.js"></script>
+    <script src="/mlib/common/swiper.min.js"></script>
+    <script src="/mlib/common/user-menu.min.js"></script>
+    <!--<script src="/mlib/common/lazyload-cfg.min.js"></script>
+    <script src="/mlib/common/ua-set.min.js"></script>
+    <script src="/mlib/common/share-sdk.min.js"></script>
+    <script src="/mlib/common/emoji.min.js"></script>
+    <script src="/mlib/layer/layer.min.js"></script>-->
+    <script src="/mlib/index.min.js"></script>
+
     <script src="/utils/highlight.js-10.1.2/highlight.pack.js"></script>
     <script src="/lib/discussion.js"></script>
 
