@@ -20,6 +20,22 @@ export default {
     url: api_uploadPicture,
     method: 'post'
   },
+  uploadPictureToDiscuss: {
+    url: api_uploadPictureToDiscuss,
+    method: 'post'
+  },
+  uploadPictureToShare: {
+    url: api_uploadPictureToShare,
+    method: 'post'
+  },
+  uploadPictureToPerson: {
+    url: api_uploadPictureToPerson,
+    method: 'post'
+  },
+  uploadPictureToFeedback: {
+    url: api_uploadPictureToFeedback,
+    method: 'post'
+  },
   submitQue: {
     url: api_submitQue,
     method: 'post'
