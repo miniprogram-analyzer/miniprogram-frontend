@@ -355,7 +355,73 @@ body.night .post_page .wrap .related_post h4 {
   font-size: 16px;
 }
 
-.postcontent a,.u_comment a{color:#F4204E;border-bottom:solid 1px #F4204E;display:inline-block;text-decoration:none;word-wrap:break-word;word-break:break-all;}.u_comment a.ruser{color:#333;text-decoration:none;border-bottom:0}body.night .u_comment a.ruser{color:#ccc}.postcontent a:hover,.u_comment a:hover{text-decoration:none}.t_info .fl,.u_info .fl{padding:7px 5px 5px 5px;overflow:hidden;float:initial!important}.level{float:left;clear:both;width:60px;text-align:center;font-size:10px}.level span{background-color:#f1ecec;border-radius:3px;padding:1px 3px}body.night .level span{background-color:#505050;}.fl img{margin-right:10px}.font-color-yellow{color:#eca500}.font-color-orange{color:#ff7e00}.font-color-orangered{color:#fb4e01}.font-color-red{color:#d22222}.font-color-purple{color:#9b0080}.font-color-lyonsblue{color:#3e007b}.font-color-blue{color:#0f3193}.font-color-skyblue{color:#0091ea}.font-color-darkcyan{color:#255965}.font-color-aqua{color:#00968b}.font-color-darkgreen{color:#548b30}.font-color-green{color:#379e28}.comm_list blockquote,.postcontent blockquote{padding:6px 45px;border-color:#c0c6cc;background-color:#f8f8fa;position:relative;margin:30px 0;border-left:4px solid #c0c6cc}body.night .comm_list blockquote,body.night .postcontent blockquote{border-color:#666;background-color:#303030;border-left:4px solid #666}.comm_list blockquote:before,.postcontent blockquote:before{display:block;width:16px;height:14px;background:url(/img/blockquote.png) no-repeat 0 0;content:'';position:absolute;top:20px;left:20px}.comm_list blockquote:after,.postcontent blockquote:after{display:block;width:16px;height:14px;background:url(/img/blockquote.png) no-repeat -16px 0;content:'';position:absolute;right:20px;bottom:20px}.postcontent ul{list-style:none!important;margin:0;padding:0}.postcontent li{margin:0;padding:0;list-style:none}.postcontent ul li p::before{content:"●";color:#F4204E;padding-right:8px}.postcontent ul li p{padding-left:5px}.postcontent p.desc_text{color:#ccc!important;font-size:12px!important;padding-bottom:0!important;padding-top:0!important;line-height:19px!important}body.night .postcontent p.desc_text{color:#888!important}.postcontent img{max-width:600px;border-radius:9px}.goanswer:hover{color:#f0f0f0;background-color:#EF5F51}.goanswer{float:right;margin-right:15px;font-size:12px;cursor:pointer;color:#fff;background-color:#FF6F61;padding:8px;margin:8px;border-radius:8px;}body.night .goanswer{color:#ededed;background-color:#0F4C81;}body.night .goanswer:hover{background-color:#1F5C91;}
+.postcontent a:hover,.u_comment a:hover{color:#FF6F61}.postcontent a,.u_comment a{color:#F4204E;display:inline-block;text-decoration:underline;word-wrap:break-word;word-break:break-all;}.u_comment a.ruser{color:#333;text-decoration:none;border-bottom:0}body.night .u_comment a.ruser{color:#ccc}.postcontent a:hover,.u_comment a:hover{text-decoration:none}.t_info .fl,.u_info .fl{padding:7px 5px 5px 5px;overflow:hidden;float:initial!important}.level{float:left;clear:both;width:60px;text-align:center;font-size:10px}.level span{background-color:#f1ecec;border-radius:3px;padding:1px 3px}body.night .level span{background-color:#505050;}.fl img{margin-right:10px}.font-color-yellow{color:#eca500}.font-color-orange{color:#ff7e00}.font-color-orangered{color:#fb4e01}.font-color-red{color:#d22222}.font-color-purple{color:#9b0080}.font-color-lyonsblue{color:#3e007b}.font-color-blue{color:#0f3193}.font-color-skyblue{color:#0091ea}.font-color-darkcyan{color:#255965}.font-color-aqua{color:#00968b}.font-color-darkgreen{color:#548b30}.font-color-green{color:#379e28}.comm_list blockquote,.postcontent blockquote{padding:6px 45px;border-color:#c0c6cc;background-color:#f8f8fa;position:relative;margin:30px 0;border-left:4px solid #c0c6cc}body.night .comm_list blockquote,body.night .postcontent blockquote{border-color:#666;background-color:#303030;border-left:4px solid #666}.comm_list blockquote:before,.postcontent blockquote:before{display:block;width:16px;height:14px;background:url(/img/blockquote.png) no-repeat 0 0;content:'';position:absolute;top:20px;left:20px}.comm_list blockquote:after,.postcontent blockquote:after{display:block;width:16px;height:14px;background:url(/img/blockquote.png) no-repeat -16px 0;content:'';position:absolute;right:20px;bottom:20px}.postcontent ul{list-style:none!important;margin:0;padding:0}.postcontent li{margin:0;padding:0;list-style:none}.postcontent ul li p::before{content:"●";color:#F4204E;padding-right:8px}.postcontent ul li p{padding-left:5px}.postcontent p.desc_text{color:#ccc!important;font-size:12px!important;padding-bottom:0!important;padding-top:0!important;line-height:19px!important}body.night .postcontent p.desc_text{color:#888!important}.postcontent img{max-width:600px;border-radius:9px}.goanswer:hover{color:#f0f0f0;background-color:#EF5F51}.goanswer{font-size:16px;cursor:pointer;color:#fff;background-color:#FF6F61;padding:8px;margin:8px;border-radius:8px;}body.night .goanswer{color:#ededed;background-color:#0F4C81;}body.night .goanswer:hover{background-color:#1F5C91;}
+
+#PostAnswer {
+  text-align: right;
+}
+
+.like {
+  font-size: 16px;
+  cursor: pointer;
+  color: #fff;
+  background-color: #FF6F61;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.like:hover {
+  color: #f0f0f0;
+  background-color: #EF5F51
+}
+
+.like>* {
+  display: inline-block;
+}
+
+.like .like-on {
+  background-image: url(/img/like_on.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: all .2s linear;
+}
+
+.like .like-off {
+  background-image: url(/img/like_off.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: all .2s linear;
+}
+
+.like #icon {
+  width: 16px;
+}
+
+body.night .like {
+  color: #ededed;
+  background-color: #0F4C81;
+}
+
+body.night .like:hover {
+  background-color: #1F5C91;
+}
+
+.like #num {
+  width: 48px;
+}
+
+a.like:hover #num {
+  display: none;
+}
+
+.like #desc {
+  display: none;
+}
+
+a.like:hover #desc {
+  display: inline-block;
+  width: 48px;
+}
 
 @media screen and (min-width:1520px) {
   .thread{width:980px}.sub_nav{width:920px}.main .post_page{width:980px}.post_page .wrap .post p img,canvas{max-width:800px}.thread .title .t_info span{max-width:600px}

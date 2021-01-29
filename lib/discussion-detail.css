@@ -1,0 +1,11 @@
+.Skeleton {
+    display: inline-block;
+    vertical-align: middle;
+    width: 96px;
+}
+
+.Skeleton-block {
+    display: block;
+    width: initial;
+    height: 30px;
+}

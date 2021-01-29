@@ -12,3 +12,185 @@
   line-height: normal;
 }
 .content{padding:0}
+.post_page .wrap .title{margin:0 20px}
+.post_page .wrap .post{padding:30px 20px 30px 60px}
+
+@media(prefers-color-scheme:dark) {
+  html:not(.light) div.t_head {
+    background-color: #666666;
+    background-image: url(/img/user_black.png);
+    transition: all .2s ease-in-out;
+  }
+
+  html:not(.light) .sub_nav {
+    background: #000
+  }
+
+  html:not(.light) .post_page .wrap {
+    background: #000;
+  }
+
+  html:not(.light) .post_page .wrap .t_title h1 {
+    color: #ccc;
+  }
+
+  html:not(.light) .post_page .wrap .post p {
+    color: #bbb;
+  }
+
+  html:not(.light) .post_page .wrap .related_post h4 {
+    border-bottom: 1px dotted #333;
+    color: #ccc;
+  }
+
+  html:not(.light) .u_comment a.ruser {
+    color: #ccc
+  }
+
+  html:not(.light) .level span {
+    background-color: #505050;
+  }
+
+  html:not(.light) .comm_list blockquote,
+  html:not(.light) .postcontent blockquote {
+    border-color: #666;
+    background-color: #303030;
+    border-left: 4px solid #666
+  }
+
+  html:not(.light) .postcontent p.desc_text {
+    color: #888 !important
+  }
+
+  html:not(.light) .goanswer {
+    color: #ededed;
+    background-color: #0F4C81;
+  }
+
+  html:not(.light) .goanswer:hover {
+    background-color: #1F5C91;
+  }
+
+  html:not(.light) .like {
+    color: #ededed;
+    background-color: #0F4C81;
+  }
+  
+  html:not(.light) .like:hover {
+    background-color: #1F5C91;
+  }
+
+  html:not(.light) .hljs {
+    background-color: #444 !important
+  }
+
+  html:not(.light) .comment .comm_title {
+    background: #303030
+  }
+
+  html:not(.light) .comment ul.comm_list li.commt_entry {
+    border-bottom: 1px solid #777
+  }
+
+  html:not(.light) table thead {
+    background-color: #303030
+  }
+
+  html:not(.light) table td,
+  html:not(.light) table th {
+    border: 1px solid #404040
+  }
+
+  html:not(.light) a {
+    color: #ccc
+  }
+}
+
+html.dark:not(.light) div.t_head {
+  background-color: #666666;
+  background-image: url(/img/user_black.png);
+  transition: all .2s ease-in-out;
+}
+
+html.dark:not(.light) .sub_nav {
+  background: #000
+}
+
+html.dark:not(.light) .post_page .wrap {
+  background: #000;
+}
+
+html.dark:not(.light) .post_page .wrap .t_title h1 {
+  color: #ccc;
+}
+
+html.dark:not(.light) .post_page .wrap .post p {
+  color: #bbb;
+}
+
+html.dark:not(.light) .post_page .wrap .related_post h4 {
+  border-bottom: 1px dotted #333;
+  color: #ccc;
+}
+
+html.dark:not(.light) .u_comment a.ruser {
+  color: #ccc
+}
+
+html.dark:not(.light) .level span {
+  background-color: #505050;
+}
+
+html.dark:not(.light) .comm_list blockquote,
+html.dark:not(.light) .postcontent blockquote {
+  border-color: #666;
+  background-color: #303030;
+  border-left: 4px solid #666
+}
+
+html.dark:not(.light) .postcontent p.desc_text {
+  color: #888 !important
+}
+
+html.dark:not(.light) .goanswer {
+  color: #ededed;
+  background-color: #0F4C81;
+}
+
+html.dark:not(.light) .goanswer:hover {
+  background-color: #1F5C91;
+}
+
+html.dark:not(.light) .like {
+  color: #ededed;
+  background-color: #0F4C81;
+}
+
+html.dark:not(.light) .like:hover {
+  background-color: #1F5C91;
+}
+
+html.dark:not(.light) .hljs {
+  background-color: #444 !important
+}
+
+html.dark:not(.light) .comment .comm_title {
+  background: #303030
+}
+
+html.dark:not(.light) .comment ul.comm_list li.commt_entry {
+  border-bottom: 1px solid #777
+}
+
+html.dark:not(.light) table thead {
+  background-color: #303030
+}
+
+html.dark:not(.light) table td,
+html.dark:not(.light) table th {
+  border: 1px solid #404040
+}
+
+html.dark:not(.light) a {
+  color: #ccc
+}

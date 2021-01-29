@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>讨论 - 代码分析平台</title>
+  <title>讨论 - 试剑亭·代码分析平台</title>
   <meta name="theme-color" content="#fff" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -28,6 +28,7 @@
   <link rel="stylesheet" type="text/css" href="/utils/highlight.js-10.1.2/highlight-simditor.css">
 
   <link href="/lib/discussion.css" rel="stylesheet" type="text/css" />
+  <link href="/lib/discussion-detail.css" rel="stylesheet" type="text/css" />
   <script src="/lib/api_url.js"></script>
 
   <script type="text/javascript" src="/utils/simditor/assets/scripts/mobilecheck.js"></script>
@@ -91,9 +92,6 @@
     </div>
     <div class="content">
       <div class="main">
-        <div class="sub_nav">
-          <a href="/answering">讨论区</a> &nbsp;&gt;&nbsp;
-        </div>
         <div class="post_page">
           <div class="wrap">
             <div class="t_title">
@@ -118,6 +116,11 @@
               <div class="postcontent"></div>
               <div></div>
               <div id="PostAnswer" style="padding-bottom: 15px;">
+                <a class="like">
+                    <span id="icon" class="like-on">&nbsp;</span>
+                    <span id="num">0</span>
+                    <span id="desc">点赞</span>
+                </a>
                 <a class="goanswer">回复</a>
               </div>
             </div>

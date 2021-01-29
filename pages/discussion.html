@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>讨论 - 代码分析平台</title>
+    <title>讨论 - 试剑亭·代码分析平台</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
     <meta name="description" />
@@ -28,7 +28,8 @@
     <link href="/lib/site.min.css" rel="stylesheet" type="text/css" />
     <link href="/lib/index.min.css" rel="stylesheet" type="text/css" />
     <link href="/lib/discussion.css" rel="stylesheet" type="text/css" />
-    <link href="/lib/discussion-dektop.css" rel="stylesheet" type="text/css" />
+    <link href="/lib/discussion-desktop.css" rel="stylesheet" type="text/css" />
+    <link href="/lib/discussion-detail.css" rel="stylesheet" type="text/css" />
     <link href="/lib/navis.css" rel="stylesheet" type="text/css" />
     <script src="/lib/api_url.js"></script>
 
@@ -53,7 +54,7 @@
                     </div>
                     <div class="post_page">
                         <div class="wrap">
-                            <div class="t_title"><h1></h1></div>
+                            <div class="t_title"><h1>[<div class="Skeleton Skeleton--text">&nbsp;</div>] <div class="Skeleton Skeleton--text" style="width:200px">&nbsp;</div></h1></div>
                             <div id="PostTitle" class="title">
                                 <div class="postimg">
                                     <a><div class="t_head"></div></a>
@@ -71,6 +72,11 @@
                                 <div class="postcontent"></div>
                                 <div></div>
                                 <div id="PostAnswer" style="padding-bottom: 15px;">
+                                    <a class="like">
+                                        <span id="icon" class="like-on">&nbsp;</span>
+                                        <span id="num">0</span>
+                                        <span id="desc">点赞</span>
+                                    </a>
                                     <a class="goanswer">回复</a>
                                 </div>
                             </div>
