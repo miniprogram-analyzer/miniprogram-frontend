@@ -1,6 +1,10 @@
+.content * {
+  transition: none;
+}
+
 .postcontent h1{font-size:1.8em}.postcontent h2{font-size:1.4em}.postcontent h3{font-size:1.17em}.postcontent h4,.postcontent h5,.postcontent h6{font-size:1em}
 .postcontent h1,.postcontent h2,.postcontent h3,.postcontent h4,.postcontent h5,.postcontent h6{margin-top:1em;margin-bottom:.6em;font-weight:300;line-height:1.1}
 .postcontent p{text-align:justify}
 .Skeleton--text{height:30px}
 .post_page .wrap .post{padding:0 30px 30px}
-.hljs{width:90%}code{padding:8px}
+.hljs{width:90%}

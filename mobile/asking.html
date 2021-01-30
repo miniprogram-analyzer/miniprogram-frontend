@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>讨论 - 试剑亭·代码分析平台</title>
+  <title>试剑亭·代码分析平台</title>
   <meta name="theme-color" content="#fff" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,26 +15,24 @@
   <link rel="icon" href="https://m.ithome.com/favicon.ico" mce_href="https://m.ithome.com/favicon.ico"
         type="image/x-icon">-->
 
+  <link href="/lib/asking.css" rel="stylesheet" type="text/css" />
+  <script src="/lib/api_url.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+  <script src="https://cdn.bootcss.com/element-ui/2.14.1/index.js"></script>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/element-ui/2.14.1/theme-chalk/index.css">
+
   <link media="all" rel="stylesheet" type="text/css" href="/utils/simditor/assets/styles/app.css" />
   <link media="all" rel="stylesheet" type="text/css" href="/utils/simditor/assets/styles/simditor.css" />
   <link media="all" rel="stylesheet" type="text/css"
-    href="/utils/simditor/assets/extensions/checklist/styles/simditor-checklist.css" />
+      href="/utils/simditor/assets/extensions/checklist/styles/simditor-checklist.css" />
   <link media="all" rel="stylesheet" type="text/css"
-    href="/utils/simditor/assets/extensions/emoji/styles/simditor-emoji.css" />
+      href="/utils/simditor/assets/extensions/emoji/styles/simditor-emoji.css" />
   <link media="all" rel="stylesheet" type="text/css"
-    href="/utils/simditor/assets/extensions/fullscreen/styles/simditor-fullscreen.css" />
+      href="/utils/simditor/assets/extensions/fullscreen/styles/simditor-fullscreen.css" />
   <link media="all" rel="stylesheet" type="text/css"
-    href="/utils/simditor/assets/extensions/html/styles/simditor-html.css" />
+      href="/utils/simditor/assets/extensions/html/styles/simditor-html.css" />
   <link rel="stylesheet" type="text/css" href="/utils/highlight.js-10.1.2/highlight-simditor.css">
-
-  <link href="/lib/discussion.css" rel="stylesheet" type="text/css" />
-  <link href="/lib/discussion-detail.css" rel="stylesheet" type="text/css" />
-  <script src="/lib/api_url.js"></script>
-
-  <script>
-    var para = window.location.search;
-    const discussion_id = parseInt(para.split("?id=")[1]);
-  </script>
 
   <link rel="stylesheet" type="text/css" href="/mlib/common/common.min.css">
   <!--<link rel="manifest" href="https://m.ithome.com/json/manifest.json?v=1.0.200902" type="application/manifest+json">-->
@@ -44,7 +42,7 @@
   <link rel="stylesheet" type="text/css" href="/mlib/common_user-menu.min.css">
   <link rel="stylesheet" type="text/css" href="/mlib/index.min.css">
   <link rel="stylesheet" type="text/css" href="/mlib/content.css">
-  <link href="/mlib/discussion.css" rel="stylesheet" type="text/css" />
+  <link href="/mlib/asking.css" rel="stylesheet" type="text/css" />
   <link media="all" rel="stylesheet" type="text/css" href="/utils/simditor/assets/styles/simditor-mobile.css" />
   <link rel="stylesheet" type="text/css" href="/utils/highlight.js-10.1.2/highlight-simditor-mobile.css">
   <script src="/mlib/common/common-head.min.js"></script>
@@ -60,6 +58,7 @@
         break;
     }
   </script>
+
   <div class="index-box"><a id="page-data" class="hide" name="mao-top" href="###" data-tag="answering"
       data-news-tag=""></a>
     <div class="head" onselectstart="return false">
@@ -92,51 +91,44 @@
       </div>
     </div>
     <div class="content">
-      <div class="main">
-        <div class="post_page">
-          <div class="wrap">
-            <div class="t_title">
-              <h1></h1>
-            </div>
-            <div id="PostTitle" class="title">
-              <div class="postimg">
-                <a>
-                  <div class="t_head"></div>
-                </a>
-                <div class="level" id="owner-identity"><span></span></div>
-              </div>
-              <div class="t_info">
-                <div class="fl">
-                  <a class="nickname postauthor"></a>
-                  <span class="mf">发帖人</span>
-                </div>
-                <div><span class="posandtime"></span></div>
-              </div>
-            </div>
-            <div class="post" id="content">
-              <div class="postcontent"></div>
-              <div></div>
-              <div id="PostAnswer" style="padding: 15px 0;">
-                <a class="like">
-                    <span id="icon" class="like-on">&nbsp;</span>
-                    <span id="num">0</span>
-                    <span id="desc">点赞</span>
-                </a>
-                <a class="goanswer">回复</a>
-              </div>
-            </div>
-            <div id="ReplyList" class="comment">
-              <div class="comm_title">
-                <div class="l">0 个回复</div>
-              </div>
-              <ul class="comm_list" id="ulcommentlist">
-                <div style=""></div>
-              </ul>
-              <div class="answer hide" id="divanswer"></div>
-            </div>
-          </div>
-        </div>
+      <div id="warning-tip">
+        <template>
+          <el-alert :title="tip_value" :type="tip_type" center show-icon @close="closeTip">
+          </el-alert>
+        </template>
       </div>
+      <div id="Qinfo">
+        <template>
+          <div id="vm">
+            <el-form :model="ruleForm" :rules="rules" label-width="100px" class="demo-ruleForm" style="margin:16px;width:calc(100% - 65px)">
+              <!-- 问题简述 -->
+              <el-form-item label="问题描述" prop="question">
+                <el-input v-model="ruleForm.question" placeholder="说说你遇到的问题" minlength="3" maxlength="40"
+                  show-word-limit />
+              </el-form-item>
+
+              <!-- 问题分类，必填 -->
+              <el-form-item label="问题分类" prop="classify">
+                <el-select v-model="ruleForm.classify" clearable filterable default-first-option
+                  placeholder="在什么方面遇到了问题？" style="width:100%">
+                  <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+                </el-select>
+              </el-form-item>
+
+              <el-form-item label="详细信息" prop="detail">
+                <el-input type="textarea" v-model="ruleForm.detail" style="display: none">
+                </el-input>
+              </el-form-item>
+
+            </el-form>
+          </div>
+        </template>
+      </div>
+
+      <section id="simditor-richtext">
+        <textarea id="txt-content" style="display:none" data-autosave="editor-content" required></textarea>
+      </section>
+      <div id="submit"></div>
     </div>
   </div>
   <script>
@@ -160,9 +152,6 @@
     <script src="/mlib/layer/layer.min.js"></script>-->
   <script src="/mlib/index.min.js"></script>
 
-  <script src="/utils/highlight.js-10.1.2/highlight.pack.js"></script>
-  <script src="/lib/discussion.js"></script>
-
   <script type="text/javascript" src="/utils/simditor/assets/scripts/module.js"></script>
   <script type="text/javascript" src="/utils/simditor/assets/scripts/uploader.js"></script>
   <script type="text/javascript" src="/utils/simditor/assets/scripts/hotkeys.js"></script>
@@ -176,6 +165,11 @@
   <script type="text/javascript" src="/utils/simditor/assets/extensions/html/lib/simditor-html.js"></script>
   <script type="text/javascript" src="/utils/simditor/assets/extensions/mark/lib/simditor-mark.js"></script>
   <script type="text/javascript" src="/utils/simditor/assets/extensions/simditor-undo.js"></script>
+  <script type="text/javascript" src="/utils/highlight.js-10.1.2/highlight.pack.js"></script>
+
+  <script type="text/javascript" src="/lib/asking.js"></script>
+
+  <script type="text/javascript" src="/lib/simditor_loading.js"></script>
 </body>
 
 </html>

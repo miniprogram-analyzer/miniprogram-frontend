@@ -12,28 +12,11 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <!--<link rel="apple-touch-icon" href="//www.ithome.com/img/t.png" />
-    <link rel="icon" href="https://m.ithome.com/favicon.ico" mce_href="https://m.ithome.com/favicon.ico"
+  <link rel="icon" href="https://m.ithome.com/favicon.ico" mce_href="https://m.ithome.com/favicon.ico"
         type="image/x-icon">-->
-
-  <link href="/lib/discussion.css" rel="stylesheet" type="text/css" />
-
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
-  <script src="https://cdn.bootcss.com/element-ui/2.14.1/index.js"></script>
-  <link rel="stylesheet" href="https://cdn.bootcss.com/element-ui/2.14.1/theme-chalk/index.css">
-
-  <!--<script src="/vue/vue.js"></script>
-  <script src="/vue/element.js"></script>
-  <link href="/vue/element.css" rel="stylesheet" type="text/css" />-->
-
-  <script src="/lib/api_url.js"></script>
-
-  <script src="/vue/axios.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="/utils/highlight.js-10.1.2/highlight-simditor.css">
   
-  <script>
-    var para = window.location.search;
-    const problem_id = parseInt(para.split("?id=")[1]);
-  </script>
+  <link href="/lib/exercising.css" rel="stylesheet" type="text/css" />
+  <script src="/lib/api_url.js"></script>
 
   <link rel="stylesheet" type="text/css" href="/mlib/common/common.min.css">
   <!--<link rel="manifest" href="https://m.ithome.com/json/manifest.json?v=1.0.200902" type="application/manifest+json">-->
@@ -43,10 +26,7 @@
   <link rel="stylesheet" type="text/css" href="/mlib/common_user-menu.min.css">
   <link rel="stylesheet" type="text/css" href="/mlib/index.min.css">
   <link rel="stylesheet" type="text/css" href="/mlib/content.css">
-  <link href="/mlib/discussion.css" rel="stylesheet" type="text/css" />
-  <link href="/mlib/problem.css" rel="stylesheet" type="text/css" />
-  <link media="all" rel="stylesheet" type="text/css" href="/utils/simditor/assets/styles/simditor-mobile.css" />
-  <link rel="stylesheet" type="text/css" href="/utils/highlight.js-10.1.2/highlight-simditor-mobile.css">
+  <link href="/mlib/exercising.css" rel="stylesheet" type="text/css" />
   <script src="/mlib/common/common-head.min.js"></script>
 </head>
 
@@ -92,22 +72,7 @@
       </div>
     </div>
     <div class="content">
-      <div class="main">
-        <div class="post_page" id="Pcontent">
-          <template>
-            <div class="wrap">
-              <div class="t_title">
-                <h1>{{title}}</h1>
-              </div>
-              <div class="post" id="content">
-                <div class="postcontent">
-                  <div v-html="detail"></div>
-                </div>
-              </div>
-            </div>
-          </template>
-        </div>
-      </div>
+      <table class="data-table" id="problems-list"></table>
     </div>
   </div>
 
@@ -132,8 +97,7 @@
     <script src="/mlib/layer/layer.min.js"></script>-->
   <script src="/mlib/index.min.js"></script>
 
-  <script src="/utils/highlight.js-10.1.2/highlight.pack.js"></script>
-  <script type="module" src="/lib/problem.js"></script>
+  <script src="/lib/exercising.js"></script>
 
 </body>
 

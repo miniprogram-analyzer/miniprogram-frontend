@@ -1,0 +1,64 @@
+@media(prefers-color-scheme:dark) {html:not(.light) .simditor-toolbar{background:#202020}
+  html:not(.light) .simditor .simditor-toolbar > ul > li > .toolbar-item{color:#ededed;}
+  html:not(.light) .simditor .simditor-toolbar .toolbar-menu{background:#202020}
+  html:not(.light) .simditor .simditor-toolbar .toolbar-menu ul > li .menu-item{color:#bbb}
+  html:not(.light) .simditor .simditor-toolbar .toolbar-menu ul > li .menu-item.menu-item-h1,
+  html:not(.light) .simditor .simditor-toolbar .toolbar-menu ul > li .menu-item.menu-item-h2,
+  html:not(.light) .simditor .simditor-toolbar .toolbar-menu ul > li .menu-item.menu-item-h3,
+  html:not(.light) .simditor .simditor-toolbar .toolbar-menu ul > li .menu-item.menu-item-h4,
+  html:not(.light) .simditor .simditor-toolbar .toolbar-menu ul > li .menu-item.menu-item-h5{color:#ccc}
+  html:not(.light) .simditor .simditor-toolbar .toolbar-menu ul > li .menu-item:hover{background:#303030}
+  html:not(.light) .simditor .simditor-toolbar > ul > li.menu-on .toolbar-item{background: #202020}
+  html:not(.light) .simditor .simditor-toolbar > ul > li > .toolbar-item.active{background:#404040}
+  html:not(.light) .simditor .simditor-body{color:#ccc;background:#202020}
+  html:not(.light) .simditor .simditor-body h1,html:not(.light) .simditor .simditor-body h2,html:not(.light) .simditor .simditor-body h3,
+  html:not(.light) .simditor .simditor-body h4,html:not(.light) .simditor .simditor-body h5,html:not(.light) .simditor .simditor-body h6,
+  html:not(.light) .editor-style h1,html:not(.light) .editor-style h2,html:not(.light) .editor-style h3,html:not(.light) .editor-style h4,html:not(.light) .editor-style h5,html:not(.light) .editor-style h6 {color:#fff}
+  html:not(.light) .simditor .simditor-body p,html:not(.light) .simditor .simditor-body div,html:not(.light) .editor-style p,html:not(.light) .editor-style div {color:#ccc}
+  html:not(.light) .simditor .simditor-body blockquote,html:not(.light) .editor-style blockquote{border-left:6px solid #555}
+  html:not(.light) .simditor .simditor-body code,html:not(.light) .editor-style code{background:#404040}
+  html:not(.light) .simditor .simditor-body pre, .editor-style pre{background:#303030}
+  html:not(.light) .simditor .simditor-body hr,html:not(.light) .editor-style hr{border-top: 1px solid #404040}
+  html:not(.light) .simditor .simditor-body table thead,html:not(.light) .editor-style table thead{background-color: #303030}
+  html:not(.light) .simditor .simditor-body table td,html:not(.light) .simditor .simditor-body table th,html:not(.light) .editor-style table td,html:not(.light) .editor-style table th{border:1px solid #404040}
+  html:not(.light) .simditor .simditor-body table td.active,html:not(.light) .simditor .simditor-body table th.active,html:not(.light) .editor-style table td.active,html:not(.light) .editor-style table th.active{background-color:#808080}
+  html:not(.light) .simditor .simditor-popover,html:not(.light) .simditor .simditor-popover .settings-field{background:#303030}
+  html:not(.light) .simditor .simditor-popover .settings-field select,html:not(.light) .simditor .simditor-popover .settings-field option,html:not(.light) .simditor .simditor-wrapper > textarea{color:#ccc;background:#202020}
+}
+
+
+html.dark:not(.light) .simditor-toolbar{background:#202020}
+html.dark:not(.light) .simditor .simditor-toolbar > ul > li > .toolbar-item{color:#ededed;}
+html.dark:not(.light) .simditor .simditor-toolbar .toolbar-menu{background:#202020}
+html.dark:not(.light) .simditor .simditor-toolbar .toolbar-menu ul > li .menu-item{color:#bbb}
+html.dark:not(.light) .simditor .simditor-toolbar .toolbar-menu ul > li .menu-item.menu-item-h1,
+html.dark:not(.light) .simditor .simditor-toolbar .toolbar-menu ul > li .menu-item.menu-item-h2,
+html.dark:not(.light) .simditor .simditor-toolbar .toolbar-menu ul > li .menu-item.menu-item-h3,
+html.dark:not(.light) .simditor .simditor-toolbar .toolbar-menu ul > li .menu-item.menu-item-h4,
+html.dark:not(.light) .simditor .simditor-toolbar .toolbar-menu ul > li .menu-item.menu-item-h5{color:#ccc}
+html.dark:not(.light) .simditor .simditor-toolbar .toolbar-menu ul > li .menu-item:hover{background:#303030}
+html.dark:not(.light) .simditor .simditor-toolbar > ul > li.menu-on .toolbar-item{background: #202020}
+html.dark:not(.light) .simditor .simditor-toolbar > ul > li > .toolbar-item.active{background:#404040}
+html.dark:not(.light) .simditor .simditor-body{color:#ccc;background:#202020}
+html.dark:not(.light) .simditor .simditor-body h1,html.dark:not(.light) .simditor .simditor-body h2,html.dark:not(.light) .simditor .simditor-body h3,
+html.dark:not(.light) .simditor .simditor-body h4,html.dark:not(.light) .simditor .simditor-body h5,html.dark:not(.light) .simditor .simditor-body h6,
+html.dark:not(.light) .editor-style h1,html.dark:not(.light) .editor-style h2,html.dark:not(.light) .editor-style h3,html.dark:not(.light) .editor-style h4,html.dark:not(.light) .editor-style h5,html.dark:not(.light) .editor-style h6 {color:#fff}
+html.dark:not(.light) .simditor .simditor-body p,html.dark:not(.light) .simditor .simditor-body div,html.dark:not(.light) .editor-style p,html.dark:not(.light) .editor-style div {color:#ccc}
+html.dark:not(.light) .simditor .simditor-body blockquote,html.dark:not(.light) .editor-style blockquote{border-left:6px solid #555}
+html.dark:not(.light) .simditor .simditor-body code,html.dark:not(.light) .editor-style code{background:#404040}
+html.dark:not(.light) .simditor .simditor-body pre, .editor-style pre{background:#303030}
+html.dark:not(.light) .simditor .simditor-body hr,html.dark:not(.light) .editor-style hr{border-top: 1px solid #404040}
+html.dark:not(.light) .simditor .simditor-body table thead,html.dark:not(.light) .editor-style table thead{background-color: #303030}
+html.dark:not(.light) .simditor .simditor-body table td,html.dark:not(.light) .simditor .simditor-body table th,html.dark:not(.light) .editor-style table td,html.dark:not(.light) .editor-style table th{border:1px solid #404040}
+html.dark:not(.light) .simditor .simditor-body table td.active,html.dark:not(.light) .simditor .simditor-body table th.active,html.dark:not(.light) .editor-style table td.active,html.dark:not(.light) .editor-style table th.active{background-color:#808080}
+html.dark:not(.light) .simditor .simditor-popover,html.dark:not(.light) .simditor .simditor-popover .settings-field{background:#303030}
+html.dark:not(.light) .simditor .simditor-popover .settings-field select,html.dark:not(.light) .simditor .simditor-popover .settings-field option,html.dark:not(.light) .simditor .simditor-wrapper > textarea{color:#ccc;background:#202020}
+
+
+.simditor .simditor-body {
+  min-height: calc(100vh - 450px);
+}
+
+.content{
+  padding: 0;
+}

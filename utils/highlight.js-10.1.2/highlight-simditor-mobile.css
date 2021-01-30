@@ -1,0 +1,143 @@
+/* Dark Mode */
+
+@media(prefers-color-scheme:dark) {
+  /* Tomorrow Comment */
+  html:not(.light) .hljs-comment,
+  html:not(.light) .hljs-quote {
+    color: #999999;
+  }
+  
+  /* Tomorrow Red */
+  html:not(.light) .hljs-variable,
+  html:not(.light) .hljs-template-variable,
+  html:not(.light) .hljs-tag,
+  html:not(.light) .hljs-name,
+  html:not(.light) .hljs-selector-id,
+  html:not(.light) .hljs-selector-class,
+  html:not(.light) .hljs-regexp,
+  html:not(.light) .hljs-deletion {
+    color: #f2777a;
+  }
+  
+  /* Tomorrow Orange */
+  html:not(.light) .hljs-number,
+  html:not(.light) .hljs-built_in,
+  html:not(.light) .hljs-builtin-name,
+  html:not(.light) .hljs-literal,
+  html:not(.light) .hljs-type,
+  html:not(.light) .hljs-params,
+  html:not(.light) .hljs-meta,
+  html:not(.light) .hljs-link {
+    color: #f99157;
+  }
+  
+  /* Tomorrow Yellow */
+  html:not(.light) .hljs-attribute {
+    color: #ffcc66;
+  }
+  
+  /* Tomorrow Green */
+  html:not(.light) .hljs-string,
+  html:not(.light) .hljs-symbol,
+  html:not(.light) .hljs-bullet,
+  html:not(.light) .hljs-addition {
+    color: #99cc99;
+  }
+  
+  /* Tomorrow Blue */
+  html:not(.light) .hljs-title,
+  html:not(.light) .hljs-section {
+    color: #6699cc;
+  }
+  
+  /* Tomorrow Purple */
+  html:not(.light) .hljs-keyword,
+  html:not(.light) .hljs-selector-tag {
+    color: #cc99cc;
+  }
+  
+  html:not(.light) .hljs {
+    display: block;
+    overflow-x: auto;
+    background: #2d2d2d;
+    color: #cccccc;
+  }
+  
+  html:not(.light) .hljs-emphasis {
+    font-style: italic;
+  }
+  
+  html:not(.light) .hljs-strong {
+    font-weight: bold;
+  }
+}
+
+/* Tomorrow Comment */
+html.dark:not(.light) .hljs-comment,
+html.dark:not(.light) .hljs-quote {
+  color: #999999;
+}
+
+/* Tomorrow Red */
+html.dark:not(.light) .hljs-variable,
+html.dark:not(.light) .hljs-template-variable,
+html.dark:not(.light) .hljs-tag,
+html.dark:not(.light) .hljs-name,
+html.dark:not(.light) .hljs-selector-id,
+html.dark:not(.light) .hljs-selector-class,
+html.dark:not(.light) .hljs-regexp,
+html.dark:not(.light) .hljs-deletion {
+  color: #f2777a;
+}
+
+/* Tomorrow Orange */
+html.dark:not(.light) .hljs-number,
+html.dark:not(.light) .hljs-built_in,
+html.dark:not(.light) .hljs-builtin-name,
+html.dark:not(.light) .hljs-literal,
+html.dark:not(.light) .hljs-type,
+html.dark:not(.light) .hljs-params,
+html.dark:not(.light) .hljs-meta,
+html.dark:not(.light) .hljs-link {
+  color: #f99157;
+}
+
+/* Tomorrow Yellow */
+html.dark:not(.light) .hljs-attribute {
+  color: #ffcc66;
+}
+
+/* Tomorrow Green */
+html.dark:not(.light) .hljs-string,
+html.dark:not(.light) .hljs-symbol,
+html.dark:not(.light) .hljs-bullet,
+html.dark:not(.light) .hljs-addition {
+  color: #99cc99;
+}
+
+/* Tomorrow Blue */
+html.dark:not(.light) .hljs-title,
+html.dark:not(.light) .hljs-section {
+  color: #6699cc;
+}
+
+/* Tomorrow Purple */
+html.dark:not(.light) .hljs-keyword,
+html.dark:not(.light) .hljs-selector-tag {
+  color: #cc99cc;
+}
+
+html.dark:not(.light) .hljs {
+  display: block;
+  overflow-x: auto;
+  background: #2d2d2d;
+  color: #cccccc;
+}
+
+html.dark:not(.light) .hljs-emphasis {
+  font-style: italic;
+}
+
+html.dark:not(.light) .hljs-strong {
+  font-weight: bold;
+}

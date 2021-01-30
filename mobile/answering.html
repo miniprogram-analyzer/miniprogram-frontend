@@ -15,26 +15,9 @@
   <link rel="icon" href="https://m.ithome.com/favicon.ico" mce_href="https://m.ithome.com/favicon.ico"
         type="image/x-icon">-->
 
-  <link media="all" rel="stylesheet" type="text/css" href="/utils/simditor/assets/styles/app.css" />
-  <link media="all" rel="stylesheet" type="text/css" href="/utils/simditor/assets/styles/simditor.css" />
-  <link media="all" rel="stylesheet" type="text/css"
-    href="/utils/simditor/assets/extensions/checklist/styles/simditor-checklist.css" />
-  <link media="all" rel="stylesheet" type="text/css"
-    href="/utils/simditor/assets/extensions/emoji/styles/simditor-emoji.css" />
-  <link media="all" rel="stylesheet" type="text/css"
-    href="/utils/simditor/assets/extensions/fullscreen/styles/simditor-fullscreen.css" />
-  <link media="all" rel="stylesheet" type="text/css"
-    href="/utils/simditor/assets/extensions/html/styles/simditor-html.css" />
-  <link rel="stylesheet" type="text/css" href="/utils/highlight.js-10.1.2/highlight-simditor.css">
-
   <link href="/lib/discussion.css" rel="stylesheet" type="text/css" />
-  <link href="/lib/discussion-detail.css" rel="stylesheet" type="text/css" />
+  <link href="/lib/answering.css" rel="stylesheet" type="text/css" />
   <script src="/lib/api_url.js"></script>
-
-  <script>
-    var para = window.location.search;
-    const discussion_id = parseInt(para.split("?id=")[1]);
-  </script>
 
   <link rel="stylesheet" type="text/css" href="/mlib/common/common.min.css">
   <!--<link rel="manifest" href="https://m.ithome.com/json/manifest.json?v=1.0.200902" type="application/manifest+json">-->
@@ -45,9 +28,9 @@
   <link rel="stylesheet" type="text/css" href="/mlib/index.min.css">
   <link rel="stylesheet" type="text/css" href="/mlib/content.css">
   <link href="/mlib/discussion.css" rel="stylesheet" type="text/css" />
-  <link media="all" rel="stylesheet" type="text/css" href="/utils/simditor/assets/styles/simditor-mobile.css" />
-  <link rel="stylesheet" type="text/css" href="/utils/highlight.js-10.1.2/highlight-simditor-mobile.css">
   <script src="/mlib/common/common-head.min.js"></script>
+
+  <link href="/mlib/answering.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -92,47 +75,51 @@
       </div>
     </div>
     <div class="content">
-      <div class="main">
-        <div class="post_page">
-          <div class="wrap">
-            <div class="t_title">
-              <h1></h1>
+      <div id="nav">
+        <a class="classify_item current" id="classify-all" href="#all">全部</a>
+        <a class="classify_item" id="classify-wxml" href="#wxml">页面设计</a>
+        <a class="classify_item" id="classify-wxss" href="#wxss">样式美化</a>
+        <a class="classify_item" id="classify-js" href="#js">功能逻辑</a>
+        <a class="classify_item" id="classify-framework" href="#framework">文件结构</a>
+        <a class="classify_item" id="classify-component" href="#component">组件</a>
+        <a class="classify_item" id="classify-api" href="#api">API调用</a>
+        <a class="classify_item" id="classify-wxcloud" href="#wxcloud">云开发</a>
+        <a class="classify_item" id="classify-other" href="#other">其他</a>
+        <a class="new-post">发表新帖</a>
+      </div>
+      <div id="con">
+        <div class="div_con">
+          <div class="main">
+            <div class="thread">
+              <div class="t_list">
+                <ul>
+                  <li>
+                    <div class="postimg"><a>
+                        <div class="t_head"></div>
+                      </a></div>
+                    <div class="title">
+                      <div class="t_title">
+                        <span class="t_cate">
+                          <img src="/img/toppest.svg" width="45" />
+                        </span>
+                        <a target="_blank" href="#replace" class="t_cate_title">
+                          讨论前必读！
+                        </a>
+                      </div>
+                      <div class="t_info">
+                        <span><a>Admin</a></span>
+                        <span>2020/10/26发表</span>
+                        <span>测试</span>
+                        <span class="numb"><img src="/img/like.svg" />0</span>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div id="PostTitle" class="title">
-              <div class="postimg">
-                <a>
-                  <div class="t_head"></div>
-                </a>
-                <div class="level" id="owner-identity"><span></span></div>
+            <div class="thread" style="margin-top:15px">
+              <div class="t_list" id="discussion_content">
               </div>
-              <div class="t_info">
-                <div class="fl">
-                  <a class="nickname postauthor"></a>
-                  <span class="mf">发帖人</span>
-                </div>
-                <div><span class="posandtime"></span></div>
-              </div>
-            </div>
-            <div class="post" id="content">
-              <div class="postcontent"></div>
-              <div></div>
-              <div id="PostAnswer" style="padding: 15px 0;">
-                <a class="like">
-                    <span id="icon" class="like-on">&nbsp;</span>
-                    <span id="num">0</span>
-                    <span id="desc">点赞</span>
-                </a>
-                <a class="goanswer">回复</a>
-              </div>
-            </div>
-            <div id="ReplyList" class="comment">
-              <div class="comm_title">
-                <div class="l">0 个回复</div>
-              </div>
-              <ul class="comm_list" id="ulcommentlist">
-                <div style=""></div>
-              </ul>
-              <div class="answer hide" id="divanswer"></div>
             </div>
           </div>
         </div>
@@ -160,22 +147,8 @@
     <script src="/mlib/layer/layer.min.js"></script>-->
   <script src="/mlib/index.min.js"></script>
 
-  <script src="/utils/highlight.js-10.1.2/highlight.pack.js"></script>
-  <script src="/lib/discussion.js"></script>
-
-  <script type="text/javascript" src="/utils/simditor/assets/scripts/module.js"></script>
-  <script type="text/javascript" src="/utils/simditor/assets/scripts/uploader.js"></script>
-  <script type="text/javascript" src="/utils/simditor/assets/scripts/hotkeys.js"></script>
-  <script type="text/javascript" src="/utils/simditor/assets/scripts/simditor.js"></script>
-  <script type="text/javascript" src="/utils/simditor/assets/extensions/autosave/lib/simditor-autosave.js"></script>
-  <script type="text/javascript" src="/utils/simditor/assets/extensions/checklist/lib/simditor-checklist.js"></script>
-  <script type="text/javascript" src="/utils/simditor/assets/extensions/dropzone/lib/simditor-dropzone.js"></script>
-  <script type="text/javascript" src="/utils/simditor/assets/extensions/emoji/lib/simditor-emoji.js"></script>
-  <script type="text/javascript" src="/utils/simditor/assets/extensions/fullscreen/lib/simditor-fullscreen.js"></script>
-  <script type="text/javascript" src="/utils/simditor/assets/extensions/html/lib/beautify-html.js"></script>
-  <script type="text/javascript" src="/utils/simditor/assets/extensions/html/lib/simditor-html.js"></script>
-  <script type="text/javascript" src="/utils/simditor/assets/extensions/mark/lib/simditor-mark.js"></script>
-  <script type="text/javascript" src="/utils/simditor/assets/extensions/simditor-undo.js"></script>
+  <script src="/lib/answering.js"></script>
+  <script src="/mlib/answering.js"></script>
 </body>
 
 </html>

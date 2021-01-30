@@ -4499,7 +4499,7 @@ ImageButton = (function(superClass) {
           alert(msg);
           img_path = _this.defaultImage;
         } else {
-          img_path = result.msg.replace(/..\/..\/..\/..\/var\/www\/html/,"");
+          img_path = result.msg.replace(/..\/..\//,"");
           //img_path = result.file_path;
         }
         _this.loadImage($img, img_path, function() {
@@ -4518,7 +4518,7 @@ ImageButton = (function(superClass) {
         });
         if (_this.popover.active) {
           _this.popover.srcEl.prop('disabled', false);
-          return _this.popover.srcEl.val(result.msg.replace(/..\/..\/..\/..\/var\/www\/html/,""));
+          return _this.popover.srcEl.val(result.msg.replace(/..\/..\//,""));
           //return _this.popover.srcEl.val(result.file_path);
         }
       };

@@ -1,0 +1,105 @@
+.content * {
+  transition: none;
+}
+
+.thread {
+  width: 100%;
+  box-shadow: none;
+  border-left: none;
+  border-right: none;
+}
+
+.thread .title .t_info {
+  color: #b3b3b3;
+  font-size: 12px;
+  margin-top: 7px;
+  padding-bottom: 0px;
+}
+
+.thread .title .t_detail {
+  margin-top: 0;
+  padding-bottom: 6px;
+}
+
+#nav{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  font-size: 16px;
+  padding: 20px 15px;
+}
+
+#nav a{
+  display: inline-block;
+  padding: 0 16px;
+  margin: 8px 8px;
+  line-height: 32px;
+  border-radius: 16px;
+  border: 1px solid #ccc;
+}
+
+#nav a.current{
+  background:#FF6F61;
+  color:#fff;
+  transition: all .3s ease;
+}
+
+#nav a.new-post{
+  background:#0175be;
+  color:#fff;
+  border: 1px solid #0175be !important;
+}
+
+@media screen and (min-width:1520px) {
+  .thread{width:100%}
+}
+
+@media screen and (max-width:1320px) {
+  .thread{width:100%}
+}
+
+@media(prefers-color-scheme:dark) {
+  html:not(.light) a {
+    color: #fff
+  }
+
+  html:not(.light) .thread {
+    background: #000;
+    border-top: 1px solid #303030;
+    border-bottom: 1px solid #303030;
+  }
+
+  html:not(.light) .thread .t_list li:hover {
+    background-color: #222
+  }
+
+  html:not(.light) .thread .title:not(:last-child) {
+    border-bottom: 1px solid #777
+  }
+
+  html:not(.light) #nav a{
+    border: 1px solid #404040;
+  }
+}
+
+html.dark:not(.light) a {
+  color: #fff
+}
+
+html.dark:not(.light) .thread {
+  background: #000;
+  border-top: 1px solid #303030;
+  border-bottom: 1px solid #303030;
+}
+
+html.dark:not(.light) .thread .t_list li:hover {
+  background-color: #222
+}
+
+html.dark:not(.light) .thread .title:not(:last-child) {
+  border-bottom: 1px solid #777
+}
+
+html.dark:not(.light) #nav a{
+  border: 1px solid #404040;
+}

@@ -1,3 +1,7 @@
+.content * {
+  transition: none;
+}
+
 .sub_nav{width:initial;box-sizing:border-box}.main .post_page{width:initial}
 .post_page .wrap .t_title h1{width:calc(100% - 50px)}
 
@@ -11,7 +15,7 @@
 .tab .tab-box .hd-tab .swiper-container {
   line-height: normal;
 }
-.content{padding:0}
+.content{padding:0}code{padding:8px}
 .post_page .wrap .title{margin:0 20px}
 .post_page .wrap .post{padding:30px 20px 30px 60px}
 
