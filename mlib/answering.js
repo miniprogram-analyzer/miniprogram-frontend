@@ -1,9 +1,9 @@
 $('body').on("click", ".new-post",
     function () {
         if (window.localStorage.getItem("id") !== null && window.localStorage.getItem("id") !== undefined) {
-            window.location.href = "/mobile/asking.html"
+            window.location.href = "/m/asking"
         } else {
-            window.location.href = "/login?source=/mobile/asking.html" + (window.localStorage.getItem("LightDarkSet") === "dark" ? "&night=1" : window.localStorage.getItem("LightDarkSet") === "light" ? "&night=0" : "")
+            window.location.href = "/login?source=/m/asking" + (window.localStorage.getItem("LightDarkSet") === "dark" ? "&night=1" : window.localStorage.getItem("LightDarkSet") === "light" ? "&night=0" : "")
         }
     });
 

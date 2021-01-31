@@ -19,6 +19,15 @@
 .post_page .wrap .title{margin:0 20px}
 .post_page .wrap .post{padding:30px 20px 30px 60px}
 
+a.like:hover #num {
+  display: inline-block;
+}
+
+a.like:hover #desc {
+  display: none;
+  width: initial;
+}
+
 @media(prefers-color-scheme:dark) {
   html:not(.light) div.t_head {
     background-color: #666666;
