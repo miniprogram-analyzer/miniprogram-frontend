@@ -19,6 +19,7 @@
 .thread .title .t_detail {
   margin-top: 0;
   padding-bottom: 6px;
+  text-align: justify;
 }
 
 #nav{
@@ -49,6 +50,8 @@
   color:#fff;
   border: 1px solid #0175be !important;
 }
+
+.thread .t_list ul{padding:20px 0}.thread .t_list li{padding-right:16px}
 
 @media screen and (min-width:1520px) {
   .thread{width:100%}
