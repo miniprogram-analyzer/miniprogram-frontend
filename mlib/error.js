@@ -5,7 +5,7 @@ var interval = this.setInterval(function(){
     }
     else{
         clearInterval(interval);
-        //window.location.href = "/m";
+        window.location.href = "/m";
     }
 },1000)
 
