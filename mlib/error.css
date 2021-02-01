@@ -16,6 +16,7 @@ body {
 }
 
 .number {
+  padding-top: 8rem;
   background: #fff;
   position: relative;
   font: 900 30vmin 'Consolas';
