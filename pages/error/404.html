@@ -14,6 +14,11 @@
   <meta name="format-detection" content="telephone=no" />
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script>
+    if (navigator.userAgent.match(/(iPhone|iPod|Android|Windows Phone|baidu Transcoder|BlackBerry)/i)) {
+      window.location.replace("/m/404");
+    }
+  </script>
 
   <link href="/lib/site.min.css" rel="stylesheet" type="text/css" />
   <link href="/lib/index.min.css" rel="stylesheet" type="text/css" />
