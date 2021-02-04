@@ -308,6 +308,15 @@ body.night .bb #personal #avatar {
   transition: all .2s ease-in-out;
 }
 
+.bb #personal #avatar img {
+  background-color: #e6e6e6;
+  width: 100px;
+  height: 100px;
+}
+body.night .bb #personal #avatar img {
+  background-color: #666666;
+}
+
 .bb #personal #username {
   display: inline-block;
   width: 190px;
@@ -676,6 +685,10 @@ body.night .text-circle {
     width: 120px;
     height: 120px;
   }
+  .bb #personal #avatar img {
+    width: 120px;
+    height: 120px;
+  }
   .bb #personal #username {
     width: 230px;
   }
@@ -890,6 +903,10 @@ body.night .text-circle {
     width: 260px;
   }
   .bb #personal #avatar {
+    width: 85px;
+    height: 85px;
+  }
+  .bb #personal #avatar img {
     width: 85px;
     height: 85px;
   }

@@ -29,37 +29,37 @@
         <div>api接口测试</div>
         <p>uploadPictureToDiscuss</p>
         <form action="/dev/api/uploadPictureToDiscuss" method="post" enctype="multipart/form-data">
-            <input type="file" name="upload_file" accept="image/jpeg,image/png,image/gif" />
+            <input type="file" name="upload_file" accept="image/*" />
             <input type="hidden" name="id" value="2020999066" />
             <input type="submit" />
         </form>
         <p>uploadPictureToShare</p>
         <form action="/dev/api/uploadPictureToShare" method="post" enctype="multipart/form-data">
-            <input type="file" name="upload_file" accept="image/jpeg,image/png,image/gif" />
+            <input type="file" name="upload_file" accept="image/*" />
             <input type="hidden" name="id" value="2020999066" />
             <input type="submit" />
         </form>
         <p>uploadPictureToPerson</p>
         <form action="/dev/api/uploadPictureToPerson" method="post" enctype="multipart/form-data">
-            <input type="file" name="upload_file" accept="image/jpeg,image/png,image/gif" />
+            <input type="file" name="upload_file" accept="image/*" />
             <input type="hidden" name="id" value="2020999066" />
             <input type="submit" />
         </form>
         <p>uploadPictureToFeedback</p>
         <form action="/dev/api/uploadPictureToFeedback" method="post" enctype="multipart/form-data">
-            <input type="file" name="upload_file" accept="image/jpeg,image/png,image/gif" />
+            <input type="file" name="upload_file" accept="image/*" />
             <input type="hidden" name="id" value="2020999066" />
             <input type="submit" />
         </form>
         <p>uploadFileForTest</p>
         <form action="/dev/api/uploadFileForTest" method="post" enctype="multipart/form-data">
-            <input type="file" name="upload_file" accept="application/zip" />
+            <input type="file" name="upload_file" accept=".zip,.rar,.7z" />
             <input type="hidden" name="id" value="2020999066" />
             <input type="submit" />
         </form>
         <p>uploadFileForExam</p>
         <form action="/dev/api/uploadFileForExam" method="post" enctype="multipart/form-data">
-            <input type="file" name="upload_file" accept="application/zip" />
+            <input type="file" name="upload_file" accept=".zip;.rar;.7z" />
             <input type="hidden" name="id" value="2020999066" />
             <input type="submit" />
         </form>

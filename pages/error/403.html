@@ -3,7 +3,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>未找到当前页面 - 试剑亭·代码分析平台</title>
+  <title>当前路径不可访问 - 试剑亭·代码分析平台</title>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
   <meta name="description" />
@@ -16,7 +16,7 @@
     content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script>
     if (navigator.userAgent.match(/(iPhone|iPod|Android|Windows Phone|baidu Transcoder|BlackBerry)/i)) {
-      window.location.replace("/m/404");
+      window.location.replace("/m/403");
     }
   </script>
 
@@ -31,6 +31,9 @@
 <body>
   <script src="/lib/darkmode.js"></script>
   <script src="/lib/navigation.js"></script>
+  <script>
+    const error_code = 403;
+  </script>
   
   <link rel="stylesheet" href="/lib/error.css">
   <section class="wrapper">
@@ -63,7 +66,7 @@
       </div>
       <div class="text">
         <article>
-          <p>未找到当前页面<br>5秒后返回首页</p>
+          <p>当前路径不可访问<br>5秒后返回首页</p>
           <button>返回首页</button>
         </article>
       </div>

@@ -166,7 +166,7 @@ body.night div.t_head {
   transition: all .2s ease-in-out;
 }
 
-a.new_post{position:absolute;top:-1px;right:-1px;display:block;width:100px;height:45px;background:#0175be;color:#fff;text-align:center;text-decoration:none;font-size:15px;line-height:45px;cursor:pointer;border:1px solid #ccc;box-sizing:content-box;transition:all .2s ease}a.new_post:hover{background-position:0 center}a.new_post:active{background-position:0 bottom}body.night a.new_post{border:1px solid #404040}
+a.new_post{position:absolute;top:-1px;right:-1px;display:block;width:100px;height:45px;background:#0F4C81;color:#fff;text-align:center;text-decoration:none;font-size:15px;line-height:45px;cursor:pointer;border:1px solid #ccc;box-sizing:content-box;transition:all .2s ease}a.new_post:hover{background-position:0 center;background-color: #1F5C91;transition:none}a.new_post:active{background-position:0 bottom}body.night a.new_post{border:1px solid #404040}
 
 .sub_nav{padding:0 30px;height:44px;background:#fff;line-height:41px;font-size:14px;word-break: break-all;width:780px;}
 body.night .sub_nav{background:#242424}
@@ -439,7 +439,8 @@ pre{font-size:14px;line-height:24px}.hljs{background-color: #eee!important;borde
 
 .comment{clear:both}.comment .comm_title{padding:0 20px;height:42px;background:#f7f7f7;line-height:42px}body.night .comment .comm_title{background:#303030}.comment ul.comm_list{padding:5px 30px 5px 30px;font-size:16px}.comment ul.comm_list li.commt_entry{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #ededed}body.night .comment ul.comm_list li.commt_entry{border-bottom:1px solid #777}.comment .answer{margin:0 20px 30px;padding:20px 0}
 
-a.answer_inpt{float:right;display:block;margin-top:10px;width:90px;height:40px;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;background:#F4204E;color:#fff;text-align:center;text-decoration:none;line-height:40px}a.answer_inpt:hover{background-color:#FF6F61}a.answer_inpt:active{background-color:#F4204E}
+a.answer_inpt{float:right;display:block;margin-top:10px;width:90px;height:40px;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;background:#FF6F61;color:#fff;text-align:center;text-decoration:none;line-height:40px}a.answer_inpt:hover{background-color:#EF5F51}a.answer_inpt:active{background-color:#FF6F61}
+body.night a.answer_inpt{color: #ededed;background-color: #0F4C81;}body.night a.answer_inpt:hover{background-color: #1F5C91;}
 
 .hide {margin:0!important;padding:0!important}
 

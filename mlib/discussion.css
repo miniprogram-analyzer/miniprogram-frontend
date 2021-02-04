@@ -110,6 +110,15 @@ a.like:hover #num{display:inline-block}a.like:hover #desc{display:none;width:ini
   html:not(.light) a {
     color: #ccc
   }
+
+  html:not(.light) a.answer_inpt {
+    color: #ededed;
+    background-color: #0F4C81;
+  }
+
+  html:not(.light) a.answer_inpt:hover {
+    background-color: #1F5C91;
+  }
 }
 
 html.dark:not(.light) div.t_head {
@@ -199,4 +208,13 @@ html.dark:not(.light) table th {
 
 html.dark:not(.light) a {
   color: #ccc
+}
+
+html.dark:not(.light) a.answer_inpt {
+  color: #ededed;
+  background-color: #0F4C81;
+}
+
+html.dark:not(.light) a.answer_inpt:hover {
+  background-color: #1F5C91;
 }

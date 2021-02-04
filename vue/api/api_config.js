@@ -16,10 +16,10 @@ export default {
     url: api_updateList,
     method: 'post'
   },
-  uploadPicture: {
+  /*uploadPicture: {
     url: api_uploadPicture,
     method: 'post'
-  },
+  },*/
   uploadPictureToDiscuss: {
     url: api_uploadPictureToDiscuss,
     method: 'post'
@@ -88,8 +88,16 @@ export default {
     url: api_printList,
     method: 'post'
   },
-  uploadFile: {
+  /*uploadFile: {
     url: api_uploadFile,
+    method: 'post'
+  },*/
+  uploadFileForTest: {
+    url: api_uploadFileForTest,
+    method: 'post'
+  },
+  uploadFileForExam: {
+    url: api_uploadFileForExam,
     method: 'post'
   },
   printProblem: {

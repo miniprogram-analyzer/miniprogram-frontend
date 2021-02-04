@@ -1,0 +1,255 @@
+@import url("https://cdn.jsdelivr.net/gh/miniprogram-analyzer/miniprogram-frontend/utils/FontAwesomePro.min.css");
+
+.section .menu {
+  padding: .3125rem 0;
+  font-size: .875rem
+}
+
+.section .menu .icon {
+  font-size: 1rem;
+  display: inline-block;
+  margin-right: .3125rem;
+  line-height: 1.125rem;
+  vertical-align: top;
+}
+
+.hasjs .menu.collapsed {
+  display: none
+}
+
+.menu__item .menu {
+  padding: 0
+}
+
+.menu__link {
+  outline: 0;
+  text-align: left;
+  display: block;
+  width: 100%;
+  padding: .75rem .9375rem;
+  line-height: 1.125rem;
+  color: #555;
+  border-left: 3px solid transparent;
+  position: relative;
+}
+
+body.night .menu__link {color: #ddd;}
+
+.menu__link.highlight {
+  background: #fbeff3
+}
+
+.menu__link.expandable:after {
+  font-family: vj4icon;
+  font-size: 1rem;
+  content: "\EA19";
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  line-height: 1;
+  margin-top: -.5rem;
+  transition: transform .2s cubic-bezier(.215, .61, .355, 1);
+  opacity: .85
+}
+
+a.menu__link.disabled,
+button.menu__link.disabled {
+  cursor: default;
+  opacity: .5
+}
+
+a.menu__link:hover,
+button.menu__link:hover {
+  text-decoration: none
+}
+
+a.menu__link:not(.disabled):hover,
+button.menu__link:not(.disabled):hover {
+  color: #555;
+  background: #fff;
+  border-color: #4690d0
+}
+
+body.night a.menu__link:not(.disabled):hover,
+body.night button.menu__link:not(.disabled):hover {
+  color: #ddd;
+  background: #242424;
+}
+
+a.menu__link.active,
+a.menu__link.active:hover,
+button.menu__link.active,
+button.menu__link.active:hover {
+  border-color: #d11845;
+  background: #ed5f82;
+  color: #fff
+}
+
+.menu__item .menu .menu__link {
+  padding-left: 1.5625rem
+}
+
+.menu__seperator {
+  height: 1px;
+  border-top: 1px solid #ddd;
+  margin: .3125rem 0
+}
+
+body.night .menu__seperator {
+  border-top: 1px solid #404040;
+}
+
+.section {
+  width: 300px;
+  background: #f4f4f4;
+  box-shadow: 0 0.375rem 1.375rem rgba(200,200,200,.5);
+  box-sizing: border-box;
+  transition: all .2s ease;
+  margin-bottom: 2rem;
+}
+
+body.night .section {
+  background: #303030;
+  box-shadow: 0 0.375rem 1.375rem rgba(100, 100, 100, .5);
+}
+
+.section ol{
+  list-style: none;
+}
+
+.section * {
+  box-sizing: border-box;
+}
+
+.section__header {
+  padding: 1.5625rem .9375rem 0;
+  position: relative
+}
+
+.section__body {
+  padding: .7em .9375rem
+}
+
+.section__body.no-padding {
+  padding: 0 !important
+}
+
+.section>.section__body:first-child {
+  padding-top: 1.5625rem
+}
+
+.section>.section__body:last-child {
+  padding-bottom: 1.5625rem
+}
+
+.section__footer {
+  border-top: 1px solid #e4e4e4;
+  padding: .9375rem
+}
+
+.section__title {
+  color: #646464
+}
+
+body.night .section__title {
+  color: #b0b0b0
+}
+
+.section__header .section__title {
+  line-height: 35px
+}
+
+h1.section__title {
+  font-size: 1.4rem;
+  margin: 0;
+  font-weight: 300;
+}
+
+h2.section__title {
+  font-size: 1.2rem;
+  margin-bottom: .625rem
+}
+
+h3.section__title {
+  font-size: 1rem;
+  margin-bottom: .5rem
+}
+
+.section__header .section__title {
+  margin-bottom: 0
+}
+
+.section__tools {
+  position: absolute;
+  right: .9375rem;
+  top: 1.5625rem;
+  font-size: .875rem
+}
+
+.section__tools .tool-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 0;
+  background: none;
+  color: #aaa;
+  margin-left: .3125rem;
+  padding: 0 .3125rem;
+  line-height: 1.5rem;
+  font-size: .8125rem;
+  outline: 0
+}
+
+.section__tools .tool-button:hover {
+  color: #444
+}
+
+.section__list__item {
+  padding: 1.5625rem .9375rem;
+  border-bottom: 1px solid #e4e4e4
+}
+
+.section__list__item:last-child {
+  border-bottom: 0
+}
+
+dl.large.horizontal {
+  overflow:hidden;
+  font-size: 14px;
+  margin: 0;
+  color: #666;
+}
+
+body.night dl.large.horizontal {
+  overflow:hidden;
+  font-size: 14px;
+  margin: 0;
+  color: #aaa;
+}
+
+.typo dl,.typo form,.typo hr,.typo p,.typo table {
+  padding-top: .3em;
+  padding-bottom: .3em
+}
+
+dl.large.horizontal dt {
+  float: left;
+  width: 45%;
+  overflow: hidden;
+  clear: left;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
+  padding-right: .625rem
+}
+
+dl.large.horizontal dd {
+  float: left;
+  width: 54%
+}
+
+dl.large.horizontal dd,dl.large.horizontal dt {
+  line-height: 1.2rem;
+  margin: .3125rem 0
+}

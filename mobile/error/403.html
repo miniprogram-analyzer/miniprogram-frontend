@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>未找到当前页面 - 试剑亭·代码分析平台</title>
+  <title>当前路径不可访问 - 试剑亭·代码分析平台</title>
   <meta name="theme-color" content="#fff" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
         type="image/x-icon">-->
   <script>
     if (!navigator.userAgent.match(/(iPhone|iPod|Android|Windows Phone|baidu Transcoder|BlackBerry)/i)) {
-      window.location.replace("/404");
+      window.location.replace("/403");
     }
   </script>
 
@@ -37,7 +37,7 @@
 
 <body>
   <script>
-    const error_code = 404;
+    const error_code = 403;
   </script>
   <script>
     switch (window.localStorage.getItem("PageBsType")) {
@@ -80,8 +80,8 @@
       </div>
     </div>
     <div class="content">
-      <div class="number">404</div>
-      <div class="text">未找到当前页面<br>5秒后返回首页</div>
+      <div class="number">403</div>
+      <div class="text">当前路径不可访问<br>5秒后返回首页</div>
       <button>返回首页</button>
     </div>
   </div>
