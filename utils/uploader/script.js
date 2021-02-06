@@ -59,7 +59,7 @@ function load_uploader() { // Drop Images only
     formData.append("id", window.localStorage.getItem("user_id"));
     $.ajax({
       type: 'POST',
-      url: api_uploadFile,
+      url: api_analyze,
       contentType: false,
       processData: false,
       data: formData,
@@ -69,7 +69,7 @@ function load_uploader() { // Drop Images only
           startPercent($(list.find('li .progress')[num]), 99, 100, 50);
           setTimeout(function(){
             window.location.href = "/code_detail"
-          },500)
+          },1000)
         } else {
           alert(res.errorMsg || "网络异常，请稍后重试")
         }
