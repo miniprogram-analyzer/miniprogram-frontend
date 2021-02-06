@@ -13,20 +13,21 @@
   <meta http-equiv="expires" content="0">
   <meta name="format-detection" content="telephone=no" />
 
+  <!--<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+  <script src="https://cdn.bootcss.com/element-ui/2.14.1/index.js"></script>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/element-ui/2.14.1/theme-chalk/index.css">-->
+
+  <script src="/vue/vue.js"></script>
+  <script src="/vue/element.js"></script>
+  <link href="/vue/element.css" rel="stylesheet" type="text/css" />
+
   <link href="/lib/site.min.css" rel="stylesheet" type="text/css" />
   <link href="/lib/index.min.css" rel="stylesheet" type="text/css" />
   <link href="/lib/discussion.css" rel="stylesheet" type="text/css" />
   <link href="/lib/discussion-desktop.css" rel="stylesheet" type="text/css" />
+  <link href="/lib/exercising-bar.css" rel="stylesheet" type="text/css" />
   <link href="/lib/problem.css" rel="stylesheet" type="text/css" />
   <link href="/lib/navis.css" rel="stylesheet" type="text/css" />
-
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
-  <script src="https://cdn.bootcss.com/element-ui/2.14.1/index.js"></script>
-  <link rel="stylesheet" href="https://cdn.bootcss.com/element-ui/2.14.1/theme-chalk/index.css">
-
-  <!--<script src="/vue/vue.js"></script>
-  <script src="/vue/element.js"></script>
-  <link href="/vue/element.css" rel="stylesheet" type="text/css" />-->
 
   <script src="/lib/api_url.js"></script>
 
@@ -42,7 +43,7 @@
 <body>
   <script src="/lib/darkmode.js"></script>
   <script src="/lib/navigation.js"></script>
-  <script>const nav_id = 4;</script>
+  <script>const nav_id = 4;var vm;</script>
 
   <div class="bb" style="margin-top: 106px;">
     <div id="con">
@@ -53,18 +54,72 @@
           </div>
           <div class="post_page" id="Pcontent">
             <template>
-              <div class="wrap">
-                <div class="t_title">
-                  <h1>{{title}}</h1>
-                </div>
-                <div class="post" id="content">
-                  <div class="postcontent">
-                    <div v-html="detail"></div>
+              <div>
+                <div v-if="uploadTest" class="wrap">
+                  <div class="t_title">
+                    <h1>提交</h1>
                   </div>
+                  <el-collapse-transition>
+                    <el-upload class="upload-demo" ref="uploadFile" :auto-upload=false :action="uploadUrl"
+                      :data="formData" :before-remove="beforeRemove" :limit='1' :on-exceed="handleExceed"
+                      :on-success="successUpload" :file-list="fileList" accept="application/zip" style="padding: 20px; width: 50%;">
+                      <el-button slot="trigger">选取文件</el-button>
+                      <el-button @click="submitUpload" type="danger" style="margin-left: 16px;">提交</el-button>
+                      <div slot="tip" class="el-upload__tip" style="padding-left: 35px; line-height: 30px;">以压缩包形式上传！</div>
+                    </el-upload>
+                  </el-collapse-transition>
+                </div>
+                <div v-else class="wrap">
+                  <div class="t_title">
+                    <h1>{{title}}</h1>
+                  </div>
+                  <el-collapse-transition>
+                    <div class="post" id="content">
+                      <div class="postcontent">
+                        <div v-html="detail"></div>
+                      </div>
+                    </div>
+                  </el-collapse-transition>
                 </div>
               </div>
             </template>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar">
+      <div class="section side section--problem-sidebar">
+        <div>
+          <ol class="menu">
+            <li class="menu__item">
+              <a class="menu__link active" href="javascript:test_info();">
+                <span class="icon far fa-info-circle fa-fw"></span> 题目信息</a></li>
+            <li class="menu__item">
+              <a class="menu__link" href="javascript:test_upload();">
+                <span class="icon far fa-paper-plane fa-fw"></span> 递交</a></li>
+            <li class="menu__seperator"></li>
+            <li class="menu__item">
+              <a class="menu__link" href="javascript:;">
+                <span class="icon far fa-file-alt fa-fw"></span> 得分</a></li>
+            <li class="menu__item">
+              <a class="menu__link" href="javascript:;">
+                <span class="icon far fa-list-alt fa-fw"></span> 历史记录</a></li>
+          </ol>
+        </div>
+      </div>
+      <div class="section side blur">
+        <div class="section__header">
+          <h1 class="section__title">个人信息</h1>
+        </div>
+        <div class="section__body typo">
+          <dl class="large horizontal">
+            <dt>提交次数</dt>
+            <dd id="total-sum">0</dd>
+            <dt>通过次数</dt>
+            <dd id="ave-score">0</dd>
+            <dt>代码总量</dt>
+            <dd id="total-code">0</dd>
+          </dl>
         </div>
       </div>
     </div>
@@ -86,7 +141,8 @@
   <script src="/lib/popwin.js"></script>
   <script src="/lib/site.js"></script>
   <script src="/utils/highlight.js-10.1.2/highlight.pack.js"></script>
-  <script type="module" src="/lib/problem.js"></script>
+  <script type="module" src="/lib/problem_vue.js"></script>
+  <script src="/lib/problem.js"></script>
 
   <script src="/lib/footer.js"></script>
 </body>

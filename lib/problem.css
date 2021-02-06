@@ -4,3 +4,112 @@
 .Skeleton--text{height:30px}
 .post_page .wrap .post{padding:0 30px 30px}
 .hljs{width:70%}
+
+.wrap {
+  min-height: 350px;
+}
+
+.sidebar {
+  position: fixed;
+  right: 0;
+  top: 106px;
+  margin-right: calc(50vw - 600px);
+}
+
+.section {
+  background: #fff;
+}
+
+body.night .section {
+  background: #242424;
+}
+
+a.menu__link:not(.disabled):hover,
+button.menu__link:not(.disabled):hover {
+  background: #f1f1f1;
+}
+
+body.night a.menu__link:not(.disabled):hover,
+body.night button.menu__link:not(.disabled):hover {
+  background: #303030;
+}
+
+a.menu__link.active,
+a.menu__link.active:hover,
+button.menu__link.active,
+button.menu__link.active:hover {
+  border-color: #d11845;
+  background: #ed5f82;
+  color: #fff
+}
+
+body.night .el-button {
+  color: #fff;
+  border-color: #404040;
+  background: #1a1a1a;
+}
+
+body.night .el-button:focus,
+body.night .el-button:hover {
+  background: #303030;
+}
+
+.el-upload__tip {
+  font-size: 14px !important;
+}
+
+body.night .el-upload__tip{
+  color: #ccc;
+}
+
+.el-button--danger {
+  background-color: #F56C6C !important;
+  border-color: #F56C6C !important;
+}
+
+.el-button--danger:focus, .el-button--danger:hover {
+  background-color: #f78989 !important;
+  border-color: #f78989 !important;
+}
+
+.el-message,.el-notification {
+  top: 75px !important;
+}
+
+.el-upload-list__item-name{
+  line-height: 40px;
+}
+
+.el-icon-close {
+  top: 13px !important;
+}
+
+.el-upload-list__item-status-label {
+  top: 8px !important;
+}
+
+@media screen and (min-width:1520px) {
+  .sidebar {
+    margin-right: calc(50vw - 700px);
+  }
+}
+
+@media screen and (min-width:1000px) and (max-width:1320px) {
+  .sidebar {
+    margin-right: calc(50vw - 500px);
+  }
+}
+
+@media screen and (max-width:1000px) {
+  .sidebar {
+    margin-right: 0;
+    left: 733px;
+    right: auto;
+  }
+}
+
+@media screen and (max-width:1320px) {
+  .section {
+    width: 250px;
+  }
+}

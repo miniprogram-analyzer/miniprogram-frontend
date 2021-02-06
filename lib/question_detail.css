@@ -7,13 +7,6 @@
   width: 810px;
 }
 
-#content>div.loading {
-  background-image: url(/img/loading.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  height: calc(100vh - 200px);
-}
-
 #content>div>h1 {
   width: 300px;
   line-height: 54px;

@@ -25,7 +25,7 @@
 
     <div id="page" class="bb" style="margin-top: 106px;">
         <div id="content">
-            <div class="loading"></div>
+            <div class="el-loading-spinner2"><svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg><!----></div>
         </div>
         <div id="recommend">
 
@@ -108,7 +108,7 @@
         $('body').on("click",
             "#RetryGetQ",
             function () {
-                $("#content").html("<div class=\"loading\"></div>");
+                $("#content").html('<div class="el-loading-spinner2"><svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg><!----></div>');
                 getList();
             }
         );

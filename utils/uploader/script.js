@@ -53,24 +53,31 @@ function load_uploader() { // Drop Images only
   })
 
   var uploadHandler = function (file, num) {
+    $('#mask-loading').removeClass('hide')
     var formData = new FormData();
     formData.append("upload_file", file);
-    formData.append("id", window.localStorage.getItem("id"));
+    formData.append("id", window.localStorage.getItem("user_id"));
     $.ajax({
       type: 'POST',
-      url: api_uploadFileForExam,
+      url: api_uploadFile,
       contentType: false,
       processData: false,
       data: formData,
       success: function (res) {
         if (res.successFlag === "Y") {
+          window.localStorage.setItem("analysis_current",JSON.stringify(res.data))
           startPercent($(list.find('li .progress')[num]), 99, 100, 50);
+          setTimeout(function(){
+            window.location.href = "/code_detail"
+          },500)
         } else {
           alert(res.errorMsg || "网络异常，请稍后重试")
         }
+        $('#mask-loading').addClass('hide')
       },
       error: function (err) {
         alert(err.errorMsg || "网络异常，请稍后重试")
+        $('#mask-loading').addClass('hide')
       }
     })
   }

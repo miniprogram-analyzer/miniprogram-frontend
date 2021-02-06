@@ -1,6 +1,6 @@
 $('body').on("click", ".new-post",
     function () {
-        if (window.localStorage.getItem("id") !== null && window.localStorage.getItem("id") !== undefined) {
+        if (window.localStorage.getItem("user_id") !== null && window.localStorage.getItem("user_id") !== undefined) {
             window.location.href = "/m/asking"
         } else {
             window.location.href = "/login?source=/m/asking" + (window.localStorage.getItem("LightDarkSet") === "dark" ? "&night=1" : window.localStorage.getItem("LightDarkSet") === "light" ? "&night=0" : "")
