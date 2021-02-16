@@ -16,7 +16,7 @@
   border-bottom: 2px solid #F4204E;
 }
 
-#miniprogram-pages {
+#miniprogram-pages, #miniprogram-apis {
   font-size: 14px;
 }
 
@@ -57,13 +57,19 @@ body.night .data-table tr{
 
 body.night .data-table td:first-child{color: #aaa;}
 
+#miniprogram-apis td:last-child{
+  width: 60px;
+  text-align: right;
+  color: #666;
+}
+
 .data-table td:nth-child(2){
   max-width: 730px;
   overflow: hidden;
 }
 
 .data-table td {
-  padding: 8px 12px;
+  padding: 16px 12px;
 }
 
 .data-table a{

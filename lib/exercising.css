@@ -32,6 +32,18 @@ body.night .data-table tr{
   transition: all .2s ease;
 }
 
+.data-table tr:nth-child(2n){background:#f4f4f4;}
+body.night .data-table tr:nth-child(2n){background:#303030;}
+
+.data-table tbody tr:hover{
+  background-color: #F5F7FA;
+  cursor: pointer;
+}
+
+body.night .data-table tbody tr:hover{
+  background-color: #444;
+}
+
 .data-table td{
   width: 60px;
   text-align: center;
@@ -74,9 +86,6 @@ body.night .data-table td:nth-child(5){
 .data-table a{
   cursor: pointer;
 }
-
-.data-table tr:nth-child(2n){background:#f4f4f4;}
-body.night .data-table tr:nth-child(2n){background:#303030;}
 
 @media screen and (min-width:1520px) {
   .data-table{

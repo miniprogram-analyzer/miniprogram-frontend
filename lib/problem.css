@@ -72,10 +72,6 @@ body.night .el-upload__tip{
   border-color: #f78989 !important;
 }
 
-.el-message,.el-notification {
-  top: 75px !important;
-}
-
 .el-upload-list__item-name{
   line-height: 40px;
 }

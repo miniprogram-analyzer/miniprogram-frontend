@@ -119,5 +119,13 @@ export default {
   getProblem: {
     url: api_getProblem,
     method: 'post'
+  },
+  analyze: {
+    url: api_analyze,
+    method: 'post'
+  },
+  analyze_history: {
+    url: api_analyze_history,
+    method: 'get'
   }
 }
