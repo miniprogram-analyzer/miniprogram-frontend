@@ -46,7 +46,7 @@
   <script src="/lib/navigation.js"></script>
   <script>const nav_id = 4;var vm;</script>
 
-  <div class="bb" style="margin-top: 106px;">
+  <div class="bb" style="margin-top: 106px;" id="page">
     <div id="con">
       <div class="div_con">
         <div class="main">
@@ -56,9 +56,21 @@
           <div class="post_page" id="Pcontent">
             <template>
               <div>
-                <div v-if="uploadTest" class="wrap">
+                <div v-if="problem_choice===1" class="wrap">
                   <div class="t_title">
-                    <h1>提交</h1>
+                    <h1>{{title}}</h1>
+                  </div>
+                  <el-collapse-transition>
+                    <div class="post" id="content">
+                      <div class="postcontent">
+                        <div v-html="detail"></div>
+                      </div>
+                    </div>
+                  </el-collapse-transition>
+                </div>
+                <div v-if="problem_choice===2" class="wrap">
+                  <div class="t_title">
+                    <h1>{{title=="问题详情"?'提交':(title+' - 提交')}}</h1>
                   </div>
                   <el-collapse-transition>
                     <el-upload class="upload-demo" ref="uploadFile" :auto-upload=false :action="uploadUrl"
@@ -70,16 +82,11 @@
                     </el-upload>
                   </el-collapse-transition>
                 </div>
-                <div v-else class="wrap">
+                <div v-if="problem_choice===4" class="wrap">
                   <div class="t_title">
-                    <h1>{{title}}</h1>
+                    <h1>{{title=="问题详情"?'得分':(title+' - 得分')}}</h1>
                   </div>
                   <el-collapse-transition>
-                    <div class="post" id="content">
-                      <div class="postcontent">
-                        <div v-html="detail"></div>
-                      </div>
-                    </div>
                   </el-collapse-transition>
                 </div>
               </div>
@@ -100,7 +107,7 @@
                 <span class="icon far fa-paper-plane fa-fw"></span> 递交</a></li>
             <li class="menu__seperator"></li>
             <li class="menu__item">
-              <a class="menu__link" href="javascript:;">
+              <a class="menu__link" href="javascript:test_score();">
                 <span class="icon far fa-file-alt fa-fw"></span> 得分</a></li>
             <li class="menu__item">
               <a class="menu__link" href="javascript:;">

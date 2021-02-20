@@ -43,14 +43,14 @@ button.menu__link.active:hover {
   color: #fff
 }
 
-body.night .el-button {
+body.night .el-button--default {
   color: #fff;
   border-color: #404040;
   background: #1a1a1a;
 }
 
-body.night .el-button:focus,
-body.night .el-button:hover {
+body.night .el-button--default:focus,
+body.night .el-button--default:hover {
   background: #303030;
 }
 
@@ -60,16 +60,6 @@ body.night .el-button:hover {
 
 body.night .el-upload__tip{
   color: #ccc;
-}
-
-.el-button--danger {
-  background-color: #F56C6C !important;
-  border-color: #F56C6C !important;
-}
-
-.el-button--danger:focus, .el-button--danger:hover {
-  background-color: #f78989 !important;
-  border-color: #f78989 !important;
 }
 
 .el-upload-list__item-name{
