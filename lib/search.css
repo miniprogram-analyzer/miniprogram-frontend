@@ -32,6 +32,10 @@ div#search .el-table {
   color: var(--fg);
   background-color: transparent;
 }
+div#search .el-table thead {
+  color: var(--fg);
+  background-color: transparent;
+}
 div#search .el-table tr {
   background-color: transparent;
 }

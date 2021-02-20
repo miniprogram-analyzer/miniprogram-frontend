@@ -18,6 +18,7 @@ body.night {background-color:#111}
 .el-form-item__label, .el-input__inner, .el-select__input, .el-form-item__content{transition:all .2s ease;}
 body.night .el-form-item__label{color:#ccc}
 body.night .el-popper[x-placement^=bottom] .popper__arrow::after{border-bottom-color:#202020}
+body.night .el-input__inner{border-color:#404040}
 
 body.night .el-input__inner,
 body.night .el-input .el-input__count .el-input__count-inner,
