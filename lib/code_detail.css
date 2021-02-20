@@ -624,3 +624,14 @@ body.night #recommend>.bdr li:before {
 .blur {
   filter: blur(10px);
 }
+
+.empty {
+  text-align: center;
+  font-size: 24px;
+}
+
+.empty img{
+  width: 300px;
+  height: 300px;
+  padding: 100px;
+}
