@@ -127,5 +127,9 @@ export default {
   analyze_history: {
     url: api_analyze_history,
     method: 'get'
+  },
+  getListnum: {
+    url: api_getListnum,
+    method: 'get'
   }
 }
