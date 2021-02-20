@@ -14,9 +14,13 @@
   <meta name="format-detection" content="telephone=no" />
   <link href="/lib/site.min.css" rel="stylesheet" type="text/css" />
   <link href="/lib/index.min.css" rel="stylesheet" type="text/css" />
+
   <link href="/lib/discussion.css" rel="stylesheet" type="text/css" />
   <link href="/lib/discussion-desktop.css" rel="stylesheet" type="text/css" />
   <link href="/lib/answering.css" rel="stylesheet" type="text/css" />
+  
+  <link href="/utils/pagination/pagination.css" rel="stylesheet" type="text/css" />
+  <script src="/utils/pagination/pagination.js"></script>
   <script src="/lib/api_url.js"></script>
 </head>
 
@@ -27,7 +31,7 @@
     const nav_id = 3;
   </script>
 
-  <div class="bb" style="margin-top: 106px;">
+  <div class="bb" style="margin-top: 106px;" id="page">
     <div id="con">
       <div class="div_con">
         <div class="main">
@@ -81,53 +85,10 @@
             </div>
           </div>
           <div class="thread" style="margin-top:15px">
-            <div class="t_list" id="discussion_content">
-              
-              <!--<ul>
-                                <li>
-                                    <div class="postimg"><a><div class="t_head"></div></a></div>
-                                    <div class="title">
-                                        <div class="t_title">
-                                            <span class="t_cate">[iPhone]</span>
-                                            <a target="_blank" href="#replace" class="t_cate_title">
-                                                讨论前必读！
-                                            </a>
-                                            </div>
-                                        <div class="t_info">
-                                            <a>Admin</a>
-                                            <span>2020/10/26发表</span>
-                                            <span>测试</span>
-                                            <span class="numb"><img src="/img/like.svg" />0</span>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>-->
-            </div>
-            <!--<div class="page_nav">
-                            <span class="page_num">
-                                <!--<script type="text/javascript"
-                                    src="/WebResource.axd?d=n928DxjxzRk_1ZkW1oDbUBhs1xmpnzvICu66uJfeBtMl2C_AB0GpEGoylcNfozEjc9leZlqQ29CdCYRxRmM_37XUXJRfLdYxhtDTddVgGgh526z5TsC-n0AYUAygxCqz0&t=635827501227819993">
-                                </script>
-                                <div id="Pager" class="pagenew" ShowInputBox="Always"
-                                    style="font-size:12px;font-weight:normal;text-decoration:none;">
-                                    <div style="width:;float:left;"></div>
-                                    <div class="pagenew" style="float:left;">
-                                        <a disabled="disabled" style="margin-right:5px;"><</a>
-                                        <span class="current" style="margin-right:5px;">1</span>
-                                        <a href="/thread/2/" style="margin-right:5px;">2</a>
-                                        <a href="/thread/3/" style="margin-right:5px;">3</a>
-                                        <a href="/thread/4/" style="margin-right:5px;">4</a>
-                                        <a href="/thread/5/" style="margin-right:5px;">5</a>
-                                        <a href="/thread/6/" style="margin-right:5px;">6</a>
-                                        <a href="/thread/7/" style="margin-right:5px;">7</a>
-                                        <a href="/thread/8/" style="margin-right:5px;">...</a>
-                                        <a href="/thread/2/" style="margin-right:5px;">></a>&nbsp;&nbsp;
-                                        <input type="text" value="1" name="Pager_input" id="Pager_input" onkeydown="ANP_keydown(event,'Pager_btn');"onkeyup="ANP_keyup('Pager_input');" style="width:30px;" />
-                                        <input type="button" value="  " name="Pager" id="Pager_btn" onclick="if(ANP_checkInput('Pager_input',10645,'页索引超出范围！','页索引不是有效的数值！')){ANP_goToPage('Pager_input','page','/thread/1/','/thread/{page}/','',10645,false);};return false;" />
-                                    </div>
-                                </div>
-                            </span>
-                        </div>-->
+            <div class="t_list" id="discussion_content"></div>
+          </div>
+          <div class="pagination">
+            <div id="pagination"></div>
           </div>
         </div>
       </div>
