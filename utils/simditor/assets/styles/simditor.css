@@ -19,7 +19,8 @@
   transform: translate(0, 0);
 }
 
-body.night .simditor-toolbar{background:#202020}
+body.night .simditor {border-color: #404040;}
+body.night .simditor-toolbar{background:#202020;border-bottom-color:#404040}
 body.night .simditor .simditor-toolbar > ul > li > .toolbar-item{color:#ededed;}
 body.night .simditor .simditor-toolbar .toolbar-menu{background:#202020}
 body.night .simditor .simditor-toolbar .toolbar-menu ul > li .menu-item{color:#bbb}
