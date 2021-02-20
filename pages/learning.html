@@ -15,7 +15,6 @@
   <link href="/lib/site.min.css" rel="stylesheet" type="text/css" />
   <link href="/lib/index.min.css" rel="stylesheet" type="text/css" />
   <link href="/lib/navis.css" rel="stylesheet" type="text/css" />
-  <script src="/lib/api_url.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
   <script src="https://cdn.bootcss.com/element-ui/2.14.1/index.js"></script>
@@ -28,6 +27,7 @@
   <link href="/lib/search.css" rel="stylesheet" type="text/css" />
   <script src="/vue/axios.min.js"></script>
   <link href="/vue/directive/waves/waves.css" rel="stylesheet" type="text/css" />
+  <script src="/lib/api_url.js"></script>
 </head>
 
 <body>
@@ -37,7 +37,7 @@
     const nav_id = 2;
   </script>
 
-  <div class="bb" style="margin-top: 106px;">
+  <div class="bb" style="margin-top: 106px;" id="page">
     <div id="navis">
       <ul class="bar">
         <li data-id="1" id="b-1" class="sel"><a href="#buglist">常见问题</a></li>
@@ -133,12 +133,13 @@
               </span>
             </el-dialog>
             <!--  -->
-            <p v-if="unfindResult" style="font-size:14px;margin:16px">
-              找不到解答？
-              上
-              <el-link type="primary" href="/pages/asking.html">提问区</el-link>问问吧！
+            <p v-if="unfindResult" style="font-size:14px;margin:16px">找不到解答？上
+              <el-link type="primary" href="/asking" style="vertical-align: baseline;">提问区</el-link>
+              问问吧！
             </p>
-            <p style="font-size:14px;margin:16px">发现错误？想参与编辑？联系我们！</p>
+            <p style="font-size:14px;margin:16px">发现错误？想参与编辑？
+              <el-link type="primary" href="/feedback" style="vertical-align: baseline;">联系我们！</el-link>
+            </p>
           </div>
         </template>
       </div>
