@@ -20,11 +20,130 @@
   width: 178px;
   height: 178px;
   display: block;
+  transition: all .2s ease;
+}
+.avatar-uploader:hover .avatar {
+  filter: blur(10px);
+  opacity: 0.5;
 }
 .info {
   padding: 0 15px;
   color: #777;
 }
 
+.el-icon-edit.avatar-uploader-icon{
+  position: relative;
+  top:-178px;
+  opacity: 0;
+  color: #8c939d;
+  transition: all .2s ease;
+}
+
+.avatar-uploader:hover .el-icon-edit.avatar-uploader-icon {
+  color: #409EFF;
+  opacity: 1;
+}
+
 body.night .info{color:#aaa}
 body.night .el-form-item__label{color:#ccc}
+
+.el-menu-item [class^='fad fa-'] {
+  margin-right: 5px;
+  width: 24px;
+  text-align: center;
+  font-size: 18px;
+  vertical-align: middle
+}
+
+a#edit {
+  margin: 16.08px 0 0;
+  font-size: 16px;
+  line-height: 32px;
+}
+
+.el-form-item__content {
+  transition: all .1s linear;
+}
+
+body.night .el-menu {
+  border-right-color: #303030;
+  background-color: #242424;
+}
+body.night .el-menu-item {
+  color: #cfcecc;
+}
+body.night .el-menu-item.is-active{
+  color:#409EFF;
+}
+body.night .el-menu-item:focus,body.night .el-menu-item:hover {
+  background-color: #243040;
+}
+
+
+.el-form-item__label, .el-input__inner, .el-select__input, .el-form-item__content{transition:all .2s ease;}
+body.night .el-form-item__label{color:#ccc}
+body.night .el-popper[x-placement^=bottom] .popper__arrow::after{border-bottom-color:#202020}
+body.night .el-input__inner{border-color:#404040}
+
+body.night .el-input__inner,
+body.night .el-input .el-input__count .el-input__count-inner,
+body.night .el-select-dropdown,
+body.night .el-select-dropdown__item
+{color:#ccc;background-color:#202020}
+
+body.night .el-input.is-disabled .el-input__inner {color: #aaa;border-color: #404040;background-color: #666;}
+
+
+body.night .el-button--default {
+  color: #fff;
+  border-color: #404040;
+  background: #1a1a1a;
+}
+
+body.night .el-button--default:focus,
+body.night .el-button--default:hover {
+  background: #303030;
+}
+
+
+.el-table__body tr:hover {
+  cursor: pointer;
+}
+
+body.night input {
+  color: #ccc;
+  background: transparent;
+}
+body.night .el-table {
+  color: #ccc !important;
+  background-color: transparent;
+}
+body.night .el-table thead {
+  color: #ccc !important;
+  background-color: transparent;
+}
+body.night .el-table tr {
+  background-color: transparent;
+}
+body.night .el-table--striped .el-table__body tr.el-table__row--striped td {
+  background-color: rgba(51,51,51,.8);
+}
+body.night .el-table__expand-icon {
+  color: #aaa;
+}
+body.night .el-table,
+body.night .el-table__expanded-cell {
+  background-color: transparent !important;
+}
+body.night .el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: #444;
+}
+body.night .el-table__header th {
+  background-color: transparent;
+}
+body.night li {
+  color: #ccc;
+}
+body.night li:hover {
+  background: #666;
+}
