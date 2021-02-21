@@ -21,6 +21,118 @@ body.night .el-notification__content{
 body.night .el-notification__closeBtn:hover{
   color: #9f9d99;
 }
+/**********************/
+
+body.night .el-menu {
+  border-right-color: #303030;
+  background-color: #242424;
+}
+body.night .el-menu-item {
+  color: #cfcecc;
+}
+body.night .el-menu-item.is-active{
+  color:#409EFF;
+}
+body.night .el-menu-item:focus,body.night .el-menu-item:hover {
+  background-color: #243040;
+}
+
+body.night .info{color:#aaa}
+
+.el-form-item__label, .el-input__inner, .el-select__input, .el-form-item__content, .el-textarea__inner, .el-textarea .el-input__count{transition:all .2s ease;}
+body.night .el-form-item__label{color:#ccc}
+body.night .el-popper[x-placement^=bottom] .popper__arrow::after{border-bottom-color:#202020}
+body.night .el-input__inner, body.night .el-textarea__inner{border-color:#404040}
+body.night .el-textarea__inner:focus{border-color: #409EFF}
+
+body.night .el-input__inner,
+body.night .el-input .el-input__count .el-input__count-inner,
+body.night .el-select-dropdown,
+body.night .el-select-dropdown__item
+{color:#ccc;background-color:#202020}
+
+body.night .el-input.is-disabled .el-input__inner {color: #aaa;border-color: #404040;background-color: #666;}
+
+
+body.night .el-button--default:not(.el-button--primary,.el-button--success,.el-button--info,.el-button--warning,.el-button--danger) {
+  color: #fff;
+  border-color: #404040;
+  background: #1a1a1a;
+}
+
+body.night .el-button--default:not(.el-button--primary,.el-button--success,.el-button--info,.el-button--warning,.el-button--danger):focus,
+body.night .el-button--default:not(.el-button--primary,.el-button--success,.el-button--info,.el-button--warning,.el-button--danger):hover {
+  background: #303030;
+}
+
+body.night input {
+  color: #ccc;
+  background: transparent;
+}
+body.night .el-table {
+  color: #ccc !important;
+  background-color: transparent;
+}
+body.night .el-table thead {
+  color: #ccc !important;
+  background-color: transparent;
+}
+body.night .el-table tr {
+  background-color: transparent;
+}
+body.night .el-table--striped .el-table__body tr.el-table__row--striped td {
+  background-color: rgba(51,51,51,.8);
+}
+body.night .el-table__expand-icon {
+  color: #aaa;
+}
+body.night .el-table,
+body.night .el-table__expanded-cell {
+  background-color: transparent !important;
+}
+body.night .el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: #444;
+}
+body.night .el-table__header th {
+  background-color: transparent;
+}
+body.night li {
+  color: #ccc;
+}
+body.night li:hover {
+  background: #666;
+}
+
+body.night .el-textarea__inner {
+  background-color: #202020;
+  color: #ccc;
+}
+
+body.night .el-textarea .el-input__count {
+  background-color: #202020;
+  color: #aaa;
+}
+
+body.night .el-upload-list__item .el-icon-close, body.night .el-message-box__headerbtn .el-message-box__close {
+  color: #9f9d99;
+}
+
+body.night .el-message-box__headerbtn:focus .el-message-box__close,body.night .el-message-box__headerbtn:hover .el-message-box__close, body.night .el-select-dropdown__item.selected{
+  color: #409EFF;
+}
+
+body.night .el-message-box{
+  background-color: #242424;
+  border-color: #404040;
+}
+
+body.night .el-message-box__content{
+  color: #ccc;
+}
+
+body.night .el-upload__tip{
+  color: #ccc;
+}
 
 @media(prefers-color-scheme:dark) {
   .el-message--success,.el-message--info,.el-message--warning,.el-message--error,.el-message__content,.el-notification{transition:all .2s ease !important}
