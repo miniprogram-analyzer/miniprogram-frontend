@@ -12,6 +12,11 @@
     <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
     <meta http-equiv="expires" content="0">
     <meta name="format-detection" content="telephone=no" />
+    <script>
+      if (navigator.userAgent.match(/(iPhone|iPod|Android|Windows Phone|baidu Transcoder|BlackBerry)/i)) {
+        window.location.replace("/m" + window.location.pathname + window.location.hash + window.location.search);
+      }
+    </script>
     
     <link href="/lib/site.min.css" rel="stylesheet" type="text/css" />
     <link href="/lib/index.min.css" rel="stylesheet" type="text/css" />

@@ -43,23 +43,8 @@ button.menu__link.active:hover {
   color: #fff
 }
 
-body.night .el-button--default {
-  color: #fff;
-  border-color: #404040;
-  background: #1a1a1a;
-}
-
-body.night .el-button--default:focus,
-body.night .el-button--default:hover {
-  background: #303030;
-}
-
 .el-upload__tip {
   font-size: 14px !important;
-}
-
-body.night .el-upload__tip{
-  color: #ccc;
 }
 
 .el-upload-list__item-name{
