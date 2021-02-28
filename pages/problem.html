@@ -39,7 +39,7 @@
   <script src="/vue/axios.min.js"></script>
   <link href="/vue/element-dark.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" type="text/css" href="/utils/highlight.js-10.1.2/highlight-simditor.css">
-  
+
   <script>
     var para = window.location.search;
     const problem_id = parseInt(para.split("?id=")[1]);
@@ -49,7 +49,10 @@
 <body>
   <script src="/lib/darkmode.js"></script>
   <script src="/lib/navigation.js"></script>
-  <script>const nav_id = 4;var vm;</script>
+  <script>
+    const nav_id = 4;
+    var vm;
+  </script>
 
   <div class="bb" style="margin-top: 106px;" id="page">
     <div id="con">
@@ -66,7 +69,7 @@
                     <h1>{{title}}</h1>
                   </div>
                   <el-collapse-transition>
-                    <div class="post" id="content">
+                    <div class="post" id="content" key="detail">
                       <div class="postcontent">
                         <div v-html="detail"></div>
                       </div>
@@ -80,10 +83,12 @@
                   <el-collapse-transition>
                     <el-upload class="upload-demo" ref="uploadFile" :auto-upload=false :action="uploadUrl"
                       :data="formData" :before-remove="beforeRemove" :limit='1' :on-exceed="handleExceed"
-                      :on-success="successUpload" :file-list="fileList" accept="application/zip" style="padding: 20px; width: 50%;">
+                      :on-success="successUpload" :file-list="fileList" accept="application/zip"
+                      style="padding: 20px; width: 50%;" key="upload">
                       <el-button slot="trigger">选取文件</el-button>
                       <el-button @click="submitUpload" type="danger" style="margin-left: 16px;">提交</el-button>
-                      <div slot="tip" class="el-upload__tip" style="padding-left: 35px; line-height: 30px;">以压缩包形式上传！</div>
+                      <div slot="tip" class="el-upload__tip" style="padding-left: 35px; line-height: 30px;">以压缩包形式上传！
+                      </div>
                     </el-upload>
                   </el-collapse-transition>
                 </div>
@@ -92,7 +97,7 @@
                     <h1>{{title=="问题详情"?'得分':(title+' - 得分')}}</h1>
                   </div>
                   <el-collapse-transition>
-                    <div>
+                    <div key="result">
                       <div style="margin: 10px 30px;font-size: 21px;font-weight: 300;">
                         <span v-if="status=='Finish'">
                           <span v-if="total_score==100" class="Passed">
@@ -116,14 +121,17 @@
                           <span v-if="status=='Compile Error'" class="Failed">Compile Error</span>
                         </span>
                       </div>
-                      <el-table v-if="status=='Finish'" :data="scoreTable" stripe style="margin: 0 20px;width:calc(100% - 40px)" :cell-class-name="handleScoreClass">
+                      <el-table v-if="status=='Finish'" :data="scoreTable" stripe
+                        style="margin: 0 20px;width:calc(100% - 40px)" :cell-class-name="handleScoreClass">
                         <el-table-column prop="id" label="#" width="60">
                         </el-table-column>
                         <el-table-column prop="status" label="状态">
                           <template slot-scope="scope">
                             <span :class="scope.row.status">
-                              <i v-if="scope.row.status=='Passed'" class="icon far fa-check fa-fw" style="margin-right: 4px;"></i>
-                              <i v-if="scope.row.status=='Failed'" class="icon far fa-times fa-fw" style="margin-right: 4px;"></i>
+                              <i v-if="scope.row.status=='Passed'" class="icon far fa-check fa-fw"
+                                style="margin-right: 4px;"></i>
+                              <i v-if="scope.row.status=='Failed'" class="icon far fa-times fa-fw"
+                                style="margin-right: 4px;"></i>
                             </span>
                             <span :class="scope.row.status" style="margin-right: 4px;">{{ scope.row.status }}</span>
                             <span v-if="scope.row.status=='Passed'" class="Info">Well done!</span>
@@ -160,9 +168,9 @@
             <li class="menu__item">
               <a class="menu__link" href="javascript:test_score();">
                 <span class="icon far fa-file-alt fa-fw"></span> 得分</a></li>
-            <li class="menu__item">
+            <!--<li class="menu__item">
               <a class="menu__link" href="javascript:;">
-                <span class="icon far fa-list-alt fa-fw"></span> 历史记录</a></li>
+                <span class="icon far fa-list-alt fa-fw"></span> 历史记录</a></li>-->
           </ol>
         </div>
       </div>
@@ -187,15 +195,18 @@
 
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.0/dist/jquery.min.js"></script>
   <script>
-    (window.jQuery || document.write("<script src='https:\/\/cdn.jsdelivr.net\/npm\/jquery@3.4.0\/dist\/jquery.min.js'><\/script>"));
+    (window.jQuery || document.write(
+      "<script src='https:\/\/cdn.jsdelivr.net\/npm\/jquery@3.4.0\/dist\/jquery.min.js'><\/script>"));
   </script>
   <script src="/jquery/jquery.cookie.min.js"></script>
   <script>
-    (window.jQuery && window.jQuery.fn && window.jQuery.fn.cookie || document.write("\u003Cscript src=\u0022/jquery/jquery.cookie.min.js\u0022\u003E\u003C\/script\u003E"));
+    (window.jQuery && window.jQuery.fn && window.jQuery.fn.cookie || document.write(
+      "\u003Cscript src=\u0022/jquery/jquery.cookie.min.js\u0022\u003E\u003C\/script\u003E"));
   </script>
   <script src="/jquery/jquery.lazyload.min.js"></script>
   <script>
-    (window.jQuery && window.jQuery.fn && window.jQuery.fn.lazyload || document.write("\u003Cscript src=\u0022/jquery/jquery.lazyload.min.js\u0022\u003E\u003C\/script\u003E"));
+    (window.jQuery && window.jQuery.fn && window.jQuery.fn.lazyload || document.write(
+      "\u003Cscript src=\u0022/jquery/jquery.lazyload.min.js\u0022\u003E\u003C\/script\u003E"));
   </script>
   <script src="/lib/popwin.js"></script>
   <script src="/lib/site.js"></script>
