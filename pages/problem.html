@@ -92,6 +92,52 @@
                     <h1>{{title=="问题详情"?'得分':(title+' - 得分')}}</h1>
                   </div>
                   <el-collapse-transition>
+                    <div>
+                      <div style="margin: 10px 30px;font-size: 21px;font-weight: 300;">
+                        <span v-if="status=='Finish'">
+                          <span v-if="total_score==100" class="Passed">
+                            <i class="icon far fa-check fa-fw" style="margin-right: 4px;"></i>
+                          </span>
+                          <span v-if="total_score==100" class="Passed">Accepted</span>
+                          <span v-if="total_score!=100" class="Failed">
+                            <i class="icon far fa-times fa-fw" style="margin-right: 4px;"></i>
+                          </span>
+                          <span v-if="total_score!=100" class="Failed">Wrong Anwser</span>
+                          <span style="float: right;">{{total_score}} / 100</span>
+                        </span>
+                        <span v-else>
+                          <span v-if="status=='Waiting'" class="Info">
+                            <i class="icon far fa-question fa-fw" style="margin-right: 4px;"></i>
+                          </span>
+                          <span v-if="status=='Waiting'" class="Info">Waiting</span>
+                          <span v-if="status=='Compile Error'" class="Failed">
+                            <i class="icon far fa-times fa-fw" style="margin-right: 4px;"></i>
+                          </span>
+                          <span v-if="status=='Compile Error'" class="Failed">Compile Error</span>
+                        </span>
+                      </div>
+                      <el-table v-if="status=='Finish'" :data="scoreTable" stripe style="margin: 0 20px;width:calc(100% - 40px)" :cell-class-name="handleScoreClass">
+                        <el-table-column prop="id" label="#" width="60">
+                        </el-table-column>
+                        <el-table-column prop="status" label="状态">
+                          <template slot-scope="scope">
+                            <span :class="scope.row.status">
+                              <i v-if="scope.row.status=='Passed'" class="icon far fa-check fa-fw" style="margin-right: 4px;"></i>
+                              <i v-if="scope.row.status=='Failed'" class="icon far fa-times fa-fw" style="margin-right: 4px;"></i>
+                            </span>
+                            <span :class="scope.row.status" style="margin-right: 4px;">{{ scope.row.status }}</span>
+                            <span v-if="scope.row.status=='Passed'" class="Info">Well done!</span>
+                            <span v-else class="Info">{{ scope.row.failureMessages }}</span>
+                          </template>
+                        </el-table-column>
+                        <el-table-column prop="score" label="得分" width="100">
+                          <template slot-scope="scope">
+                            <span :class="scope.row.status">{{ scope.row.score }}{{ ' / ' }}{{ ave_score }}</span>
+                          </template>
+                        </el-table-column>
+                      </el-table>
+                      <div v-else style="margin: 20px 60px;font-size: 21px;font-weight: 300;">{{message}}</div>
+                    </div>
                   </el-collapse-transition>
                 </div>
               </div>

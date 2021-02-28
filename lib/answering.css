@@ -32,6 +32,51 @@ body.night .classify-nav .nav.disabled {
   color: #555;
 }
 
+body.night table thead{background-color: #303030}
+body.night table td,body.night table th{border:1px solid #404040}
+
+table {
+  position: relative;
+}
+table.resizing {
+  cursor: col-resize;
+}
+table .simditor-resize-handle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 10px;
+  height: 100%;
+  cursor: col-resize;
+}
+
+table{
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 15px 0;
+}
+table thead{
+  background-color: #f9f9f9;
+}
+table td, table th{
+  min-width: 40px;
+  height: 30px;
+  border: 1px solid #ccc;
+  vertical-align: top;
+  padding: 2px 4px;
+  text-align: left;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+table img{
+  margin: 0 5px;
+  vertical-align: middle;
+  max-width: calc(100% - 10px);
+  height: auto;
+}
+
 body.night .classify-nav .nav{border: 1px solid #404040;}
 #nav-left{border-right:none}
 #nav-right{border-left:none}

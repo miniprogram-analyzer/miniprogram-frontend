@@ -59,6 +59,26 @@ button.menu__link.active:hover {
   top: 8px !important;
 }
 
+.border-passed {
+  border-left:3px solid #25ad40;
+}
+
+.border-failed {
+  border-left:3px solid #fb5555;
+}
+
+.Passed {
+  color:#25ad40;
+}
+
+.Failed {
+  color:#fb5555;
+}
+
+.Info {
+  color: #909399;
+}
+
 @media screen and (min-width:1520px) {
   .sidebar {
     margin-right: calc(50vw - 700px);

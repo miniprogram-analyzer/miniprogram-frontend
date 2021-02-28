@@ -122,7 +122,7 @@ body.night .thread .title:not(:last-child) {
   text-overflow: ellipsis;
   overflow: hidden;
   display: inline-block;
-  max-width: 500px;
+  max-width: 490px;
 }
 
 .thread .title .t_info span.numb {
@@ -447,52 +447,6 @@ a.answer_inpt{float:right;display:block;margin-top:10px;width:90px;height:40px;-
 body.night a.answer_inpt{color: #ededed;background-color: #0F4C81;}body.night a.answer_inpt:hover{background-color: #1F5C91;}
 
 .hide {margin:0!important;padding:0!important}
-
-
-body.night table thead{background-color: #303030}
-body.night table td,body.night table th{border:1px solid #404040}
-
-table {
-  position: relative;
-}
-table.resizing {
-  cursor: col-resize;
-}
-table .simditor-resize-handle {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 10px;
-  height: 100%;
-  cursor: col-resize;
-}
-
-table{
-  width: 100%;
-  table-layout: fixed;
-  border-collapse: collapse;
-  border-spacing: 0;
-  margin: 15px 0;
-}
-table thead{
-  background-color: #f9f9f9;
-}
-table td, table th{
-  min-width: 40px;
-  height: 30px;
-  border: 1px solid #ccc;
-  vertical-align: top;
-  padding: 2px 4px;
-  text-align: left;
-  box-sizing: border-box;
-  vertical-align: middle;
-}
-table img{
-  margin: 0 5px;
-  vertical-align: middle;
-  max-width: calc(100% - 10px);
-  height: auto;
-}
 
 b{font-weight:bold}i{font-style:italic}
 .postcontent ol li,.u_comment ol li{list-style:decimal}.postcontent ul li,.u_comment ul li{list-style:disc}
