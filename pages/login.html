@@ -62,7 +62,14 @@
             </el-form-item>
           </el-tooltip>
 
-          <el-button :loading="loading" type="primary" style="width:100%;margin-top:40px;"
+          <div class="footer-container">
+            <el-divider>其它方式登录</el-divider>
+            <div class="login-oauths">
+              <a :href="'https://oauth.proxy.hfzhang.wang/oauth?appid=demo&redirect_uri='+oauth_url" title="火花空间登录"><img src="/img/icon/oursparkspace.jpg" /></a>
+            </div>
+          </div>
+
+          <el-button :loading="loading" type="primary" style="width:100%;margin-top:2px;"
             @click.native.prevent="handleLogin">登录</el-button>
           <el-link v-if="nav_link" type="primary" :href="'/register'+params"
             style="display:table;text-align:center;margin: 16px auto;">没有账号？点此注册</el-link>

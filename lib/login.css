@@ -4,6 +4,8 @@ div#login {
   --cursor: #333;
   --bg: #fff;
   --svg: #888;
+  --fg: #303133;
+  --divider: #DCDFE6;
 }
 @supports (-webkit-mask: none) and (not (cater-color: var(--cursor))) {
   div#login .login-container .el-input input {
@@ -73,14 +75,37 @@ div#login .login-container .title-container {
 div#login .login-container .title-container img{
   width: 120px;
   height: 120px;
-  margin: 0 120px 16px;
+  margin: 0 120px;
 }
 div#login .login-container .title-container .title {
   font-size: 26px;
   color: var(--cursor);
-  margin: 0px auto 50px auto;
+  margin: 0px auto 15px auto;
   text-align: center;
   font-weight: bold;
+}
+div#login .login-container .footer-container {
+  padding: 10px 0 10px;
+}
+div#login .login-container .footer-container .login-oauths {
+  display: flex;
+  justify-content: center;
+}
+div#login .login-container .footer-container .login-oauths img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  filter: brightness(100%);
+}
+div#login .login-container .footer-container .login-oauths img:hover {
+  filter: brightness(120%);
+}
+div#login .login-container .footer-container .el-divider__text {
+  color: var(--fg) !important;
+  background-color: var(--bg) !important;
+}
+div#login .login-container .footer-container .el-divider {
+  background-color: var(--divider) !important;
 }
 div#login .login-container .show-pwd {
   position: absolute;
@@ -108,6 +133,8 @@ div#login .login-container .introduction {
     --cursor: #ccc;
     --bg: #202020;
     --svg: #aaa;
+    --fg: #cfcecc;
+    --divider: #505050;
   }
 }
 html.dark:not(.light) div#login {
@@ -115,4 +142,6 @@ html.dark:not(.light) div#login {
   --cursor: #ccc;
   --bg: #202020;
   --svg: #aaa;
+  --fg: #cfcecc;
+  --divider: #505050;
 }
