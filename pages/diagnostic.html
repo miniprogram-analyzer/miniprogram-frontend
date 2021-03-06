@@ -39,11 +39,6 @@
     (window.jQuery || document.write(
       "<script src='https:\/\/cdn.jsdelivr.net\/npm\/jquery@3.4.0\/dist\/jquery.min.js'><\/script>"));
   </script>
-  <!--<script src="/jquery/jquery.cookie.min.js"></script>
-  <script>
-    (window.jQuery && window.jQuery.fn && window.jQuery.fn.cookie || document.write(
-      "\u003Cscript src=\u0022/jquery/jquery.cookie.min.js\u0022\u003E\u003C\/script\u003E"));
-  </script>-->
   <script src="/lib/popwin.js"></script>
   <script src="/lib/site.js"></script>
 
@@ -70,13 +65,16 @@
         value: ['function hello() {', '\talert(\'Hello world!\');', '}'].join('\n'),
         language: 'javascript',
 
+        automaticLayout: true,
+        formatOnPaste: true,
+        formatOnType: true,
+        glyphMargin: false,
         roundedSelection: true,
         scrollBeyondLastLine: true,
-        glyphMargin: false,
         wordWrap: true,
         wordWrapMinified: true,
         wrappingIndent: "indent",
-        fontFamily: "JetBrainsMono"
+        theme: nightMode ? 'vs-dark' : 'vs'
       });
     });
   </script>
