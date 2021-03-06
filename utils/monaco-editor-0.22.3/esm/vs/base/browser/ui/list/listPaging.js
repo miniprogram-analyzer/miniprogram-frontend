@@ -108,6 +108,12 @@ export class PagedList {
     setSelection(indexes, browserEvent) {
         this.list.setSelection(indexes, browserEvent);
     }
+    getSelection() {
+        return this.list.getSelection();
+    }
+    getSelectedElements() {
+        return this.getSelection().map(i => this.model.get(i));
+    }
     style(styles) {
         this.list.style(styles);
     }

@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import './selections.css';
-import * as browser from '../../../../base/browser/browser.js';
 import { DynamicViewOverlay } from '../../view/dynamicViewOverlay.js';
 import { editorInactiveSelection, editorSelectionBackground, editorSelectionForeground } from '../../../../platform/theme/common/colorRegistry.js';
 import { registerThemingParticipant } from '../../../../platform/theme/common/themeService.js';
@@ -27,10 +26,6 @@ function toStyledRange(item) {
 function toStyled(item) {
     return new LineVisibleRangesWithStyle(item.lineNumber, item.ranges.map(toStyledRange));
 }
-// TODO@Alex: Remove this once IE11 fixes Bug #524217
-// The problem in IE11 is that it does some sort of auto-zooming to accomodate for displays with different pixel density.
-// Unfortunately, this auto-zooming is buggy around dealing with rounded borders
-const isIEWithZoomingIssuesNearRoundedBorders = browser.isEdgeLegacy;
 export class SelectionsOverlay extends DynamicViewOverlay {
     constructor(context) {
         super();
@@ -187,7 +182,7 @@ export class SelectionsOverlay extends DynamicViewOverlay {
         const _linesVisibleRanges = ctx.linesVisibleRangesForRange(selection, true) || [];
         const linesVisibleRanges = _linesVisibleRanges.map(toStyled);
         const visibleRangesHaveGaps = this._visibleRangesHaveGaps(linesVisibleRanges);
-        if (!isIEWithZoomingIssuesNearRoundedBorders && !visibleRangesHaveGaps && this._roundedSelection) {
+        if (!visibleRangesHaveGaps && this._roundedSelection) {
             this._enrichVisibleRangesWithStyle(ctx.visibleRange, linesVisibleRanges, previousFrame);
         }
         // The visible ranges are sorted TOP-BOTTOM and LEFT-RIGHT

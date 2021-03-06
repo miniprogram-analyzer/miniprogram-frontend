@@ -6,7 +6,7 @@ import * as nls from '../../../../nls.js';
 import * as strings from '../../../common/strings.js';
 import { SubmenuAction, Separator, EmptySubmenuAction } from '../../../common/actions.js';
 import { ActionBar } from '../actionbar/actionbar.js';
-import { EventType, EventHelper, removeTabIndexAndUpdateFocus, isAncestor, addDisposableListener, append, $, clearNode, createStyleSheet, isInShadowDOM, getActiveElement, Dimension } from '../../dom.js';
+import { EventType, EventHelper, isAncestor, addDisposableListener, append, $, clearNode, createStyleSheet, isInShadowDOM, getActiveElement, Dimension } from '../../dom.js';
 import { StandardKeyboardEvent } from '../../keyboardEvent.js';
 import { RunOnceScheduler } from '../../../common/async.js';
 import { DisposableStore } from '../../../common/lifecycle.js';
@@ -41,6 +41,7 @@ export class Menu extends ActionBar {
             context: options.context,
             actionRunner: options.actionRunner,
             ariaLabel: options.ariaLabel,
+            focusOnlyEnabledItems: true,
             triggerKeys: { keys: [3 /* Enter */, ...(isMacintosh || isLinux ? [10 /* Space */] : [])], keyDown: true }
         });
         this.menuElement = menuElement;
@@ -445,19 +446,22 @@ class BaseMenuActionViewItem extends BaseActionViewItem {
         if (this.getAction().enabled) {
             if (this.element) {
                 this.element.classList.remove('disabled');
+                this.element.removeAttribute('aria-disabled');
             }
             if (this.item) {
                 this.item.classList.remove('disabled');
+                this.item.removeAttribute('aria-disabled');
                 this.item.tabIndex = 0;
             }
         }
         else {
             if (this.element) {
                 this.element.classList.add('disabled');
+                this.element.setAttribute('aria-disabled', 'true');
             }
             if (this.item) {
                 this.item.classList.add('disabled');
-                removeTabIndexAndUpdateFocus(this.item);
+                this.item.setAttribute('aria-disabled', 'true');
             }
         }
     }

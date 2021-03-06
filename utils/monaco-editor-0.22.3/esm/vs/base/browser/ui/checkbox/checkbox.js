@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import './checkbox.css';
-import * as DOM from '../../dom.js';
 import { Widget } from '../widget.js';
 import { Color } from '../../../common/color.js';
 import { Emitter } from '../../../common/event.js';
@@ -35,7 +34,9 @@ export class Checkbox extends Widget {
         this.domNode = document.createElement('div');
         this.domNode.title = this._opts.title;
         this.domNode.classList.add(...classes);
-        this.domNode.tabIndex = 0;
+        if (!this._opts.notFocusable) {
+            this.domNode.tabIndex = 0;
+        }
         this.domNode.setAttribute('role', 'checkbox');
         this.domNode.setAttribute('aria-checked', String(this._checked));
         this.domNode.setAttribute('aria-label', this._opts.title);
@@ -94,11 +95,9 @@ export class Checkbox extends Widget {
         }
     }
     enable() {
-        this.domNode.tabIndex = 0;
         this.domNode.setAttribute('aria-disabled', String(false));
     }
     disable() {
-        DOM.removeTabIndexAndUpdateFocus(this.domNode);
         this.domNode.setAttribute('aria-disabled', String(true));
     }
 }

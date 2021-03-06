@@ -295,6 +295,12 @@ FoldingRangeKind.Imports = new FoldingRangeKind('imports');
  * The value of the kind is 'region'.
  */
 FoldingRangeKind.Region = new FoldingRangeKind('region');
+export var InlineHintKind;
+(function (InlineHintKind) {
+    InlineHintKind[InlineHintKind["Other"] = 0] = "Other";
+    InlineHintKind[InlineHintKind["Type"] = 1] = "Type";
+    InlineHintKind[InlineHintKind["Parameter"] = 2] = "Parameter";
+})(InlineHintKind || (InlineHintKind = {}));
 // --- feature registries ------
 /**
  * @internal

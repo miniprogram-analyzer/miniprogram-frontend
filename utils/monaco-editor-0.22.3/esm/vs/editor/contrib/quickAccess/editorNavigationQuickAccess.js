@@ -92,7 +92,8 @@ export class AbstractEditorNavigationQuickAccessProvider {
     }
     getModel(editor) {
         var _a;
-        return isDiffEditor(editor) ? (_a = editor.getModel()) === null || _a === void 0 ? void 0 : _a.modified :
+        return isDiffEditor(editor) ?
+            (_a = editor.getModel()) === null || _a === void 0 ? void 0 : _a.modified :
             editor.getModel();
     }
     addDecorations(editor, range) {

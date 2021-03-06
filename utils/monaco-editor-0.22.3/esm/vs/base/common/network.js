@@ -42,6 +42,7 @@ export var Schemas;
     Schemas.vscodeNotebookCell = 'vscode-notebook-cell';
     Schemas.vscodeNotebookCellMetadata = 'vscode-notebook-cell-metadata';
     Schemas.vscodeSettings = 'vscode-settings';
+    Schemas.vscodeWorkspaceTrust = 'vscode-workspace-trust';
     Schemas.webviewPanel = 'webview-panel';
     /**
      * Scheme used for loading the wrapper html and script in webviews.

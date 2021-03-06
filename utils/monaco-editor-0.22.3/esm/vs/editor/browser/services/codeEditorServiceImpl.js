@@ -62,7 +62,7 @@ export class GlobalStyleSheet {
     }
 }
 let CodeEditorServiceImpl = class CodeEditorServiceImpl extends AbstractCodeEditorService {
-    constructor(themeService, styleSheet = null) {
+    constructor(styleSheet, themeService) {
         super();
         this._decorationOptionProviders = new Map();
         this._editorStyleSheets = new Map();
@@ -134,7 +134,7 @@ let CodeEditorServiceImpl = class CodeEditorServiceImpl extends AbstractCodeEdit
     }
 };
 CodeEditorServiceImpl = __decorate([
-    __param(0, IThemeService)
+    __param(1, IThemeService)
 ], CodeEditorServiceImpl);
 export { CodeEditorServiceImpl };
 export class DecorationSubTypeOptionsProvider {

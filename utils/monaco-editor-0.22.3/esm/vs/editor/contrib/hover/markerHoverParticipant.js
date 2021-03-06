@@ -150,7 +150,7 @@ let MarkerHoverParticipant = class MarkerHoverParticipant {
         const actionsElement = dom.append(hoverElement, $('div.actions'));
         if (markerHover.marker.severity === MarkerSeverity.Error || markerHover.marker.severity === MarkerSeverity.Warning || markerHover.marker.severity === MarkerSeverity.Info) {
             disposables.add(this.renderAction(actionsElement, {
-                label: nls.localize('peek problem', "Peek Problem"),
+                label: nls.localize('view problem', "View Problem"),
                 commandId: NextMarkerAction.ID,
                 run: () => {
                     this._hover.hide();

@@ -15,9 +15,10 @@ import { PauseableEmitter } from '../../../base/common/event.js';
 import { Iterable } from '../../../base/common/iterator.js';
 import { DisposableStore, MutableDisposable } from '../../../base/common/lifecycle.js';
 import { TernarySearchTree } from '../../../base/common/map.js';
+import { localize } from '../../../nls.js';
 import { CommandsRegistry } from '../../commands/common/commands.js';
 import { IConfigurationService } from '../../configuration/common/configuration.js';
-import { IContextKeyService, SET_CONTEXT_COMMAND_ID } from '../common/contextkey.js';
+import { IContextKeyService, SET_CONTEXT_COMMAND_ID, RawContextKey } from '../common/contextkey.js';
 import { KeybindingResolver } from '../../keybinding/common/keybindingResolver.js';
 const KEYBINDING_CONTEXT_ATTR = 'data-keybinding-context';
 export class Context {
@@ -317,32 +318,29 @@ class ScopedContextKeyService extends AbstractContextKeyService {
         this._parentChangeListener = new MutableDisposable();
         this._parent = parent;
         this._updateParentChangeListener();
-        if (domNode) {
-            this._domNode = domNode;
-            if (this._domNode.hasAttribute(KEYBINDING_CONTEXT_ATTR)) {
-                let extraInfo = '';
-                if (this._domNode.classList) {
-                    extraInfo = Array.from(this._domNode.classList.values()).join(', ');
-                }
-                console.error(`Element already has context attribute${extraInfo ? ': ' + extraInfo : ''}`);
+        this._domNode = domNode;
+        if (this._domNode.hasAttribute(KEYBINDING_CONTEXT_ATTR)) {
+            let extraInfo = '';
+            if (this._domNode.classList) {
+                extraInfo = Array.from(this._domNode.classList.values()).join(', ');
             }
-            this._domNode.setAttribute(KEYBINDING_CONTEXT_ATTR, String(this._myContextId));
+            console.error(`Element already has context attribute${extraInfo ? ': ' + extraInfo : ''}`);
         }
+        this._domNode.setAttribute(KEYBINDING_CONTEXT_ATTR, String(this._myContextId));
     }
     _updateParentChangeListener() {
         // Forward parent events to this listener. Parent will change.
         this._parentChangeListener.value = this._parent.onDidChangeContext(this._onDidChangeContext.fire, this._onDidChangeContext);
     }
     dispose() {
-        var _a;
-        this._onDidChangeContext.dispose();
-        this._isDisposed = true;
-        this._parent.disposeContext(this._myContextId);
-        (_a = this._parentChangeListener) === null || _a === void 0 ? void 0 : _a.dispose();
-        if (this._domNode) {
-            this._domNode.removeAttribute(KEYBINDING_CONTEXT_ATTR);
-            this._domNode = undefined;
+        if (this._isDisposed) {
+            return;
         }
+        this._onDidChangeContext.dispose();
+        this._parent.disposeContext(this._myContextId);
+        this._parentChangeListener.dispose();
+        this._domNode.removeAttribute(KEYBINDING_CONTEXT_ATTR);
+        this._isDisposed = true;
     }
     getContextValuesContainer(contextId) {
         if (this._isDisposed) {
@@ -378,4 +376,26 @@ function findContextAttr(domNode) {
 }
 CommandsRegistry.registerCommand(SET_CONTEXT_COMMAND_ID, function (accessor, contextKey, contextValue) {
     accessor.get(IContextKeyService).createKey(String(contextKey), contextValue);
+});
+CommandsRegistry.registerCommand({
+    id: 'getContextKeyInfo',
+    handler() {
+        return [...RawContextKey.all()].sort((a, b) => a.key.localeCompare(b.key));
+    },
+    description: {
+        description: localize('getContextKeyInfo', "A command that returns information about context keys"),
+        args: []
+    }
+});
+CommandsRegistry.registerCommand('_generateContextKeyInfo', function () {
+    const result = [];
+    const seen = new Set();
+    for (let info of RawContextKey.all()) {
+        if (!seen.has(info.key)) {
+            seen.add(info.key);
+            result.push(info);
+        }
+    }
+    result.sort((a, b) => a.key.localeCompare(b.key));
+    console.log(JSON.stringify(result, undefined, 2));
 });

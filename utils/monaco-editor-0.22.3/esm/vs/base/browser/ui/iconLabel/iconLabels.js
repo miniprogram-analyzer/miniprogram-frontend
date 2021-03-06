@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import * as dom from '../../dom.js';
 import { CSSIcon } from '../../../common/codicons.js';
-const labelWithIconsRegex = /(\\)?\$\(([a-z\-]+(?:~[a-z\-]+)?)\)/gi;
+const labelWithIconsRegex = new RegExp(`(\\\\)?\\$\\((${CSSIcon.iconNameExpression}(?:${CSSIcon.iconModifierExpression})?)\\)`, 'g');
 export function renderLabelWithIcons(text) {
     const elements = new Array();
     let match;

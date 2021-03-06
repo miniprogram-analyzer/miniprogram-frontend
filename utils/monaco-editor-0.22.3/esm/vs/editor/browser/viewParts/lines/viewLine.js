@@ -33,7 +33,6 @@ const canUseFastRenderedViewLine = (function () {
     return true;
 })();
 let monospaceAssumptionsAreValid = true;
-const alwaysRenderInlineSelection = (browser.isEdgeLegacy);
 export class DomReadingContext {
     constructor(domNode, endNode) {
         this._domNode = domNode;
@@ -115,7 +114,7 @@ export class ViewLine {
         this._options = newOptions;
     }
     onSelectionChanged() {
-        if (alwaysRenderInlineSelection || this._options.themeType === ColorScheme.HIGH_CONTRAST || this._options.renderWhitespace === 'selection') {
+        if (this._options.themeType === ColorScheme.HIGH_CONTRAST || this._options.renderWhitespace === 'selection') {
             this._isMaybeInvalid = true;
             return true;
         }
@@ -132,7 +131,7 @@ export class ViewLine {
         const actualInlineDecorations = LineDecoration.filter(lineData.inlineDecorations, lineNumber, lineData.minColumn, lineData.maxColumn);
         // Only send selection information when needed for rendering whitespace
         let selectionsOnLine = null;
-        if (alwaysRenderInlineSelection || options.themeType === ColorScheme.HIGH_CONTRAST || this._options.renderWhitespace === 'selection') {
+        if (options.themeType === ColorScheme.HIGH_CONTRAST || this._options.renderWhitespace === 'selection') {
             const selections = viewportData.selections;
             for (const selection of selections) {
                 if (selection.endLineNumber < lineNumber || selection.startLineNumber > lineNumber) {

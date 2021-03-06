@@ -348,6 +348,12 @@ export var IndentAction;
      */
     IndentAction[IndentAction["Outdent"] = 3] = "Outdent";
 })(IndentAction || (IndentAction = {}));
+export var InlineHintKind;
+(function (InlineHintKind) {
+    InlineHintKind[InlineHintKind["Other"] = 0] = "Other";
+    InlineHintKind[InlineHintKind["Type"] = 1] = "Type";
+    InlineHintKind[InlineHintKind["Parameter"] = 2] = "Parameter";
+})(InlineHintKind || (InlineHintKind = {}));
 /**
  * Virtual Key Codes, the value does not hold any inherent meaning.
  * Inspired somewhat from https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx

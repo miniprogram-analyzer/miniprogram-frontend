@@ -14,7 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 import './menuEntryActionViewItem.css';
 import { asCSSUrl, ModifierKeyEmitter } from '../../../base/browser/dom.js';
 import { domEvent } from '../../../base/browser/event.js';
-import { Separator } from '../../../base/common/actions.js';
+import { Separator, SubmenuAction } from '../../../base/common/actions.js';
 import { toDisposable, MutableDisposable, DisposableStore } from '../../../base/common/lifecycle.js';
 import { localize } from '../../../nls.js';
 import { MenuItemAction, SubmenuItemAction } from '../common/actions.js';
@@ -25,10 +25,10 @@ import { ThemeIcon } from '../../theme/common/themeService.js';
 import { ActionViewItem } from '../../../base/browser/ui/actionbar/actionViewItems.js';
 import { DropdownMenuActionViewItem } from '../../../base/browser/ui/dropdown/dropdownActionViewItem.js';
 import { isWindows, isLinux } from '../../../base/common/platform.js';
-export function createAndFillInActionBarActions(menu, options, target, isPrimaryGroup) {
+export function createAndFillInActionBarActions(menu, options, target, isPrimaryGroup, primaryMaxCount, shouldInlineSubmenu) {
     const groups = menu.getActions(options);
     // Action bars handle alternative actions on their own so the alternative actions should be ignored
-    fillInActions(groups, target, false, isPrimaryGroup);
+    fillInActions(groups, target, false, isPrimaryGroup, primaryMaxCount, shouldInlineSubmenu);
     return asDisposable(groups);
 }
 function asDisposable(groups) {
@@ -40,22 +40,55 @@ function asDisposable(groups) {
     }
     return disposables;
 }
-function fillInActions(groups, target, useAlternativeActions, isPrimaryGroup = group => group === 'navigation') {
-    for (let [group, actions] of groups) {
-        if (useAlternativeActions) {
-            actions = actions.map(a => (a instanceof MenuItemAction) && !!a.alt ? a.alt : a);
-        }
+function fillInActions(groups, target, useAlternativeActions, isPrimaryGroup = group => group === 'navigation', primaryMaxCount = Number.MAX_SAFE_INTEGER, shouldInlineSubmenu = () => false) {
+    let primaryBucket;
+    let secondaryBucket;
+    if (Array.isArray(target)) {
+        primaryBucket = target;
+        secondaryBucket = target;
+    }
+    else {
+        primaryBucket = target.primary;
+        secondaryBucket = target.secondary;
+    }
+    const submenuInfo = new Set();
+    for (const [group, actions] of groups) {
+        let target;
         if (isPrimaryGroup(group)) {
-            const to = Array.isArray(target) ? target : target.primary;
-            to.unshift(...actions);
+            target = primaryBucket;
         }
         else {
-            const to = Array.isArray(target) ? target : target.secondary;
-            if (to.length > 0) {
-                to.push(new Separator());
+            target = secondaryBucket;
+            if (target.length > 0) {
+                target.push(new Separator());
             }
-            to.push(...actions);
         }
+        for (let action of actions) {
+            if (useAlternativeActions) {
+                action = action instanceof MenuItemAction && action.alt ? action.alt : action;
+            }
+            const newLen = target.push(action);
+            // keep submenu info for later inlining
+            if (action instanceof SubmenuAction) {
+                submenuInfo.add({ group, action, index: newLen - 1 });
+            }
+        }
+    }
+    // ask the outside if submenu should be inlined or not. only ask when
+    // there would be enough space
+    for (const { group, action, index } of submenuInfo) {
+        const target = isPrimaryGroup(group) ? primaryBucket : secondaryBucket;
+        // inlining submenus with length 0 or 1 is easy,
+        // larger submenus need to be checked with the overall limit
+        const submenuActions = action.actions;
+        if ((submenuActions.length <= 1 || target.length + submenuActions.length - 2 <= primaryMaxCount) && shouldInlineSubmenu(action, group, target.length)) {
+            target.splice(index, 1, ...submenuActions);
+        }
+    }
+    // overflow items from the primary group into the secondary bucket
+    if (primaryBucket !== secondaryBucket && primaryBucket.length > primaryMaxCount) {
+        const overflow = primaryBucket.splice(primaryMaxCount, primaryBucket.length - primaryMaxCount);
+        secondaryBucket.unshift(...overflow, new Separator());
     }
 }
 let MenuEntryActionViewItem = class MenuEntryActionViewItem extends ActionViewItem {

@@ -126,13 +126,13 @@ let ReferencesController = class ReferencesController {
         }));
         const requestId = ++this._requestIdPool;
         modelPromise.then(model => {
+            var _a;
             // still current request? widget still open?
             if (requestId !== this._requestIdPool || !this._widget) {
+                model.dispose();
                 return undefined;
             }
-            if (this._model) {
-                this._model.dispose();
-            }
+            (_a = this._model) === null || _a === void 0 ? void 0 : _a.dispose();
             this._model = model;
             // show widget
             return this._widget.setModel(this._model).then(() => {

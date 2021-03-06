@@ -206,18 +206,37 @@ export class EditorAction extends EditorCommand {
     }
 }
 export class MultiEditorAction extends EditorAction {
-    constructor(opts) {
-        super(opts);
+    constructor() {
+        super(...arguments);
         this._implementations = [];
     }
-    runEditorCommand(accessor, editor, args) {
-        this.reportTelemetry(accessor, editor);
+    /**
+     * A higher priority gets to be looked at first
+     */
+    addImplementation(priority, implementation) {
+        this._implementations.push([priority, implementation]);
+        this._implementations.sort((a, b) => b[0] - a[0]);
+        return {
+            dispose: () => {
+                for (let i = 0; i < this._implementations.length; i++) {
+                    if (this._implementations[i][1] === implementation) {
+                        this._implementations.splice(i, 1);
+                        return;
+                    }
+                }
+            }
+        };
+    }
+    run(accessor, editor, args) {
         for (const impl of this._implementations) {
-            if (impl[1](accessor, args)) {
-                return;
+            const result = impl[1](accessor, args);
+            if (result) {
+                if (typeof result === 'boolean') {
+                    return;
+                }
+                return result;
             }
         }
-        return this.run(accessor, editor, args || {});
     }
 }
 //#endregion

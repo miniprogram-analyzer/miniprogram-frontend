@@ -104,6 +104,7 @@ export var Sizing;
 })(Sizing || (Sizing = {}));
 export class SplitView extends Disposable {
     constructor(container, options = {}) {
+        var _a, _b;
         super();
         this.size = 0;
         this.contentSize = 0;
@@ -119,6 +120,7 @@ export class SplitView extends Disposable {
         this.orientation = types.isUndefined(options.orientation) ? 0 /* VERTICAL */ : options.orientation;
         this.inverseAltBehavior = !!options.inverseAltBehavior;
         this.proportionalLayout = types.isUndefined(options.proportionalLayout) ? true : !!options.proportionalLayout;
+        this.getSashOrthogonalSize = options.getSashOrthogonalSize;
         this.el = document.createElement('div');
         this.el.classList.add('monaco-split-view2');
         this.el.classList.add(this.orientation === 0 /* VERTICAL */ ? 'vertical' : 'horizontal');
@@ -127,8 +129,8 @@ export class SplitView extends Disposable {
         this.viewContainer = $('.split-view-container');
         this.scrollable = new Scrollable(125, scheduleAtNextAnimationFrame);
         this.scrollableElement = this._register(new SmoothScrollableElement(this.viewContainer, {
-            vertical: this.orientation === 0 /* VERTICAL */ ? 1 /* Auto */ : 2 /* Hidden */,
-            horizontal: this.orientation === 1 /* HORIZONTAL */ ? 1 /* Auto */ : 2 /* Hidden */
+            vertical: this.orientation === 0 /* VERTICAL */ ? ((_a = options.scrollbarVisibility) !== null && _a !== void 0 ? _a : 1 /* Auto */) : 2 /* Hidden */,
+            horizontal: this.orientation === 1 /* HORIZONTAL */ ? ((_b = options.scrollbarVisibility) !== null && _b !== void 0 ? _b : 1 /* Auto */) : 2 /* Hidden */
         }, this.scrollable));
         this._register(this.scrollableElement.onScroll(e => {
             this.viewContainer.scrollTop = e.scrollTop;
@@ -404,17 +406,10 @@ export class SplitView extends Disposable {
         this.viewItems.splice(index, 0, item);
         // Add sash
         if (this.viewItems.length > 1) {
+            let opts = { orthogonalStartSash: this.orthogonalStartSash, orthogonalEndSash: this.orthogonalEndSash };
             const sash = this.orientation === 0 /* VERTICAL */
-                ? new Sash(this.sashContainer, { getHorizontalSashTop: (sash) => this.getSashPosition(sash) }, {
-                    orientation: 1 /* HORIZONTAL */,
-                    orthogonalStartSash: this.orthogonalStartSash,
-                    orthogonalEndSash: this.orthogonalEndSash
-                })
-                : new Sash(this.sashContainer, { getVerticalSashLeft: (sash) => this.getSashPosition(sash) }, {
-                    orientation: 0 /* VERTICAL */,
-                    orthogonalStartSash: this.orthogonalStartSash,
-                    orthogonalEndSash: this.orthogonalEndSash
-                });
+                ? new Sash(this.sashContainer, { getHorizontalSashTop: s => this.getSashPosition(s), getHorizontalSashWidth: this.getSashOrthogonalSize }, Object.assign(Object.assign({}, opts), { orientation: 1 /* HORIZONTAL */ }))
+                : new Sash(this.sashContainer, { getVerticalSashLeft: s => this.getSashPosition(s), getVerticalSashHeight: this.getSashOrthogonalSize }, Object.assign(Object.assign({}, opts), { orientation: 0 /* VERTICAL */ }));
             const sashEventMapper = this.orientation === 0 /* VERTICAL */
                 ? (e) => ({ sash, start: e.startY, current: e.currentY, alt: e.altKey })
                 : (e) => ({ sash, start: e.startX, current: e.currentX, alt: e.altKey });

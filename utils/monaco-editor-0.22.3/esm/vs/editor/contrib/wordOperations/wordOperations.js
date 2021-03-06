@@ -16,6 +16,7 @@ import { CONTEXT_ACCESSIBILITY_MODE_ENABLED } from '../../../platform/accessibil
 import { ContextKeyExpr } from '../../../platform/contextkey/common/contextkey.js';
 import { EditorOptions } from '../../common/config/editorOptions.js';
 import { LanguageConfigurationRegistry } from '../../common/modes/languageConfigurationRegistry.js';
+import { IsWindowsContext } from '../../../platform/contextkey/common/contextkeys.js';
 export class MoveWordCommand extends EditorCommand {
     constructor(opts) {
         super(opts);
@@ -84,13 +85,14 @@ export class CursorWordEndLeft extends WordLeftCommand {
 }
 export class CursorWordLeft extends WordLeftCommand {
     constructor() {
+        var _a;
         super({
             inSelectionMode: false,
             wordNavigationType: 1 /* WordStartFast */,
             id: 'cursorWordLeft',
             precondition: undefined,
             kbOpts: {
-                kbExpr: EditorContextKeys.textInputFocus,
+                kbExpr: ContextKeyExpr.and(EditorContextKeys.textInputFocus, (_a = ContextKeyExpr.and(CONTEXT_ACCESSIBILITY_MODE_ENABLED, IsWindowsContext)) === null || _a === void 0 ? void 0 : _a.negate()),
                 primary: 2048 /* CtrlCmd */ | 15 /* LeftArrow */,
                 mac: { primary: 512 /* Alt */ | 15 /* LeftArrow */ },
                 weight: 100 /* EditorContrib */
@@ -120,13 +122,14 @@ export class CursorWordEndLeftSelect extends WordLeftCommand {
 }
 export class CursorWordLeftSelect extends WordLeftCommand {
     constructor() {
+        var _a;
         super({
             inSelectionMode: true,
             wordNavigationType: 1 /* WordStartFast */,
             id: 'cursorWordLeftSelect',
             precondition: undefined,
             kbOpts: {
-                kbExpr: EditorContextKeys.textInputFocus,
+                kbExpr: ContextKeyExpr.and(EditorContextKeys.textInputFocus, (_a = ContextKeyExpr.and(CONTEXT_ACCESSIBILITY_MODE_ENABLED, IsWindowsContext)) === null || _a === void 0 ? void 0 : _a.negate()),
                 primary: 2048 /* CtrlCmd */ | 1024 /* Shift */ | 15 /* LeftArrow */,
                 mac: { primary: 512 /* Alt */ | 1024 /* Shift */ | 15 /* LeftArrow */ },
                 weight: 100 /* EditorContrib */
@@ -141,12 +144,7 @@ export class CursorWordAccessibilityLeft extends WordLeftCommand {
             inSelectionMode: false,
             wordNavigationType: 3 /* WordAccessibility */,
             id: 'cursorWordAccessibilityLeft',
-            precondition: undefined,
-            kbOpts: {
-                kbExpr: ContextKeyExpr.and(EditorContextKeys.textInputFocus, CONTEXT_ACCESSIBILITY_MODE_ENABLED),
-                win: { primary: 2048 /* CtrlCmd */ | 15 /* LeftArrow */ },
-                weight: 100 /* EditorContrib */ + 1
-            }
+            precondition: undefined
         });
     }
     _move(_, model, position, wordNavigationType) {
@@ -159,12 +157,7 @@ export class CursorWordAccessibilityLeftSelect extends WordLeftCommand {
             inSelectionMode: true,
             wordNavigationType: 3 /* WordAccessibility */,
             id: 'cursorWordAccessibilityLeftSelect',
-            precondition: undefined,
-            kbOpts: {
-                kbExpr: ContextKeyExpr.and(EditorContextKeys.textInputFocus, CONTEXT_ACCESSIBILITY_MODE_ENABLED),
-                win: { primary: 2048 /* CtrlCmd */ | 1024 /* Shift */ | 15 /* LeftArrow */ },
-                weight: 100 /* EditorContrib */ + 1
-            }
+            precondition: undefined
         });
     }
     _move(_, model, position, wordNavigationType) {
@@ -183,13 +176,14 @@ export class CursorWordStartRight extends WordRightCommand {
 }
 export class CursorWordEndRight extends WordRightCommand {
     constructor() {
+        var _a;
         super({
             inSelectionMode: false,
             wordNavigationType: 2 /* WordEnd */,
             id: 'cursorWordEndRight',
             precondition: undefined,
             kbOpts: {
-                kbExpr: EditorContextKeys.textInputFocus,
+                kbExpr: ContextKeyExpr.and(EditorContextKeys.textInputFocus, (_a = ContextKeyExpr.and(CONTEXT_ACCESSIBILITY_MODE_ENABLED, IsWindowsContext)) === null || _a === void 0 ? void 0 : _a.negate()),
                 primary: 2048 /* CtrlCmd */ | 17 /* RightArrow */,
                 mac: { primary: 512 /* Alt */ | 17 /* RightArrow */ },
                 weight: 100 /* EditorContrib */
@@ -219,13 +213,14 @@ export class CursorWordStartRightSelect extends WordRightCommand {
 }
 export class CursorWordEndRightSelect extends WordRightCommand {
     constructor() {
+        var _a;
         super({
             inSelectionMode: true,
             wordNavigationType: 2 /* WordEnd */,
             id: 'cursorWordEndRightSelect',
             precondition: undefined,
             kbOpts: {
-                kbExpr: EditorContextKeys.textInputFocus,
+                kbExpr: ContextKeyExpr.and(EditorContextKeys.textInputFocus, (_a = ContextKeyExpr.and(CONTEXT_ACCESSIBILITY_MODE_ENABLED, IsWindowsContext)) === null || _a === void 0 ? void 0 : _a.negate()),
                 primary: 2048 /* CtrlCmd */ | 1024 /* Shift */ | 17 /* RightArrow */,
                 mac: { primary: 512 /* Alt */ | 1024 /* Shift */ | 17 /* RightArrow */ },
                 weight: 100 /* EditorContrib */
@@ -249,12 +244,7 @@ export class CursorWordAccessibilityRight extends WordRightCommand {
             inSelectionMode: false,
             wordNavigationType: 3 /* WordAccessibility */,
             id: 'cursorWordAccessibilityRight',
-            precondition: undefined,
-            kbOpts: {
-                kbExpr: ContextKeyExpr.and(EditorContextKeys.textInputFocus, CONTEXT_ACCESSIBILITY_MODE_ENABLED),
-                win: { primary: 2048 /* CtrlCmd */ | 17 /* RightArrow */ },
-                weight: 100 /* EditorContrib */ + 1
-            }
+            precondition: undefined
         });
     }
     _move(_, model, position, wordNavigationType) {
@@ -267,12 +257,7 @@ export class CursorWordAccessibilityRightSelect extends WordRightCommand {
             inSelectionMode: true,
             wordNavigationType: 3 /* WordAccessibility */,
             id: 'cursorWordAccessibilityRightSelect',
-            precondition: undefined,
-            kbOpts: {
-                kbExpr: ContextKeyExpr.and(EditorContextKeys.textInputFocus, CONTEXT_ACCESSIBILITY_MODE_ENABLED),
-                win: { primary: 2048 /* CtrlCmd */ | 1024 /* Shift */ | 17 /* RightArrow */ },
-                weight: 100 /* EditorContrib */ + 1
-            }
+            precondition: undefined
         });
     }
     _move(_, model, position, wordNavigationType) {

@@ -10,7 +10,7 @@ import * as platform from '../../../base/common/platform.js';
 import * as strings from '../../../base/common/strings.js';
 import { Configuration } from '../config/configuration.js';
 import { CopyOptions, TextAreaInput } from './textAreaInput.js';
-import { PagedScreenReaderStrategy, TextAreaState } from './textAreaState.js';
+import { PagedScreenReaderStrategy, TextAreaState, _debugComposition } from './textAreaState.js';
 import { PartFingerprints, ViewPart } from '../view/viewPart.js';
 import { LineNumbersOverlay } from '../viewParts/lineNumbers/lineNumbers.js';
 import { Margin } from '../viewParts/margin/margin.js';
@@ -133,6 +133,21 @@ export class TextAreaHandler extends ViewPart {
                     }
                     return TextAreaState.EMPTY;
                 }
+                if (browser.isAndroid) {
+                    // when tapping in the editor on a word, Android enters composition mode.
+                    // in the `compositionstart` event we cannot clear the textarea, because
+                    // it then forgets to ever send a `compositionend`.
+                    // we therefore only write the current word in the textarea
+                    const selection = this._selections[0];
+                    if (selection.isEmpty()) {
+                        const position = selection.getStartPosition();
+                        const [wordAtPosition, positionOffsetInWord] = this._getAndroidWordAtPosition(position);
+                        if (wordAtPosition.length > 0) {
+                            return new TextAreaState(wordAtPosition, positionOffsetInWord, positionOffsetInWord, position, position);
+                        }
+                    }
+                    return TextAreaState.EMPTY;
+                }
                 return PagedScreenReaderStrategy.fromEditorSelection(currentState, simpleModel, this._selections[0], this._accessibilityPageSize, this._accessibilitySupport === 0 /* Unknown */);
             },
             deduceModelPosition: (viewAnchorPosition, deltaOffset, lineFeedCnt) => {
@@ -161,10 +176,17 @@ export class TextAreaHandler extends ViewPart {
             this._viewController.cut();
         }));
         this._register(this._textAreaInput.onType((e) => {
-            if (e.replaceCharCnt) {
-                this._viewController.replacePreviousChar(e.text, e.replaceCharCnt);
+            if (e.replacePrevCharCnt || e.replaceNextCharCnt || e.positionDelta) {
+                // must be handled through the new command
+                if (_debugComposition) {
+                    console.log(` => compositionType: <<${e.text}>>, ${e.replacePrevCharCnt}, ${e.replaceNextCharCnt}, ${e.positionDelta}`);
+                }
+                this._viewController.compositionType(e.text, e.replacePrevCharCnt, e.replaceNextCharCnt, e.positionDelta);
             }
             else {
+                if (_debugComposition) {
+                    console.log(` => type: <<${e.text}>>`);
+                }
                 this._viewController.type(e.text);
             }
         }));
@@ -173,7 +195,7 @@ export class TextAreaHandler extends ViewPart {
         }));
         this._register(this._textAreaInput.onCompositionStart((e) => {
             const lineNumber = this._selections[0].startLineNumber;
-            const column = this._selections[0].startColumn - (e.moveOneCharacterLeft ? 1 : 0);
+            const column = this._selections[0].startColumn + e.revealDeltaColumns;
             this._context.model.revealRange('keyboard', true, new Range(lineNumber, column, lineNumber, column), 0 /* Simple */, 1 /* Immediate */);
             // Find range pixel position
             const visibleRange = this._viewHelper.visibleRangeForPositionRelativeToEditor(lineNumber, column);
@@ -187,6 +209,9 @@ export class TextAreaHandler extends ViewPart {
             this._context.model.onCompositionStart();
         }));
         this._register(this._textAreaInput.onCompositionUpdate((e) => {
+            if (!this._visibleTextArea) {
+                return;
+            }
             // adjust width by its size
             this._visibleTextArea = this._visibleTextArea.setWidth(measureText(e.data, this._fontInfo));
             this._render();
@@ -207,6 +232,46 @@ export class TextAreaHandler extends ViewPart {
     }
     dispose() {
         super.dispose();
+    }
+    _getAndroidWordAtPosition(position) {
+        const ANDROID_WORD_SEPARATORS = '`~!@#$%^&*()-=+[{]}\\|;:",.<>/?';
+        const lineContent = this._context.model.getLineContent(position.lineNumber);
+        const wordSeparators = getMapForWordSeparators(ANDROID_WORD_SEPARATORS);
+        let goingLeft = true;
+        let startColumn = position.column;
+        let goingRight = true;
+        let endColumn = position.column;
+        let distance = 0;
+        while (distance < 50 && (goingLeft || goingRight)) {
+            if (goingLeft && startColumn <= 1) {
+                goingLeft = false;
+            }
+            if (goingLeft) {
+                const charCode = lineContent.charCodeAt(startColumn - 2);
+                const charClass = wordSeparators.get(charCode);
+                if (charClass !== 0 /* Regular */) {
+                    goingLeft = false;
+                }
+                else {
+                    startColumn--;
+                }
+            }
+            if (goingRight && endColumn > lineContent.length) {
+                goingRight = false;
+            }
+            if (goingRight) {
+                const charCode = lineContent.charCodeAt(endColumn - 1);
+                const charClass = wordSeparators.get(charCode);
+                if (charClass !== 0 /* Regular */) {
+                    goingRight = false;
+                }
+                else {
+                    endColumn++;
+                }
+            }
+            distance++;
+        }
+        return [lineContent.substring(startColumn - 1, endColumn - 1), position.column - startColumn];
     }
     _getWordBeforePosition(position) {
         const lineContent = this._context.model.getLineContent(position.lineNumber);

@@ -455,7 +455,7 @@ export var FuzzyScore;
      */
     FuzzyScore.Default = ([-100, 0]);
     function isDefault(score) {
-        return !score || (score[0] === -100 && score[1] === 0 && score[2] === 0);
+        return !score || (score.length === 2 && score[0] === -100 && score[1] === 0);
     }
     FuzzyScore.isDefault = isDefault;
 })(FuzzyScore || (FuzzyScore = {}));

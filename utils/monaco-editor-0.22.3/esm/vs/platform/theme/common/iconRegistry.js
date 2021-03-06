@@ -10,7 +10,7 @@ import { Extensions as JSONExtensions } from '../../jsonschemas/common/jsonContr
 import { RunOnceScheduler } from '../../../base/common/async.js';
 import * as Codicons from '../../../base/common/codicons.js';
 //  ------ API types
-// color registry
+// icon registry
 export const Extensions = {
     IconContribution: 'base.contributions.icons'
 };
@@ -33,8 +33,9 @@ class IconRegistry {
             type: 'object',
             properties: {}
         };
-        this.iconReferenceSchema = { type: 'string', enum: [], enumDescriptions: [] };
+        this.iconReferenceSchema = { type: 'string', pattern: `^${Codicons.CSSIcon.iconNameExpression}$`, enum: [], enumDescriptions: [] };
         this.iconsById = {};
+        this.iconFontsById = {};
     }
     registerIcon(id, defaults, description, deprecationMessage) {
         const existing = this.iconsById[id];
@@ -65,29 +66,17 @@ class IconRegistry {
         this._onDidChange.fire();
         return { id };
     }
+    getIcons() {
+        return Object.keys(this.iconsById).map(id => this.iconsById[id]);
+    }
+    getIcon(id) {
+        return this.iconsById[id];
+    }
     getIconSchema() {
         return this.iconSchema;
     }
-    getCSS() {
-        const rules = [];
-        for (let id in this.iconsById) {
-            const rule = this.formatRule(id);
-            if (rule) {
-                rules.push(rule);
-            }
-        }
-        return rules.join('\n');
-    }
-    formatRule(id) {
-        let definition = this.iconsById[id].defaults;
-        while (ThemeIcon.isThemeIcon(definition)) {
-            const c = this.iconsById[definition.id];
-            if (!c) {
-                return undefined;
-            }
-            definition = c.defaults;
-        }
-        return `.codicon-${id}:before { content: '${definition.character}'; }`;
+    getIconFont(id) {
+        return this.iconFontsById[id];
     }
     toString() {
         const sorter = (i1, i2) => {
@@ -100,7 +89,7 @@ class IconRegistry {
             return `codicon codicon-${i ? i.id : ''}`;
         };
         let reference = [];
-        reference.push(`| preview     | identifier                        | default codicon id                | description`);
+        reference.push(`| preview     | identifier                        | default codicon ID                | description`);
         reference.push(`| ----------- | --------------------------------- | --------------------------------- | --------------------------------- |`);
         const contributions = Object.keys(this.iconsById).map(key => this.iconsById[key]);
         for (const i of contributions.filter(i => !!i.description).sort(sorter)) {

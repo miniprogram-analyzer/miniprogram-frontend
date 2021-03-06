@@ -147,6 +147,9 @@ let StandaloneEditor = class StandaloneEditor extends StandaloneCodeEditor {
         if (typeof options.theme === 'string') {
             themeService.setTheme(options.theme);
         }
+        if (typeof options.autoDetectHighContrast !== 'undefined') {
+            themeService.setAutoDetectHighContrast(Boolean(options.autoDetectHighContrast));
+        }
         let _model = options.model;
         delete options.model;
         super(domElement, options, instantiationService, codeEditorService, commandService, contextKeyService, keybindingService, themeService, notificationService, accessibilityService);
@@ -180,6 +183,9 @@ let StandaloneEditor = class StandaloneEditor extends StandaloneCodeEditor {
         updateConfigurationService(this._configurationService, newOptions, false);
         if (typeof newOptions.theme === 'string') {
             this._standaloneThemeService.setTheme(newOptions.theme);
+        }
+        if (typeof newOptions.autoDetectHighContrast !== 'undefined') {
+            this._standaloneThemeService.setAutoDetectHighContrast(Boolean(newOptions.autoDetectHighContrast));
         }
         super.updateOptions(newOptions);
     }
@@ -218,7 +224,10 @@ let StandaloneDiffEditor = class StandaloneDiffEditor extends DiffEditorWidget {
         updateConfigurationService(configurationService, options, true);
         const themeDomRegistration = themeService.registerEditorContainer(domElement);
         if (typeof options.theme === 'string') {
-            options.theme = themeService.setTheme(options.theme);
+            themeService.setTheme(options.theme);
+        }
+        if (typeof options.autoDetectHighContrast !== 'undefined') {
+            themeService.setAutoDetectHighContrast(Boolean(options.autoDetectHighContrast));
         }
         super(domElement, options, {}, clipboardService, editorWorkerService, contextKeyService, instantiationService, codeEditorService, themeService, notificationService, contextMenuService, editorProgressService);
         this._contextViewService = contextViewService;
@@ -235,6 +244,9 @@ let StandaloneDiffEditor = class StandaloneDiffEditor extends DiffEditorWidget {
         updateConfigurationService(this._configurationService, newOptions, true);
         if (typeof newOptions.theme === 'string') {
             this._standaloneThemeService.setTheme(newOptions.theme);
+        }
+        if (typeof newOptions.autoDetectHighContrast !== 'undefined') {
+            this._standaloneThemeService.setAutoDetectHighContrast(Boolean(newOptions.autoDetectHighContrast));
         }
         super.updateOptions(newOptions);
     }

@@ -17,7 +17,7 @@ import * as platform from '../../../common/platform.js';
 import { Gesture } from '../../touch.js';
 import { StandardKeyboardEvent } from '../../keyboardEvent.js';
 import { Event, Emitter, EventBufferer } from '../../../common/event.js';
-import { domEvent } from '../../event.js';
+import { domEvent, stopEvent } from '../../event.js';
 import { ListError } from './list.js';
 import { ListView } from './listView.js';
 import { Color } from '../../../common/color.js';
@@ -587,6 +587,10 @@ export class DefaultStyleController {
 				.monaco-list${suffix}:focus .monaco-list-row.selected.focused { color: ${styles.listFocusAndSelectionForeground}; }
 			`);
         }
+        if (styles.listInactiveFocusForeground) {
+            content.push(`.monaco-list${suffix} .monaco-list-row.focused { color:  ${styles.listInactiveFocusForeground}; }`);
+            content.push(`.monaco-list${suffix} .monaco-list-row.focused:hover { color:  ${styles.listInactiveFocusForeground}; }`); // overwrite :hover style in this case!
+        }
         if (styles.listInactiveFocusBackground) {
             content.push(`.monaco-list${suffix} .monaco-list-row.focused { background-color:  ${styles.listInactiveFocusBackground}; }`);
             content.push(`.monaco-list${suffix} .monaco-list-row.focused:hover { background-color:  ${styles.listInactiveFocusBackground}; }`); // overwrite :hover style in this case!
@@ -599,7 +603,7 @@ export class DefaultStyleController {
             content.push(`.monaco-list${suffix} .monaco-list-row.selected { color: ${styles.listInactiveSelectionForeground}; }`);
         }
         if (styles.listHoverBackground) {
-            content.push(`.monaco-list${suffix}:not(.drop-target) .monaco-list-row:hover:not(.selected):not(.focused) { background-color:  ${styles.listHoverBackground}; }`);
+            content.push(`.monaco-list${suffix}:not(.drop-target) .monaco-list-row:hover:not(.selected):not(.focused) { background-color: ${styles.listHoverBackground}; }`);
         }
         if (styles.listHoverForeground) {
             content.push(`.monaco-list${suffix} .monaco-list-row:hover:not(.selected):not(.focused) { color:  ${styles.listHoverForeground}; }`);
@@ -638,6 +642,13 @@ export class DefaultStyleController {
         if (styles.listMatchesShadow) {
             content.push(`.monaco-list-type-filter { box-shadow: 1px 1px 1px ${styles.listMatchesShadow}; }`);
         }
+        if (styles.tableColumnsBorder) {
+            content.push(`
+				.monaco-table:hover > .monaco-split-view2,
+				.monaco-table:hover > .monaco-split-view2 .monaco-sash.vertical::before {
+					border-color: ${styles.tableColumnsBorder};
+			}`);
+        }
         this.styleElement.textContent = content.join('\n');
     }
 }
@@ -650,7 +661,8 @@ const defaultStyles = {
     listInactiveSelectionBackground: Color.fromHex('#3F3F46'),
     listHoverBackground: Color.fromHex('#2A2D2E'),
     listDropBackground: Color.fromHex('#383B3D'),
-    treeIndentGuidesStroke: Color.fromHex('#a9a9a9')
+    treeIndentGuidesStroke: Color.fromHex('#a9a9a9'),
+    tableColumnsBorder: Color.fromHex('#cccccc').transparent(0.2)
 };
 const DefaultOptions = {
     keyboardSupport: true,
@@ -844,7 +856,6 @@ export class List {
         this.eventBufferer = new EventBufferer();
         this._ariaLabel = '';
         this.disposables = new DisposableStore();
-        this.didJustPressContextMenuKey = false;
         this._onDidDispose = new Emitter();
         this.onDidDispose = this._onDidDispose.event;
         const role = this._options.accessibilityProvider && this._options.accessibilityProvider.getWidgetRole ? (_a = this._options.accessibilityProvider) === null || _a === void 0 ? void 0 : _a.getWidgetRole() : 'list';
@@ -916,31 +927,39 @@ export class List {
     get onMouseDown() { return this.view.onMouseDown; }
     get onTouchStart() { return this.view.onTouchStart; }
     get onTap() { return this.view.onTap; }
+    /**
+     * Possible context menu trigger events:
+     * - ContextMenu key
+     * - Shift F10
+     * - Ctrl Option Shift M (macOS with VoiceOver)
+     * - Mouse right click
+     */
     get onContextMenu() {
-        const fromKeydown = Event.chain(domEvent(this.view.domNode, 'keydown'))
+        let didJustPressContextMenuKey = false;
+        const fromKeyDown = Event.chain(domEvent(this.view.domNode, 'keydown'))
             .map(e => new StandardKeyboardEvent(e))
-            .filter(e => this.didJustPressContextMenuKey = e.keyCode === 58 /* ContextMenu */ || (e.shiftKey && e.keyCode === 68 /* F10 */))
-            .filter(e => { e.preventDefault(); e.stopPropagation(); return false; })
+            .filter(e => didJustPressContextMenuKey = e.keyCode === 58 /* ContextMenu */ || (e.shiftKey && e.keyCode === 68 /* F10 */))
+            .map(stopEvent)
+            .filter(() => false)
             .event;
-        const fromKeyup = Event.chain(domEvent(this.view.domNode, 'keyup'))
-            .filter(() => {
-            const didJustPressContextMenuKey = this.didJustPressContextMenuKey;
-            this.didJustPressContextMenuKey = false;
-            return didJustPressContextMenuKey;
-        })
-            .filter(() => this.getFocus().length > 0 && !!this.view.domElement(this.getFocus()[0]))
-            .map(browserEvent => {
-            const index = this.getFocus()[0];
-            const element = this.view.element(index);
-            const anchor = this.view.domElement(index);
+        const fromKeyUp = Event.chain(domEvent(this.view.domNode, 'keyup'))
+            .forEach(() => didJustPressContextMenuKey = false)
+            .map(e => new StandardKeyboardEvent(e))
+            .filter(e => e.keyCode === 58 /* ContextMenu */ || (e.shiftKey && e.keyCode === 68 /* F10 */))
+            .map(stopEvent)
+            .map(({ browserEvent }) => {
+            const focus = this.getFocus();
+            const index = focus.length ? focus[0] : undefined;
+            const element = typeof index !== 'undefined' ? this.view.element(index) : undefined;
+            const anchor = typeof index !== 'undefined' ? this.view.domElement(index) : this.view.domNode;
             return { index, element, anchor, browserEvent };
         })
             .event;
         const fromMouse = Event.chain(this.view.onContextMenu)
-            .filter(() => !this.didJustPressContextMenuKey)
+            .filter(_ => !didJustPressContextMenuKey)
             .map(({ element, index, browserEvent }) => ({ element, index, anchor: { x: browserEvent.clientX + 1, y: browserEvent.clientY }, browserEvent }))
             .event;
-        return Event.any(fromKeydown, fromKeyup, fromMouse);
+        return Event.any(fromKeyDown, fromKeyUp, fromMouse);
     }
     get onKeyDown() { return domEvent(this.view.domNode, 'keydown'); }
     createMouseController(options) {
@@ -994,7 +1013,7 @@ export class List {
         this.view.domNode.setAttribute('aria-label', value);
     }
     domFocus() {
-        this.view.domNode.focus();
+        this.view.domNode.focus({ preventScroll: true });
     }
     layout(height, width) {
         this.view.layout(height, width);

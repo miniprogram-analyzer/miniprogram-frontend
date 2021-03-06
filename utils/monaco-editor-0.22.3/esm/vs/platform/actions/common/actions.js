@@ -133,13 +133,19 @@ export const MenuRegistry = new class {
     }
 };
 export class SubmenuItemAction extends SubmenuAction {
-    constructor(item, menuService, contextKeyService, options) {
+    constructor(item, _menuService, _contextKeyService, _options) {
+        super(`submenuitem.${item.submenu.id}`, typeof item.title === 'string' ? item.title : item.title.value, [], 'submenu');
+        this.item = item;
+        this._menuService = _menuService;
+        this._contextKeyService = _contextKeyService;
+        this._options = _options;
+    }
+    get actions() {
         const result = [];
-        const menu = menuService.createMenu(item.submenu, contextKeyService);
-        const groups = menu.getActions(options);
+        const menu = this._menuService.createMenu(this.item.submenu, this._contextKeyService);
+        const groups = menu.getActions(this._options);
         menu.dispose();
-        for (let group of groups) {
-            const [, actions] = group;
+        for (const [, actions] of groups) {
             if (actions.length > 0) {
                 result.push(...actions);
                 result.push(new Separator());
@@ -148,8 +154,7 @@ export class SubmenuItemAction extends SubmenuAction {
         if (result.length) {
             result.pop(); // remove last separator
         }
-        super(`submenuitem.${item.submenu.id}`, typeof item.title === 'string' ? item.title : item.title.value, result, 'submenu');
-        this.item = item;
+        return result;
     }
 }
 // implements IAction, does NOT extend Action, so that no one

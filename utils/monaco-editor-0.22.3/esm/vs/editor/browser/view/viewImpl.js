@@ -152,6 +152,9 @@ export class View extends ViewEventHandler {
             focusTextArea: () => {
                 this.focus();
             },
+            dispatchTextAreaEvent: (event) => {
+                this._textAreaHandler.textArea.domNode.dispatchEvent(event);
+            },
             getLastRenderData: () => {
                 const lastViewCursorsRenderData = this._viewCursors.getLastRenderData() || [];
                 const lastTextareaPosition = this._textAreaHandler.getLastRenderData();

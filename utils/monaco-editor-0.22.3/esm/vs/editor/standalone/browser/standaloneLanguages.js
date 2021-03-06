@@ -53,7 +53,7 @@ export function setLanguageConfiguration(languageId, configuration) {
     if (!languageIdentifier) {
         throw new Error(`Cannot set configuration for unknown language ${languageId}`);
     }
-    return LanguageConfigurationRegistry.register(languageIdentifier, configuration);
+    return LanguageConfigurationRegistry.register(languageIdentifier, configuration, 100);
 }
 /**
  * @internal
@@ -434,6 +434,7 @@ export function createMonacoLanguagesAPI() {
         IndentAction: standaloneEnums.IndentAction,
         CompletionTriggerKind: standaloneEnums.CompletionTriggerKind,
         SignatureHelpTriggerKind: standaloneEnums.SignatureHelpTriggerKind,
+        InlineHintKind: standaloneEnums.InlineHintKind,
         // classes
         FoldingRangeKind: modes.FoldingRangeKind,
     };

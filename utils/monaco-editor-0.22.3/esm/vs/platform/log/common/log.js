@@ -17,7 +17,7 @@ export var LogLevel;
     LogLevel[LogLevel["Off"] = 6] = "Off";
 })(LogLevel || (LogLevel = {}));
 export const DEFAULT_LOG_LEVEL = LogLevel.Info;
-export class AbstractLogService extends Disposable {
+export class AbstractLogger extends Disposable {
     constructor() {
         super(...arguments);
         this.level = DEFAULT_LOG_LEVEL;
@@ -33,7 +33,7 @@ export class AbstractLogService extends Disposable {
         return this.level;
     }
 }
-export class ConsoleLogService extends AbstractLogService {
+export class ConsoleLogger extends AbstractLogger {
     constructor(logLevel = DEFAULT_LOG_LEVEL) {
         super();
         this.setLevel(logLevel);
@@ -60,5 +60,27 @@ export class ConsoleLogService extends AbstractLogService {
     }
     dispose() {
         // noop
+    }
+}
+export class LogService extends Disposable {
+    constructor(logger) {
+        super();
+        this.logger = logger;
+        this._register(logger);
+    }
+    getLevel() {
+        return this.logger.getLevel();
+    }
+    trace(message, ...args) {
+        this.logger.trace(message, ...args);
+    }
+    debug(message, ...args) {
+        this.logger.debug(message, ...args);
+    }
+    info(message, ...args) {
+        this.logger.info(message, ...args);
+    }
+    error(message, ...args) {
+        this.logger.error(message, ...args);
     }
 }

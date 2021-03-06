@@ -38,7 +38,8 @@ const DefaultOptions = {
         drop() { }
     },
     horizontalScrolling: false,
-    transformOptimization: true
+    transformOptimization: true,
+    alwaysConsumeMouseWheel: true,
 };
 export class ElementsDragAndDropData {
     constructor(elements) {
@@ -166,6 +167,7 @@ export class ListView {
         this.disposables.add(Gesture.addTarget(this.rowsContainer));
         this.scrollable = new Scrollable(getOrDefault(options, o => o.smoothScrolling, false) ? 125 : 0, cb => scheduleAtNextAnimationFrame(cb));
         this.scrollableElement = this.disposables.add(new SmoothScrollableElement(this.rowsContainer, {
+            alwaysConsumeMouseWheel: getOrDefault(options, o => o.alwaysConsumeMouseWheel, DefaultOptions.alwaysConsumeMouseWheel),
             horizontal: 1 /* Auto */,
             vertical: getOrDefault(options, o => o.verticalScrollMode, DefaultOptions.verticalScrollMode),
             useShadows: getOrDefault(options, o => o.useShadows, DefaultOptions.useShadows),
@@ -251,7 +253,11 @@ export class ListView {
                     rows = [];
                     rowsToDispose.set(item.templateId, rows);
                 }
-                rows.push([item.row, item.element, i, item.size]);
+                const renderer = this.renderers.get(item.templateId);
+                if (renderer && renderer.disposeElement) {
+                    renderer.disposeElement(item.element, i, item.row.templateData, item.size);
+                }
+                rows.push(item.row);
             }
             item.row = null;
         }
@@ -276,8 +282,8 @@ export class ListView {
         if (start === 0 && deleteCount >= this.items.length) {
             this.rangeMap = new RangeMap();
             this.rangeMap.splice(0, 0, inserted);
+            deleted = this.items;
             this.items = inserted;
-            deleted = [];
         }
         else {
             this.rangeMap.splice(start, deleteCount, inserted);
@@ -304,26 +310,12 @@ export class ListView {
             for (let i = range.start; i < range.end; i++) {
                 const item = this.items[i];
                 const rows = rowsToDispose.get(item.templateId);
-                const rowData = rows === null || rows === void 0 ? void 0 : rows.pop();
-                if (!rowData) {
-                    this.insertItemInDOM(i, beforeElement);
-                }
-                else {
-                    const [row, element, index, size] = rowData;
-                    const renderer = this.renderers.get(item.templateId);
-                    if (renderer && renderer.disposeElement) {
-                        renderer.disposeElement(element, index, row.templateData, size);
-                    }
-                    this.insertItemInDOM(i, beforeElement, row);
-                }
+                const row = rows === null || rows === void 0 ? void 0 : rows.pop();
+                this.insertItemInDOM(i, beforeElement, row);
             }
         }
-        for (const [templateId, rows] of rowsToDispose) {
-            for (const [row, element, index, size] of rows) {
-                const renderer = this.renderers.get(templateId);
-                if (renderer && renderer.disposeElement) {
-                    renderer.disposeElement(element, index, row.templateData, size);
-                }
+        for (const rows of rowsToDispose.values()) {
+            for (const row of rows) {
                 this.cache.release(row);
             }
         }

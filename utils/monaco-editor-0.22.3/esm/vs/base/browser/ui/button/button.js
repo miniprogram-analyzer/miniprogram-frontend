@@ -10,7 +10,7 @@ import { Emitter } from '../../../common/event.js';
 import { Disposable } from '../../../common/lifecycle.js';
 import { Gesture, EventType as TouchEventType } from '../../touch.js';
 import { renderLabelWithIcons } from '../iconLabel/iconLabels.js';
-import { addDisposableListener, EventType, EventHelper, trackFocus, reset, removeTabIndexAndUpdateFocus } from '../../dom.js';
+import { addDisposableListener, EventType, EventHelper, trackFocus, reset } from '../../dom.js';
 const defaultOptions = {
     buttonBackground: Color.fromHex('#0E639C'),
     buttonHoverBackground: Color.fromHex('#006BB3'),
@@ -142,7 +142,6 @@ export class Button extends Disposable {
         else {
             this._element.classList.add('disabled');
             this._element.setAttribute('aria-disabled', String(true));
-            removeTabIndexAndUpdateFocus(this._element);
         }
     }
     get enabled() {

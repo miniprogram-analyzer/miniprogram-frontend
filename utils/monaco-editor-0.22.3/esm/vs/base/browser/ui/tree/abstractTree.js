@@ -815,13 +815,14 @@ class TreeNodeListMouseController extends MouseController {
         if (expandOnlyOnTwistieClick && !onTwistie && e.browserEvent.detail !== 2) {
             return super.onViewPointer(e);
         }
-        if (this.tree.expandOnlyOnDoubleClick && e.browserEvent.detail !== 2 && !onTwistie) {
+        if (!this.tree.expandOnDoubleClick && e.browserEvent.detail === 2) {
             return super.onViewPointer(e);
         }
         if (node.collapsible) {
             const model = this.tree.model; // internal
             const location = model.getNodeLocation(node);
             const recursive = e.browserEvent.altKey;
+            this.tree.setFocus([location]);
             model.setCollapsed(location, undefined, recursive);
             if (expandOnlyOnTwistieClick && onTwistie) {
                 return;
@@ -831,7 +832,7 @@ class TreeNodeListMouseController extends MouseController {
     }
     onDoubleClick(e) {
         const onTwistie = e.browserEvent.target.classList.contains('monaco-tl-twistie');
-        if (onTwistie) {
+        if (onTwistie || !this.tree.expandOnDoubleClick) {
             return;
         }
         super.onDoubleClick(e);
@@ -959,8 +960,8 @@ export class AbstractTree {
     get onPointer() { return Event.map(this.view.onPointer, asTreeMouseEvent); }
     get onDidFocus() { return this.view.onDidFocus; }
     get onDidChangeCollapseState() { return this.model.onDidChangeCollapseState; }
-    get expandOnlyOnDoubleClick() { var _a; return (_a = this._options.expandOnlyOnDoubleClick) !== null && _a !== void 0 ? _a : false; }
-    get expandOnlyOnTwistieClick() { return typeof this._options.expandOnlyOnTwistieClick === 'undefined' ? false : this._options.expandOnlyOnTwistieClick; }
+    get expandOnDoubleClick() { return typeof this._options.expandOnDoubleClick === 'undefined' ? true : this._options.expandOnDoubleClick; }
+    get expandOnlyOnTwistieClick() { return typeof this._options.expandOnlyOnTwistieClick === 'undefined' ? true : this._options.expandOnlyOnTwistieClick; }
     get onDidDispose() { return this.view.onDidDispose; }
     updateOptions(optionsUpdate = {}) {
         this._options = Object.assign(Object.assign({}, this._options), optionsUpdate);

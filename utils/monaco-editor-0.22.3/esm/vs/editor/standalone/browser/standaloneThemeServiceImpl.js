@@ -13,7 +13,7 @@ import { Extensions } from '../../../platform/theme/common/colorRegistry.js';
 import { Extensions as ThemingExtensions } from '../../../platform/theme/common/themeService.js';
 import { Disposable } from '../../../base/common/lifecycle.js';
 import { ColorScheme } from '../../../platform/theme/common/theme.js';
-import { getIconRegistry } from '../../../platform/theme/common/iconRegistry.js';
+import { getIconsStyleSheet } from '../../../platform/theme/browser/iconsStyleSheet.js';
 const VS_THEME_NAME = 'vs';
 const VS_DARK_THEME_NAME = 'vs-dark';
 const HC_BLACK_THEME_NAME = 'hc-black';
@@ -155,21 +155,25 @@ export class StandaloneThemeServiceImpl extends Disposable {
         this._onColorThemeChange = this._register(new Emitter());
         this.onDidColorThemeChange = this._onColorThemeChange.event;
         this._environment = Object.create(null);
+        this._autoDetectHighContrast = true;
         this._knownThemes = new Map();
         this._knownThemes.set(VS_THEME_NAME, newBuiltInTheme(VS_THEME_NAME));
         this._knownThemes.set(VS_DARK_THEME_NAME, newBuiltInTheme(VS_DARK_THEME_NAME));
         this._knownThemes.set(HC_BLACK_THEME_NAME, newBuiltInTheme(HC_BLACK_THEME_NAME));
-        const iconRegistry = getIconRegistry();
-        this._codiconCSS = iconRegistry.getCSS();
+        const iconsStyleSheet = getIconsStyleSheet();
+        this._codiconCSS = iconsStyleSheet.getCSS();
         this._themeCSS = '';
         this._allCSS = `${this._codiconCSS}\n${this._themeCSS}`;
         this._globalStyleElement = null;
         this._styleElements = [];
         this._colorMapOverride = null;
         this.setTheme(VS_THEME_NAME);
-        iconRegistry.onDidChange(() => {
-            this._codiconCSS = iconRegistry.getCSS();
+        iconsStyleSheet.onDidChange(() => {
+            this._codiconCSS = iconsStyleSheet.getCSS();
             this._updateCSS();
+        });
+        window.matchMedia('(forced-colors: active)').addEventListener('change', () => {
+            this._updateActualTheme();
         });
     }
     registerEditorContainer(domNode) {
@@ -219,7 +223,7 @@ export class StandaloneThemeServiceImpl extends Disposable {
                 }
             });
         }
-        if (this._theme && this._theme.themeName === themeName) {
+        if (this._theme.themeName === themeName) {
             this.setTheme(themeName); // refresh theme
         }
     }
@@ -238,13 +242,23 @@ export class StandaloneThemeServiceImpl extends Disposable {
         else {
             theme = this._knownThemes.get(VS_THEME_NAME);
         }
+        this._desiredTheme = theme;
+        this._updateActualTheme();
+    }
+    _updateActualTheme() {
+        const theme = (this._autoDetectHighContrast && window.matchMedia(`(forced-colors: active)`).matches
+            ? this._knownThemes.get(HC_BLACK_THEME_NAME)
+            : this._desiredTheme);
         if (this._theme === theme) {
             // Nothing to do
-            return theme.id;
+            return;
         }
         this._theme = theme;
         this._updateThemeOrColorMap();
-        return theme.id;
+    }
+    setAutoDetectHighContrast(autoDetectHighContrast) {
+        this._autoDetectHighContrast = autoDetectHighContrast;
+        this._updateActualTheme();
     }
     _updateThemeOrColorMap() {
         let cssRules = [];

@@ -17,7 +17,7 @@ function isExclusive(selector) {
         return selector.every(isExclusive);
     }
     else {
-        return !!selector.exclusive;
+        return !!selector.exclusive; // TODO: microsoft/TypeScript#42768
     }
 }
 export class LanguageFeatureRegistry {

@@ -747,8 +747,8 @@ export class ViewModel extends Disposable {
     type(text, source) {
         this._executeCursorEdit(eventsCollector => this._cursor.type(eventsCollector, text, source));
     }
-    replacePreviousChar(text, replaceCharCnt, source) {
-        this._executeCursorEdit(eventsCollector => this._cursor.replacePreviousChar(eventsCollector, text, replaceCharCnt, source));
+    compositionType(text, replacePrevCharCnt, replaceNextCharCnt, positionDelta, source) {
+        this._executeCursorEdit(eventsCollector => this._cursor.compositionType(eventsCollector, text, replacePrevCharCnt, replaceNextCharCnt, positionDelta, source));
     }
     paste(text, pasteOnNewLine, multicursorText, source) {
         this._executeCursorEdit(eventsCollector => this._cursor.paste(eventsCollector, text, pasteOnNewLine, multicursorText, source));

@@ -11,7 +11,7 @@ import * as types from '../../../common/types.js';
 import { EventType as TouchEventType, Gesture } from '../../touch.js';
 import { DataTransfers } from '../../dnd.js';
 import { isFirefox } from '../../browser.js';
-import { $, addDisposableListener, append, EventHelper, EventType, removeTabIndexAndUpdateFocus } from '../../dom.js';
+import { $, addDisposableListener, append, EventHelper, EventType } from '../../dom.js';
 export class BaseActionViewItem extends Disposable {
     constructor(context, action, options = {}) {
         super();
@@ -119,8 +119,11 @@ export class BaseActionViewItem extends Disposable {
         const context = types.isUndefinedOrNull(this._context) ? ((_a = this.options) === null || _a === void 0 ? void 0 : _a.useEventAsContext) ? event : undefined : this._context;
         this.actionRunner.run(this._action, context);
     }
+    // Only set the tabIndex on the element once it is about to get focused
+    // That way this element wont be a tab stop when it is not needed #106441
     focus() {
         if (this.element) {
+            this.element.tabIndex = 0;
             this.element.focus();
             this.element.classList.add('focused');
         }
@@ -128,8 +131,17 @@ export class BaseActionViewItem extends Disposable {
     blur() {
         if (this.element) {
             this.element.blur();
+            this.element.tabIndex = -1;
             this.element.classList.remove('focused');
         }
+    }
+    setFocusable(focusable) {
+        if (this.element) {
+            this.element.tabIndex = focusable ? 0 : -1;
+        }
+    }
+    get trapsArrowNavigation() {
+        return false;
     }
     updateEnabled() {
         // implement in subclass
@@ -189,10 +201,22 @@ export class ActionViewItem extends BaseActionViewItem {
         this.updateEnabled();
         this.updateChecked();
     }
+    // Only set the tabIndex on the element once it is about to get focused
+    // That way this element wont be a tab stop when it is not needed #106441
     focus() {
-        super.focus();
         if (this.label) {
+            this.label.tabIndex = 0;
             this.label.focus();
+        }
+    }
+    blur() {
+        if (this.label) {
+            this.label.tabIndex = -1;
+        }
+    }
+    setFocusable(focusable) {
+        if (this.label) {
+            this.label.tabIndex = focusable ? 0 : -1;
         }
     }
     updateLabel() {
@@ -240,7 +264,6 @@ export class ActionViewItem extends BaseActionViewItem {
             if (this.label) {
                 this.label.removeAttribute('aria-disabled');
                 this.label.classList.remove('disabled');
-                this.label.tabIndex = 0;
             }
             if (this.element) {
                 this.element.classList.remove('disabled');
@@ -250,7 +273,6 @@ export class ActionViewItem extends BaseActionViewItem {
             if (this.label) {
                 this.label.setAttribute('aria-disabled', 'true');
                 this.label.classList.add('disabled');
-                removeTabIndexAndUpdateFocus(this.label);
             }
             if (this.element) {
                 this.element.classList.add('disabled');

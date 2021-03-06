@@ -206,7 +206,7 @@ class AnimationFrameQueueItem {
         }
     };
 })();
-const MINIMUM_TIME_MS = 16;
+const MINIMUM_TIME_MS = 8;
 const DEFAULT_EVENT_MERGER = function (lastEvent, currentEvent) {
     return currentEvent;
 };
@@ -575,7 +575,7 @@ export const EventType = {
     MOUSE_OUT: 'mouseout',
     MOUSE_ENTER: 'mouseenter',
     MOUSE_LEAVE: 'mouseleave',
-    MOUSE_WHEEL: browser.isEdgeLegacy ? 'mousewheel' : 'wheel',
+    MOUSE_WHEEL: 'wheel',
     POINTER_UP: 'pointerup',
     POINTER_DOWN: 'pointerdown',
     POINTER_MOVE: 'pointermove',
@@ -779,31 +779,6 @@ export function hide(...elements) {
         element.setAttribute('aria-hidden', 'true');
     }
 }
-function findParentWithAttribute(node, attribute) {
-    while (node && node.nodeType === node.ELEMENT_NODE) {
-        if (node instanceof HTMLElement && node.hasAttribute(attribute)) {
-            return node;
-        }
-        node = node.parentNode;
-    }
-    return null;
-}
-export function removeTabIndexAndUpdateFocus(node) {
-    if (!node || !node.hasAttribute('tabIndex')) {
-        return;
-    }
-    // If we are the currently focused element and tabIndex is removed,
-    // standard DOM behavior is to move focus to the <body> element. We
-    // typically never want that, rather put focus to the closest element
-    // in the hierarchy of the parent DOM nodes.
-    if (document.activeElement === node) {
-        let parentFocusable = findParentWithAttribute(node.parentElement, 'tabIndex');
-        if (parentFocusable) {
-            parentFocusable.focus();
-        }
-    }
-    node.removeAttribute('tabindex');
-}
 export function getElementsByTagName(tag) {
     return Array.prototype.slice.call(document.getElementsByTagName(tag), 0);
 }
@@ -859,6 +834,9 @@ export function asCSSUrl(uri) {
     }
     return `url('${FileAccess.asBrowserUri(uri).toString(true).replace(/'/g, '%27')}')`;
 }
+export function asCSSPropertyValue(value) {
+    return `'${value.replace(/'/g, '%27')}'`;
+}
 export class ModifierKeyEmitter extends Emitter {
     constructor() {
         super();
@@ -869,12 +847,13 @@ export class ModifierKeyEmitter extends Emitter {
             ctrlKey: false,
             metaKey: false
         };
-        this._subscriptions.add(domEvent(document.body, 'keydown', true)(e => {
-            // if keydown event is repeated, ignore it #112347
-            if (e.repeat) {
+        this._subscriptions.add(domEvent(window, 'keydown', true)(e => {
+            const event = new StandardKeyboardEvent(e);
+            // If Alt-key keydown event is repeated, ignore it #112347
+            // Only known to be necessary for Alt-Key at the moment #115810
+            if (event.keyCode === 6 /* Alt */ && e.repeat) {
                 return;
             }
-            const event = new StandardKeyboardEvent(e);
             if (e.altKey && !this._keyStatus.altKey) {
                 this._keyStatus.lastKeyPressed = 'alt';
             }
@@ -902,7 +881,7 @@ export class ModifierKeyEmitter extends Emitter {
                 this.fire(this._keyStatus);
             }
         }));
-        this._subscriptions.add(domEvent(document.body, 'keyup', true)(e => {
+        this._subscriptions.add(domEvent(window, 'keyup', true)(e => {
             if (!e.altKey && this._keyStatus.altKey) {
                 this._keyStatus.lastKeyReleased = 'alt';
             }

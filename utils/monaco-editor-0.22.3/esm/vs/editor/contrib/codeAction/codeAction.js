@@ -187,9 +187,8 @@ function getDocumentation(provider, providedCodeActions, only) {
     }
     return undefined;
 }
-CommandsRegistry.registerCommand('_executeCodeActionProvider', function (accessor, ...args) {
+CommandsRegistry.registerCommand('_executeCodeActionProvider', function (accessor, resource, rangeOrSelection, kind, itemResolveCount) {
     return __awaiter(this, void 0, void 0, function* () {
-        const [resource, rangeOrSelection, kind, itemResolveCount] = args;
         if (!(resource instanceof URI)) {
             throw illegalArgument();
         }
@@ -205,7 +204,8 @@ CommandsRegistry.registerCommand('_executeCodeActionProvider', function (accesso
         if (!validatedRangeOrSelection) {
             throw illegalArgument();
         }
-        const codeActionSet = yield getCodeActions(model, validatedRangeOrSelection, { type: 2 /* Manual */, filter: { includeSourceActions: true, include: kind && kind.value ? new CodeActionKind(kind.value) : undefined } }, Progress.None, CancellationToken.None);
+        const include = typeof kind === 'string' ? new CodeActionKind(kind) : undefined;
+        const codeActionSet = yield getCodeActions(model, validatedRangeOrSelection, { type: 2 /* Manual */, filter: { includeSourceActions: true, include } }, Progress.None, CancellationToken.None);
         const resolving = [];
         const resolveCount = Math.min(codeActionSet.validActions.length, typeof itemResolveCount === 'number' ? itemResolveCount : 0);
         for (let i = 0; i < resolveCount; i++) {

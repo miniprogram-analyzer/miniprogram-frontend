@@ -11,6 +11,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+import '../services/markerDecorations.js';
 import './media/editor.css';
 import * as nls from '../../../nls.js';
 import * as dom from '../../../base/browser/dom.js';
@@ -666,7 +667,12 @@ let CodeEditorWidget = class CodeEditorWidget extends Disposable {
             }
             case "replacePreviousChar" /* ReplacePreviousChar */: {
                 const args = payload;
-                this._replacePreviousChar(source, args.text || '', args.replaceCharCnt || 0);
+                this._compositionType(source, args.text || '', args.replaceCharCnt || 0, 0, 0);
+                return;
+            }
+            case "compositionType" /* CompositionType */: {
+                const args = payload;
+                this._compositionType(source, args.text || '', args.replacePrevCharCnt || 0, args.replaceNextCharCnt || 0, args.positionDelta || 0);
                 return;
             }
             case "paste" /* Paste */: {
@@ -717,11 +723,11 @@ let CodeEditorWidget = class CodeEditorWidget extends Disposable {
             this._onDidType.fire(text);
         }
     }
-    _replacePreviousChar(source, text, replaceCharCnt) {
+    _compositionType(source, text, replacePrevCharCnt, replaceNextCharCnt, positionDelta) {
         if (!this._modelData) {
             return;
         }
-        this._modelData.viewModel.replacePreviousChar(text, replaceCharCnt, source);
+        this._modelData.viewModel.compositionType(text, replacePrevCharCnt, replaceNextCharCnt, positionDelta, source);
     }
     _paste(source, text, pasteOnNewLine, multicursorText, mode) {
         if (!this._modelData || text.length === 0) {
@@ -1105,8 +1111,8 @@ let CodeEditorWidget = class CodeEditorWidget extends Disposable {
                 type: (text) => {
                     this._type('keyboard', text);
                 },
-                replacePreviousChar: (text, replaceCharCnt) => {
-                    this._replacePreviousChar('keyboard', text, replaceCharCnt);
+                compositionType: (text, replacePrevCharCnt, replaceNextCharCnt, positionDelta) => {
+                    this._compositionType('keyboard', text, replacePrevCharCnt, replaceNextCharCnt, positionDelta);
                 },
                 startComposition: () => {
                     this._startComposition();
@@ -1129,9 +1135,17 @@ let CodeEditorWidget = class CodeEditorWidget extends Disposable {
                     const payload = { text };
                     this._commandService.executeCommand("type" /* Type */, payload);
                 },
-                replacePreviousChar: (text, replaceCharCnt) => {
-                    const payload = { text, replaceCharCnt };
-                    this._commandService.executeCommand("replacePreviousChar" /* ReplacePreviousChar */, payload);
+                compositionType: (text, replacePrevCharCnt, replaceNextCharCnt, positionDelta) => {
+                    // Try if possible to go through the existing `replacePreviousChar` command
+                    if (replaceNextCharCnt || positionDelta) {
+                        // must be handled through the new command
+                        const payload = { text, replacePrevCharCnt, replaceNextCharCnt, positionDelta };
+                        this._commandService.executeCommand("compositionType" /* CompositionType */, payload);
+                    }
+                    else {
+                        const payload = { text, replaceCharCnt: replacePrevCharCnt };
+                        this._commandService.executeCommand("replacePreviousChar" /* ReplacePreviousChar */, payload);
+                    }
                 },
                 startComposition: () => {
                     this._commandService.executeCommand("compositionStart" /* CompositionStart */, {});

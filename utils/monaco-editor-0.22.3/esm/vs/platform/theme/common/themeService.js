@@ -25,17 +25,14 @@ export var ThemeIcon;
         return obj && typeof obj === 'object' && typeof obj.id === 'string' && (typeof obj.color === 'undefined' || ThemeColor.isThemeColor(obj.color));
     }
     ThemeIcon.isThemeIcon = isThemeIcon;
-    const _regexFromString = /^\$\(([a-z.]+\/)?([a-z-~]+)\)$/i;
+    const _regexFromString = new RegExp(`^\\$\\((${CSSIcon.iconNameExpression}(?:${CSSIcon.iconModifierExpression})?)\\)$`);
     function fromString(str) {
         const match = _regexFromString.exec(str);
         if (!match) {
             return undefined;
         }
-        let [, owner, name] = match;
-        if (!owner || owner === 'codicon/') {
-            return { id: name };
-        }
-        return { id: owner + name };
+        let [, name] = match;
+        return { id: name };
     }
     ThemeIcon.fromString = fromString;
     function modify(icon, modifier) {

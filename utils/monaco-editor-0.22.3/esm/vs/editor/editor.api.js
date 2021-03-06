@@ -2,7 +2,7 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-var _a, _b;
+var _a;
 import { EditorOptions } from './common/config/editorOptions.js';
 import { createMonacoBaseAPI } from './common/standalone/standaloneBase.js';
 import { createMonacoEditorAPI } from './standalone/browser/standaloneEditor.js';
@@ -34,7 +34,7 @@ export const Uri = api.Uri;
 export const Token = api.Token;
 export const editor = api.editor;
 export const languages = api.languages;
-if (((_a = globals.MonacoEnvironment) === null || _a === void 0 ? void 0 : _a.globalAPI) || ((_b = globals.define) === null || _b === void 0 ? void 0 : _b.amd)) {
+if (((_a = globals.MonacoEnvironment) === null || _a === void 0 ? void 0 : _a.globalAPI) || (typeof define === 'function' && define.amd)) {
     self.monaco = api;
 }
 if (typeof self.require !== 'undefined' && typeof self.require.config === 'function') {

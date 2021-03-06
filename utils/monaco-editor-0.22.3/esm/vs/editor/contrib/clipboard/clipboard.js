@@ -23,8 +23,6 @@ import { IClipboardService } from '../../../platform/clipboard/common/clipboardS
 const CLIPBOARD_CONTEXT_MENU_GROUP = '9_cutcopypaste';
 const supportsCut = (platform.isNative || document.queryCommandSupported('cut'));
 const supportsCopy = (platform.isNative || document.queryCommandSupported('copy'));
-// IE and Edge have trouble with setting html content in clipboard
-const supportsCopyWithSyntaxHighlighting = (supportsCopy && !browser.isEdgeLegacy);
 // Firefox only supports navigator.clipboard.readText() in browser extensions.
 // See https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/readText#Browser_compatibility
 // When loading over http, navigator.clipboard can be undefined. See https://github.com/microsoft/monaco-editor/issues/2313
@@ -219,6 +217,6 @@ if (PasteAction) {
         return true;
     });
 }
-if (supportsCopyWithSyntaxHighlighting) {
+if (supportsCopy) {
     registerEditorAction(ExecCommandCopyWithSyntaxHighlightingAction);
 }

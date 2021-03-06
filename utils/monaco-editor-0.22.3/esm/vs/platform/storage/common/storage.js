@@ -6,6 +6,7 @@ import { createDecorator } from '../../instantiation/common/instantiation.js';
 import { Emitter, PauseableEmitter } from '../../../base/common/event.js';
 import { Disposable } from '../../../base/common/lifecycle.js';
 import { isUndefinedOrNull } from '../../../base/common/types.js';
+import { InMemoryStorageDatabase, Storage } from '../../../base/parts/storage/common/storage.js';
 const TARGET_KEY = '__$__targetStorageMarker';
 export const IStorageService = createDecorator('storageService');
 export var WillSaveStateReason;
@@ -20,8 +21,9 @@ export var WillSaveStateReason;
     WillSaveStateReason[WillSaveStateReason["SHUTDOWN"] = 1] = "SHUTDOWN";
 })(WillSaveStateReason || (WillSaveStateReason = {}));
 export class AbstractStorageService extends Disposable {
-    constructor() {
-        super(...arguments);
+    constructor(options = { flushInterval: AbstractStorageService.DEFAULT_FLUSH_INTERVAL }) {
+        super();
+        this.options = options;
         this._onDidChangeValue = this._register(new PauseableEmitter());
         this._onDidChangeTarget = this._register(new PauseableEmitter());
         this._onWillSaveState = this._register(new Emitter());
@@ -47,6 +49,18 @@ export class AbstractStorageService extends Disposable {
             this._onDidChangeValue.fire({ scope, key, target: this.getKeyTargets(scope)[key] });
         }
     }
+    get(key, scope, fallbackValue) {
+        var _a;
+        return (_a = this.getStorage(scope)) === null || _a === void 0 ? void 0 : _a.get(key, fallbackValue);
+    }
+    getBoolean(key, scope, fallbackValue) {
+        var _a;
+        return (_a = this.getStorage(scope)) === null || _a === void 0 ? void 0 : _a.getBoolean(key, fallbackValue);
+    }
+    getNumber(key, scope, fallbackValue) {
+        var _a;
+        return (_a = this.getStorage(scope)) === null || _a === void 0 ? void 0 : _a.getNumber(key, fallbackValue);
+    }
     store(key, value, scope, target) {
         // We remove the key for undefined/null values
         if (isUndefinedOrNull(value)) {
@@ -55,19 +69,21 @@ export class AbstractStorageService extends Disposable {
         }
         // Update our datastructures but send events only after
         this.withPausedEmitters(() => {
+            var _a;
             // Update key-target map
             this.updateKeyTarget(key, scope, target);
             // Store actual value
-            this.doStore(key, value, scope);
+            (_a = this.getStorage(scope)) === null || _a === void 0 ? void 0 : _a.set(key, value);
         });
     }
     remove(key, scope) {
         // Update our datastructures but send events only after
         this.withPausedEmitters(() => {
+            var _a;
             // Update key-target map
             this.updateKeyTarget(key, scope, undefined);
             // Remove actual key
-            this.doRemove(key, scope);
+            (_a = this.getStorage(scope)) === null || _a === void 0 ? void 0 : _a.delete(key);
         });
     }
     withPausedEmitters(fn) {
@@ -84,19 +100,20 @@ export class AbstractStorageService extends Disposable {
         }
     }
     updateKeyTarget(key, scope, target) {
+        var _a, _b;
         // Add
         const keyTargets = this.getKeyTargets(scope);
         if (typeof target === 'number') {
             if (keyTargets[key] !== target) {
                 keyTargets[key] = target;
-                this.doStore(TARGET_KEY, JSON.stringify(keyTargets), scope);
+                (_a = this.getStorage(scope)) === null || _a === void 0 ? void 0 : _a.set(TARGET_KEY, JSON.stringify(keyTargets));
             }
         }
         // Remove
         else {
             if (typeof keyTargets[key] === 'number') {
                 delete keyTargets[key];
-                this.doStore(TARGET_KEY, JSON.stringify(keyTargets), scope);
+                (_b = this.getStorage(scope)) === null || _b === void 0 ? void 0 : _b.set(TARGET_KEY, JSON.stringify(keyTargets));
             }
         }
     }
@@ -128,55 +145,16 @@ export class AbstractStorageService extends Disposable {
         return Object.create(null);
     }
 }
+AbstractStorageService.DEFAULT_FLUSH_INTERVAL = 60 * 1000; // every minute
 export class InMemoryStorageService extends AbstractStorageService {
     constructor() {
-        super(...arguments);
-        this.globalCache = new Map();
-        this.workspaceCache = new Map();
+        super();
+        this.globalStorage = new Storage(new InMemoryStorageDatabase());
+        this.workspaceStorage = new Storage(new InMemoryStorageDatabase());
+        this._register(this.workspaceStorage.onDidChangeStorage(key => this.emitDidChangeValue(1 /* WORKSPACE */, key)));
+        this._register(this.globalStorage.onDidChangeStorage(key => this.emitDidChangeValue(0 /* GLOBAL */, key)));
     }
-    getCache(scope) {
-        return scope === 0 /* GLOBAL */ ? this.globalCache : this.workspaceCache;
-    }
-    get(key, scope, fallbackValue) {
-        const value = this.getCache(scope).get(key);
-        if (isUndefinedOrNull(value)) {
-            return fallbackValue;
-        }
-        return value;
-    }
-    getBoolean(key, scope, fallbackValue) {
-        const value = this.getCache(scope).get(key);
-        if (isUndefinedOrNull(value)) {
-            return fallbackValue;
-        }
-        return value === 'true';
-    }
-    getNumber(key, scope, fallbackValue) {
-        const value = this.getCache(scope).get(key);
-        if (isUndefinedOrNull(value)) {
-            return fallbackValue;
-        }
-        return parseInt(value, 10);
-    }
-    doStore(key, value, scope) {
-        // Otherwise, convert to String and store
-        const valueStr = String(value);
-        // Return early if value already set
-        const currentValue = this.getCache(scope).get(key);
-        if (currentValue === valueStr) {
-            return;
-        }
-        // Update in cache
-        this.getCache(scope).set(key, valueStr);
-        // Events
-        this.emitDidChangeValue(scope, key);
-    }
-    doRemove(key, scope) {
-        const wasDeleted = this.getCache(scope).delete(key);
-        if (!wasDeleted) {
-            return; // Return early if value already deleted
-        }
-        // Events
-        this.emitDidChangeValue(scope, key);
+    getStorage(scope) {
+        return scope === 0 /* GLOBAL */ ? this.globalStorage : this.workspaceStorage;
     }
 }

@@ -14,7 +14,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { localize } from '../../../nls.js';
 import { Emitter } from '../../../base/common/event.js';
 import { basename, extUri } from '../../../base/common/resources.js';
-import { dispose, DisposableStore } from '../../../base/common/lifecycle.js';
+import { dispose } from '../../../base/common/lifecycle.js';
 import * as strings from '../../../base/common/strings.js';
 import { defaultGenerator } from '../../../base/common/idGenerator.js';
 import { Range } from '../../common/core/range.js';
@@ -118,7 +118,6 @@ export class FileReferences {
 }
 export class ReferencesModel {
     constructor(links, title) {
-        this._disposables = new DisposableStore();
         this.groups = [];
         this.references = [];
         this._onDidChangeReferenceRange = new Emitter();
@@ -145,7 +144,6 @@ export class ReferencesModel {
     }
     dispose() {
         dispose(this.groups);
-        this._disposables.dispose();
         this._onDidChangeReferenceRange.dispose();
         this.groups.length = 0;
     }

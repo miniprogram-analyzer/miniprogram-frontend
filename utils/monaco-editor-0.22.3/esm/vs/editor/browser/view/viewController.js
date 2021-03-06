@@ -18,8 +18,8 @@ export class ViewController {
     type(text) {
         this.commandDelegate.type(text);
     }
-    replacePreviousChar(text, replaceCharCnt) {
-        this.commandDelegate.replacePreviousChar(text, replaceCharCnt);
+    compositionType(text, replacePrevCharCnt, replaceNextCharCnt, positionDelta) {
+        this.commandDelegate.compositionType(text, replacePrevCharCnt, replaceNextCharCnt, positionDelta);
     }
     compositionStart() {
         this.commandDelegate.startComposition();

@@ -198,13 +198,12 @@ var TypeScriptWorker = /** @class */ (function () {
     // --- language features
     TypeScriptWorker.clearFiles = function (diagnostics) {
         // Clear the `file` field, which cannot be JSON'yfied because it
-        // contains cyclic data structures.
+        // contains cyclic data structures, except for the `fileName`
+        // property.
         diagnostics.forEach(function (diag) {
-            diag.file = undefined;
-            var related = diag.relatedInformation;
-            if (related) {
-                related.forEach(function (diag2) { return (diag2.file = undefined); });
-            }
+            var _a;
+            diag.file = diag.file ? { fileName: diag.file.fileName } : undefined;
+            (_a = diag.relatedInformation) === null || _a === void 0 ? void 0 : _a.forEach(function (diag2) { return (diag2.file = diag2.file ? { fileName: diag2.file.fileName } : undefined); });
         });
         return diagnostics;
     };

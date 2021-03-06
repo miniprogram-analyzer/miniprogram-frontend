@@ -905,9 +905,20 @@ export class ContextKeyOrExpr {
     }
 }
 export class RawContextKey extends ContextKeyDefinedExpr {
-    constructor(key, defaultValue) {
+    constructor(key, defaultValue, metaOrHide) {
         super(key);
+        this.key = key;
         this._defaultValue = defaultValue;
+        // collect all context keys into a central place
+        if (typeof metaOrHide === 'object') {
+            RawContextKey._info.push(Object.assign(Object.assign({}, metaOrHide), { key }));
+        }
+        else if (metaOrHide !== true) {
+            RawContextKey._info.push({ key, description: metaOrHide, type: defaultValue !== null && defaultValue !== undefined ? typeof defaultValue : undefined });
+        }
+    }
+    static all() {
+        return RawContextKey._info.values();
     }
     bindTo(target) {
         return target.createKey(this.key, this._defaultValue);
@@ -922,6 +933,7 @@ export class RawContextKey extends ContextKeyDefinedExpr {
         return ContextKeyExpr.equals(this.key, value);
     }
 }
+RawContextKey._info = [];
 export const IContextKeyService = createDecorator('contextKeyService');
 export const SET_CONTEXT_COMMAND_ID = 'setContext';
 function cmp1(key1, key2) {

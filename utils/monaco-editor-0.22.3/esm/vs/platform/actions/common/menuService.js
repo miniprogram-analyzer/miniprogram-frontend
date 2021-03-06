@@ -22,8 +22,14 @@ let MenuService = class MenuService {
         this._commandService = _commandService;
         //
     }
-    createMenu(id, contextKeyService) {
-        return new Menu(id, this._commandService, contextKeyService, this);
+    /**
+     * Create a new menu for the given menu identifier. A menu sends events when it's entries
+     * have changed (placement, enablement, checked-state). By default it does send events for
+     * sub menu entries. That is more expensive and must be explicitly enabled with the
+     * `emitEventsForSubmenuChanges` flag.
+     */
+    createMenu(id, contextKeyService, emitEventsForSubmenuChanges = false) {
+        return new Menu(id, emitEventsForSubmenuChanges, this._commandService, contextKeyService, this);
     }
 };
 MenuService = __decorate([
@@ -31,8 +37,9 @@ MenuService = __decorate([
 ], MenuService);
 export { MenuService };
 let Menu = class Menu {
-    constructor(_id, _commandService, _contextKeyService, _menuService) {
+    constructor(_id, _fireEventsForSubmenuChanges, _commandService, _contextKeyService, _menuService) {
         this._id = _id;
+        this._fireEventsForSubmenuChanges = _fireEventsForSubmenuChanges;
         this._commandService = _commandService;
         this._contextKeyService = _contextKeyService;
         this._menuService = _menuService;
@@ -81,20 +88,28 @@ let Menu = class Menu {
             }
             group[1].push(item);
             // keep keys for eventing
-            Menu._fillInKbExprKeys(item.when, this._contextKeys);
-            if (isIMenuItem(item)) {
-                // keep precondition keys for event if applicable
-                if (item.command.precondition) {
-                    Menu._fillInKbExprKeys(item.command.precondition, this._contextKeys);
-                }
-                // keep toggled keys for event if applicable
-                if (item.command.toggled) {
-                    const toggledExpression = item.command.toggled.condition || item.command.toggled;
-                    Menu._fillInKbExprKeys(toggledExpression, this._contextKeys);
-                }
-            }
+            this._collectContextKeys(item);
         }
         this._onDidChange.fire(this);
+    }
+    _collectContextKeys(item) {
+        Menu._fillInKbExprKeys(item.when, this._contextKeys);
+        if (isIMenuItem(item)) {
+            // keep precondition keys for event if applicable
+            if (item.command.precondition) {
+                Menu._fillInKbExprKeys(item.command.precondition, this._contextKeys);
+            }
+            // keep toggled keys for event if applicable
+            if (item.command.toggled) {
+                const toggledExpression = item.command.toggled.condition || item.command.toggled;
+                Menu._fillInKbExprKeys(toggledExpression, this._contextKeys);
+            }
+        }
+        else if (this._fireEventsForSubmenuChanges) {
+            // recursively collect context keys from submenus so that this
+            // menu fires events when context key changes affect submenus
+            MenuRegistry.getMenuItems(item.submenu).forEach(this._collectContextKeys, this);
+        }
     }
     getActions(options) {
         const result = [];
@@ -165,7 +180,7 @@ let Menu = class Menu {
     }
 };
 Menu = __decorate([
-    __param(1, ICommandService),
-    __param(2, IContextKeyService),
-    __param(3, IMenuService)
+    __param(2, ICommandService),
+    __param(3, IContextKeyService),
+    __param(4, IMenuService)
 ], Menu);

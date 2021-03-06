@@ -37,6 +37,7 @@ export class MouseHandler extends ViewEventHandler {
         this.mouseTargetFactory = new MouseTargetFactory(this._context, viewHelper);
         this._mouseDownOperation = this._register(new MouseDownOperation(this._context, this.viewController, this.viewHelper, (e, testEventTarget) => this._createMouseTarget(e, testEventTarget), (e) => this._getMouseColumn(e)));
         this.lastMouseLeaveTime = -1;
+        this._height = this._context.configuration.options.get(124 /* layoutInfo */).height;
         const mouseEvents = new EditorMouseEventFactory(this.viewHelper.viewDomNode);
         this._register(mouseEvents.onContextMenu(this.viewHelper.viewDomNode, (e) => this._onContextMenu(e, true)));
         this._register(mouseEvents.onMouseMoveThrottled(this.viewHelper.viewDomNode, (e) => this._onMouseMove(e), createMouseMoveEventMerger(this.mouseTargetFactory), MouseHandler.MOUSE_MOVE_MINIMUM_TIME));
@@ -50,7 +51,9 @@ export class MouseHandler extends ViewEventHandler {
             }
             const e = new StandardWheelEvent(browserEvent);
             const doMouseWheelZoom = (platform.isMacintosh
-                ? (browserEvent.metaKey && !browserEvent.ctrlKey && !browserEvent.shiftKey && !browserEvent.altKey)
+                // on macOS we support cmd + two fingers scroll (`metaKey` set)
+                // and also the two fingers pinch gesture (`ctrKey` set)
+                ? ((browserEvent.metaKey || browserEvent.ctrlKey) && !browserEvent.shiftKey && !browserEvent.altKey)
                 : (browserEvent.ctrlKey && !browserEvent.metaKey && !browserEvent.shiftKey && !browserEvent.altKey));
             if (doMouseWheelZoom) {
                 const zoomLevel = EditorZoom.getZoomLevel();
@@ -68,6 +71,17 @@ export class MouseHandler extends ViewEventHandler {
         super.dispose();
     }
     // --- begin event handlers
+    onConfigurationChanged(e) {
+        if (e.hasChanged(124 /* layoutInfo */)) {
+            // layout change
+            const height = this._context.configuration.options.get(124 /* layoutInfo */).height;
+            if (this._height !== height) {
+                this._height = height;
+                this._mouseDownOperation.onHeightChanged();
+            }
+        }
+        return false;
+    }
     onCursorStateChanged(e) {
         this._mouseDownOperation.onCursorStateChanged(e);
         return false;
@@ -263,6 +277,9 @@ class MouseDownOperation extends Disposable {
     _stop() {
         this._isActive = false;
         this._onScrollTimeout.cancel();
+    }
+    onHeightChanged() {
+        this._mouseMoveMonitor.stopMonitoring();
     }
     onScrollChanged() {
         if (!this._isActive) {

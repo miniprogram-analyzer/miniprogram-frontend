@@ -220,32 +220,30 @@ export class TypeOperations {
         }
         return commands;
     }
-    static replacePreviousChar(prevEditOperationType, config, model, selections, txt, replaceCharCnt) {
-        let commands = [];
-        for (let i = 0, len = selections.length; i < len; i++) {
-            const selection = selections[i];
-            if (!selection.isEmpty()) {
-                // looks like https://github.com/microsoft/vscode/issues/2773
-                // where a cursor operation occurred before a canceled composition
-                // => ignore composition
-                commands[i] = null;
-                continue;
-            }
-            const pos = selection.getPosition();
-            const startColumn = Math.max(1, pos.column - replaceCharCnt);
-            const range = new Range(pos.lineNumber, startColumn, pos.lineNumber, pos.column);
-            const oldText = model.getValueInRange(range);
-            if (oldText === txt) {
-                // => ignore composition that doesn't do anything
-                commands[i] = null;
-                continue;
-            }
-            commands[i] = new ReplaceCommand(range, txt);
-        }
+    static compositionType(prevEditOperationType, config, model, selections, text, replacePrevCharCnt, replaceNextCharCnt, positionDelta) {
+        const commands = selections.map(selection => this._compositionType(model, selection, text, replacePrevCharCnt, replaceNextCharCnt, positionDelta));
         return new EditOperationResult(1 /* Typing */, commands, {
             shouldPushStackElementBefore: (prevEditOperationType !== 1 /* Typing */),
             shouldPushStackElementAfter: false
         });
+    }
+    static _compositionType(model, selection, text, replacePrevCharCnt, replaceNextCharCnt, positionDelta) {
+        if (!selection.isEmpty()) {
+            // looks like https://github.com/microsoft/vscode/issues/2773
+            // where a cursor operation occurred before a canceled composition
+            // => ignore composition
+            return null;
+        }
+        const pos = selection.getPosition();
+        const startColumn = Math.max(1, pos.column - replacePrevCharCnt);
+        const endColumn = Math.min(model.getLineMaxColumn(pos.lineNumber), pos.column + replaceNextCharCnt);
+        const range = new Range(pos.lineNumber, startColumn, pos.lineNumber, endColumn);
+        const oldText = model.getValueInRange(range);
+        if (oldText === text && positionDelta === 0) {
+            // => ignore composition that doesn't do anything
+            return null;
+        }
+        return new ReplaceCommandWithOffsetCursorState(range, text, 0, positionDelta);
     }
     static _typeCommand(range, text, keepPosition) {
         if (keepPosition) {

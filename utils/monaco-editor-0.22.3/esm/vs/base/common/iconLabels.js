@@ -2,19 +2,21 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+import { CSSIcon } from './codicons.js';
 import { matchesFuzzy } from './filters.js';
 import { ltrim } from './strings.js';
 export const iconStartMarker = '$(';
-const escapeIconsRegex = /(\\)?\$\([a-z0-9\-]+?(?:~[a-z0-9\-]*?)?\)/gi;
+const iconsRegex = new RegExp(`\\$\\(${CSSIcon.iconNameExpression}(?:${CSSIcon.iconModifierExpression})?\\)`, 'g'); // no capturing groups
+const escapeIconsRegex = new RegExp(`(\\\\)?${iconsRegex.source}`, 'g');
 export function escapeIcons(text) {
     return text.replace(escapeIconsRegex, (match, escaped) => escaped ? match : `\\${match}`);
 }
-const markdownEscapedIconsRegex = /\\\$\([a-z0-9\-]+?(?:~[a-z0-9\-]*?)?\)/gi;
+const markdownEscapedIconsRegex = new RegExp(`\\\\${iconsRegex.source}`, 'g');
 export function markdownEscapeEscapedIcons(text) {
     // Need to add an extra \ for escaping in markdown
     return text.replace(markdownEscapedIconsRegex, match => `\\${match}`);
 }
-const stripIconsRegex = /(\s)?(\\)?\$\([a-z0-9\-]+?(?:~[a-z0-9\-]*?)?\)(\s)?/gi;
+const stripIconsRegex = new RegExp(`(\\s)?(\\\\)?${iconsRegex.source}(\\s)?`, 'g');
 export function stripIcons(text) {
     if (text.indexOf(iconStartMarker) === -1) {
         return text;

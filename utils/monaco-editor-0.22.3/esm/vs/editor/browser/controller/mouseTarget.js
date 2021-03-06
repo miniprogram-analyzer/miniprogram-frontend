@@ -2,7 +2,6 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import * as browser from '../../../base/browser/browser.js';
 import { PageCoordinates } from '../editorDom.js';
 import { PartFingerprints } from '../view/viewPart.js';
 import { ViewLine } from '../viewParts/lines/viewLine.js';
@@ -536,11 +535,6 @@ export class MouseTargetFactory {
         const pos = new Position(lineNumber, column);
         const lineWidth = ctx.getLineWidth(lineNumber);
         if (request.mouseContentHorizontalOffset > lineWidth) {
-            if (browser.isEdgeLegacy && pos.column === 1) {
-                // See https://github.com/microsoft/vscode/issues/10875
-                const detail = createEmptyContentDataInLines(request.mouseContentHorizontalOffset - lineWidth);
-                return request.fulfill(7 /* CONTENT_EMPTY */, new Position(lineNumber, ctx.model.getLineMaxColumn(lineNumber)), undefined, detail);
-            }
             const detail = createEmptyContentDataInLines(request.mouseContentHorizontalOffset - lineWidth);
             return request.fulfill(7 /* CONTENT_EMPTY */, pos, undefined, detail);
         }
@@ -720,49 +714,6 @@ export class MouseTargetFactory {
             hitTarget: hitResult.offsetNode
         };
     }
-    /**
-     * Most probably IE
-     */
-    static _doHitTestWithMoveToPoint(ctx, coords) {
-        let resultPosition = null;
-        let resultHitTarget = null;
-        const textRange = document.body.createTextRange();
-        try {
-            textRange.moveToPoint(coords.clientX, coords.clientY);
-        }
-        catch (err) {
-            return {
-                position: null,
-                hitTarget: null
-            };
-        }
-        textRange.collapse(true);
-        // Now, let's do our best to figure out what we hit :)
-        const parentElement = textRange ? textRange.parentElement() : null;
-        const parent1 = parentElement ? parentElement.parentNode : null;
-        const parent2 = parent1 ? parent1.parentNode : null;
-        const parent2ClassName = parent2 && parent2.nodeType === parent2.ELEMENT_NODE ? parent2.className : '';
-        if (parent2ClassName === ViewLine.CLASS_NAME) {
-            const rangeToContainEntireSpan = textRange.duplicate();
-            rangeToContainEntireSpan.moveToElementText(parentElement);
-            rangeToContainEntireSpan.setEndPoint('EndToStart', textRange);
-            resultPosition = ctx.getPositionFromDOMInfo(parentElement, rangeToContainEntireSpan.text.length);
-            // Move range out of the span node, IE doesn't like having many ranges in
-            // the same spot and will act badly for lines containing dashes ('-')
-            rangeToContainEntireSpan.moveToElementText(ctx.viewDomNode);
-        }
-        else {
-            // Looks like we've hit the hover or something foreign
-            resultHitTarget = parentElement;
-        }
-        // Move range out of the span node, IE doesn't like having many ranges in
-        // the same spot and will act badly for lines containing dashes ('-')
-        textRange.moveToElementText(ctx.viewDomNode);
-        return {
-            position: resultPosition,
-            hitTarget: resultHitTarget
-        };
-    }
     static _snapToSoftTabBoundary(position, viewModel) {
         const lineContent = viewModel.getLineContent(position.lineNumber);
         const { tabSize } = viewModel.getTextModelOptions();
@@ -773,29 +724,12 @@ export class MouseTargetFactory {
         return position;
     }
     static _doHitTest(ctx, request) {
-        // State of the art (18.10.2012):
-        // The spec says browsers should support document.caretPositionFromPoint, but nobody implemented it (http://dev.w3.org/csswg/cssom-view/)
-        // Gecko:
-        //    - they tried to implement it once, but failed: https://bugzilla.mozilla.org/show_bug.cgi?id=654352
-        //    - however, they do give out rangeParent/rangeOffset properties on mouse events
-        // Webkit:
-        //    - they have implemented a previous version of the spec which was using document.caretRangeFromPoint
-        // IE:
-        //    - they have a proprietary method on ranges, moveToPoint: https://msdn.microsoft.com/en-us/library/ie/ms536632(v=vs.85).aspx
-        // 24.08.2016: Edge has added WebKit's document.caretRangeFromPoint, but it is quite buggy
-        //    - when hit testing the cursor it returns the first or the last line in the viewport
-        //    - it inconsistently hits text nodes or span nodes, while WebKit only hits text nodes
-        //    - when toggling render whitespace on, and hit testing in the empty content after a line, it always hits offset 0 of the first span of the line
-        // Thank you browsers for making this so 'easy' :)
         let result;
         if (typeof document.caretRangeFromPoint === 'function') {
             result = this._doHitTestWithCaretRangeFromPoint(ctx, request);
         }
         else if (document.caretPositionFromPoint) {
             result = this._doHitTestWithCaretPositionFromPoint(ctx, request.pos.toClientCoordinates());
-        }
-        else if (document.body.createTextRange) {
-            result = this._doHitTestWithMoveToPoint(ctx, request.pos.toClientCoordinates());
         }
         else {
             result = {

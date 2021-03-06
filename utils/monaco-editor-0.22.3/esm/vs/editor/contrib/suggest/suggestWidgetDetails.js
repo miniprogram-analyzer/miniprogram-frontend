@@ -95,6 +95,7 @@ let SuggestDetailsWidget = class SuggestDetailsWidget {
         this._onDidChangeContents.fire(this);
     }
     renderItem(item, explainMode) {
+        var _a;
         this._renderDisposeable.clear();
         let { detail, documentation } = item.completion;
         if (explainMode) {
@@ -102,7 +103,7 @@ let SuggestDetailsWidget = class SuggestDetailsWidget {
             md += `score: ${item.score[0]}${item.word ? `, compared '${item.completion.filterText && (item.completion.filterText + ' (filterText)') || typeof item.completion.label === 'string' ? item.completion.label : item.completion.label.name}' with '${item.word}'` : ' (no prefix)'}\n`;
             md += `distance: ${item.distance}, see localityBonus-setting\n`;
             md += `index: ${item.idx}, based on ${item.completion.sortText && `sortText: "${item.completion.sortText}"` || 'label'}\n`;
-            md += `commit characters: ${item.completion.commitCharacters}\n`;
+            md += `commit characters: ${(_a = item.completion.commitCharacters) === null || _a === void 0 ? void 0 : _a.join('')}\n`;
             documentation = new MarkdownString().appendCodeblock('empty', md);
             detail = `Provider: ${item.provider._debugDisplayName}`;
         }

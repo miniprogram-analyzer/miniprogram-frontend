@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import './sash.css';
-import { dispose, Disposable, DisposableStore } from '../../../common/lifecycle.js';
+import { dispose, Disposable, DisposableStore, toDisposable } from '../../../common/lifecycle.js';
 import { isMacintosh } from '../../../common/platform.js';
 import * as types from '../../../common/types.js';
 import { EventType, Gesture } from '../../touch.js';
@@ -11,7 +11,8 @@ import { StandardMouseEvent } from '../../mouseEvent.js';
 import { Emitter } from '../../../common/event.js';
 import { getElementsByTagName, EventHelper, createStyleSheet, addDisposableListener, append, $ } from '../../dom.js';
 import { domEvent } from '../../event.js';
-const DEBUG = false;
+import { Delayer } from '../../../common/async.js';
+let DEBUG = false;
 export var OrthogonalEdge;
 (function (OrthogonalEdge) {
     OrthogonalEdge["North"] = "north";
@@ -24,6 +25,7 @@ const onDidChangeGlobalSize = new Emitter();
 export class Sash extends Disposable {
     constructor(container, layoutProvider, options) {
         super();
+        this.hoverDelayer = this._register(new Delayer(300));
         this._state = 3 /* Enabled */;
         this._onDidEnablementChange = this._register(new Emitter());
         this.onDidEnablementChange = this._onDidEnablementChange.event;
@@ -37,7 +39,9 @@ export class Sash extends Disposable {
         this.onDidEnd = this._onDidEnd.event;
         this.linkedSash = undefined;
         this.orthogonalStartSashDisposables = this._register(new DisposableStore());
+        this.orthogonalStartDragHandleDisposables = this._register(new DisposableStore());
         this.orthogonalEndSashDisposables = this._register(new DisposableStore());
+        this.orthogonalEndDragHandleDisposables = this._register(new DisposableStore());
         this.el = append(container, $('.monaco-sash'));
         if (options.orthogonalEdge) {
             this.el.classList.add(`orthogonal-edge-${options.orthogonalEdge}`);
@@ -47,6 +51,8 @@ export class Sash extends Disposable {
         }
         this._register(domEvent(this.el, 'mousedown')(this.onMouseDown, this));
         this._register(domEvent(this.el, 'dblclick')(this.onMouseDoubleClick, this));
+        this._register(domEvent(this.el, 'mouseenter')(() => Sash.onMouseEnter(this)));
+        this._register(domEvent(this.el, 'mouseleave')(() => Sash.onMouseLeave(this)));
         this._register(Gesture.addTarget(this.el));
         this._register(domEvent(this.el, EventType.Start)(this.onTouchStart, this));
         if (typeof options.size === 'number') {
@@ -94,25 +100,39 @@ export class Sash extends Disposable {
     }
     get orthogonalStartSash() { return this._orthogonalStartSash; }
     set orthogonalStartSash(sash) {
+        this.orthogonalStartDragHandleDisposables.clear();
         this.orthogonalStartSashDisposables.clear();
         if (sash) {
-            this.orthogonalStartSashDisposables.add(sash.onDidEnablementChange(this.onOrthogonalStartSashEnablementChange, this));
-            this.onOrthogonalStartSashEnablementChange(sash.state);
-        }
-        else {
-            this.onOrthogonalStartSashEnablementChange(0 /* Disabled */);
+            const onChange = (state) => {
+                this.orthogonalStartDragHandleDisposables.clear();
+                if (state !== 0 /* Disabled */) {
+                    this._orthogonalStartDragHandle = append(this.el, $('.orthogonal-drag-handle.start'));
+                    this.orthogonalStartDragHandleDisposables.add(toDisposable(() => this._orthogonalStartDragHandle.remove()));
+                    domEvent(this._orthogonalStartDragHandle, 'mouseenter')(() => Sash.onMouseEnter(sash), undefined, this.orthogonalStartDragHandleDisposables);
+                    domEvent(this._orthogonalStartDragHandle, 'mouseleave')(() => Sash.onMouseLeave(sash), undefined, this.orthogonalStartDragHandleDisposables);
+                }
+            };
+            this.orthogonalStartSashDisposables.add(sash.onDidEnablementChange(onChange, this));
+            onChange(sash.state);
         }
         this._orthogonalStartSash = sash;
     }
     get orthogonalEndSash() { return this._orthogonalEndSash; }
     set orthogonalEndSash(sash) {
+        this.orthogonalEndDragHandleDisposables.clear();
         this.orthogonalEndSashDisposables.clear();
         if (sash) {
-            this.orthogonalEndSashDisposables.add(sash.onDidEnablementChange(this.onOrthogonalEndSashEnablementChange, this));
-            this.onOrthogonalEndSashEnablementChange(sash.state);
-        }
-        else {
-            this.onOrthogonalEndSashEnablementChange(0 /* Disabled */);
+            const onChange = (state) => {
+                this.orthogonalEndDragHandleDisposables.clear();
+                if (state !== 0 /* Disabled */) {
+                    this._orthogonalEndDragHandle = append(this.el, $('.orthogonal-drag-handle.end'));
+                    this.orthogonalEndDragHandleDisposables.add(toDisposable(() => this._orthogonalEndDragHandle.remove()));
+                    domEvent(this._orthogonalEndDragHandle, 'mouseenter')(() => Sash.onMouseEnter(sash), undefined, this.orthogonalEndDragHandleDisposables);
+                    domEvent(this._orthogonalEndDragHandle, 'mouseleave')(() => Sash.onMouseLeave(sash), undefined, this.orthogonalEndDragHandleDisposables);
+                }
+            };
+            this.orthogonalEndSashDisposables.add(sash.onDidEnablementChange(onChange, this));
+            onChange(sash.state);
         }
         this._orthogonalEndSash = sash;
     }
@@ -239,10 +259,29 @@ export class Sash extends Disposable {
                 });
             }
         }));
-        listeners.push(addDisposableListener(this.el, EventType.End, (event) => {
+        listeners.push(addDisposableListener(this.el, EventType.End, () => {
             this._onDidEnd.fire();
             dispose(listeners);
         }));
+    }
+    static onMouseEnter(sash, fromLinkedSash = false) {
+        if (sash.el.classList.contains('active')) {
+            sash.hoverDelayer.cancel();
+            sash.el.classList.add('hover');
+        }
+        else {
+            sash.hoverDelayer.trigger(() => sash.el.classList.add('hover'));
+        }
+        if (!fromLinkedSash && sash.linkedSash) {
+            Sash.onMouseEnter(sash.linkedSash, true);
+        }
+    }
+    static onMouseLeave(sash, fromLinkedSash = false) {
+        sash.hoverDelayer.cancel();
+        sash.el.classList.remove('hover');
+        if (!fromLinkedSash && sash.linkedSash) {
+            Sash.onMouseLeave(sash.linkedSash, true);
+        }
     }
     layout() {
         if (this.orientation === 0 /* VERTICAL */) {
@@ -271,28 +310,12 @@ export class Sash extends Disposable {
         this.el.style.display = 'none';
         this.el.setAttribute('aria-hidden', 'true');
     }
-    onOrthogonalStartSashEnablementChange(state) {
-        this.el.classList.toggle('orthogonal-start', state !== 0 /* Disabled */);
-    }
-    onOrthogonalEndSashEnablementChange(state) {
-        this.el.classList.toggle('orthogonal-end', state !== 0 /* Disabled */);
-    }
     getOrthogonalSash(e) {
-        if (this.orientation === 0 /* VERTICAL */) {
-            if (e.offsetY <= this.size) {
-                return this.orthogonalStartSash;
-            }
-            else if (e.offsetY >= this.el.clientHeight - this.size) {
-                return this.orthogonalEndSash;
-            }
+        if (!e.target || !(e.target instanceof HTMLElement)) {
+            return undefined;
         }
-        else {
-            if (e.offsetX <= this.size) {
-                return this.orthogonalStartSash;
-            }
-            else if (e.offsetX >= this.el.clientWidth - this.size) {
-                return this.orthogonalEndSash;
-            }
+        if (e.target.classList.contains('orthogonal-drag-handle')) {
+            return e.target.classList.contains('start') ? this.orthogonalStartSash : this.orthogonalEndSash;
         }
         return undefined;
     }

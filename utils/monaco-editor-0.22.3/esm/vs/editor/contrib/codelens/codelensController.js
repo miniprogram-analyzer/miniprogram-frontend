@@ -89,7 +89,6 @@ let CodeLensContribution = class CodeLensContribution {
         return { codeLensHeight, fontSize };
     }
     _updateLensStyle() {
-        var _a;
         const { codeLensHeight, fontSize } = this._getLayoutInfo();
         const fontFamily = this._editor.getOption(12 /* codeLensFontFamily */);
         const editorFontInfo = this._editor.getOption(38 /* fontInfo */);
@@ -102,7 +101,7 @@ let CodeLensContribution = class CodeLensContribution {
             newStyle += `.monaco-editor .codelens-decoration.${this._styleClassName} { font-family: var(${fontFamilyVar})}`;
         }
         this._styleElement.textContent = newStyle;
-        (_a = this._editor.getDomNode()) === null || _a === void 0 ? void 0 : _a.style.setProperty(fontFamilyVar, fontFamily !== null && fontFamily !== void 0 ? fontFamily : 'inherit');
+        this._editor.getContainerDomNode().style.setProperty(fontFamilyVar, fontFamily !== null && fontFamily !== void 0 ? fontFamily : 'inherit');
         //
         this._editor.changeViewZones(accessor => {
             for (let lens of this._lenses) {

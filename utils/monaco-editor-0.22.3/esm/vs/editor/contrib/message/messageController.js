@@ -83,7 +83,7 @@ let MessageController = class MessageController {
     }
 };
 MessageController.ID = 'editor.contrib.messageController';
-MessageController.MESSAGE_VISIBLE = new RawContextKey('messageVisible', false);
+MessageController.MESSAGE_VISIBLE = new RawContextKey('messageVisible', false, nls.localize('messageVisible', 'Whether the editor is currently showing an inline message'));
 MessageController = __decorate([
     __param(1, IContextKeyService)
 ], MessageController);

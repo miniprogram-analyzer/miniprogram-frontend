@@ -171,7 +171,7 @@ export var RevealLine_;
                 name: 'Reveal line argument object',
                 description: `Property-value pairs that can be passed through this argument:
 					* 'lineNumber': A mandatory line number value.
-					* 'at': Logical position at which line has to be revealed .
+					* 'at': Logical position at which line has to be revealed.
 						\`\`\`
 						'top', 'center', 'bottom'
 						\`\`\`
@@ -428,16 +428,18 @@ export var CoreNavigationCommands;
                 case 1 /* Right */:
                 case 2 /* Up */:
                 case 3 /* Down */:
-                case 4 /* WrappedLineStart */:
-                case 5 /* WrappedLineFirstNonWhitespaceCharacter */:
-                case 6 /* WrappedLineColumnCenter */:
-                case 7 /* WrappedLineEnd */:
-                case 8 /* WrappedLineLastNonWhitespaceCharacter */:
+                case 4 /* PrevBlankLine */:
+                case 5 /* NextBlankLine */:
+                case 6 /* WrappedLineStart */:
+                case 7 /* WrappedLineFirstNonWhitespaceCharacter */:
+                case 8 /* WrappedLineColumnCenter */:
+                case 9 /* WrappedLineEnd */:
+                case 10 /* WrappedLineLastNonWhitespaceCharacter */:
                     return CursorMoveCommands.simpleMove(viewModel, cursors, args.direction, inSelectionMode, value, args.unit);
-                case 9 /* ViewPortTop */:
-                case 11 /* ViewPortBottom */:
-                case 10 /* ViewPortCenter */:
-                case 12 /* ViewPortIfOutside */:
+                case 11 /* ViewPortTop */:
+                case 13 /* ViewPortBottom */:
+                case 12 /* ViewPortCenter */:
+                case 14 /* ViewPortIfOutside */:
                     return CursorMoveCommands.viewportMove(viewModel, cursors, args.direction, inSelectionMode, value);
                 default:
                     return null;
@@ -1547,6 +1549,7 @@ registerOverwritableCommand("type" /* Type */, {
         }]
 });
 registerOverwritableCommand("replacePreviousChar" /* ReplacePreviousChar */);
+registerOverwritableCommand("compositionType" /* CompositionType */);
 registerOverwritableCommand("compositionStart" /* CompositionStart */);
 registerOverwritableCommand("compositionEnd" /* CompositionEnd */);
 registerOverwritableCommand("paste" /* Paste */);

@@ -167,7 +167,7 @@ let OpenerService = class OpenerService {
             // check with contributed validators
             const targetURI = typeof target === 'string' ? URI.parse(target) : target;
             // validate against the original URI that this URI resolves to, if one exists
-            const validationTarget = (_a = this._resolvedUriTargets.get(targetURI)) !== null && _a !== void 0 ? _a : target;
+            const validationTarget = (_a = this._resolvedUriTargets.get(targetURI)) !== null && _a !== void 0 ? _a : targetURI;
             for (const validator of this._validators) {
                 if (!(yield validator.shouldOpen(validationTarget))) {
                     return false;
@@ -188,7 +188,9 @@ let OpenerService = class OpenerService {
             for (const resolver of this._resolvers) {
                 const result = yield resolver.resolveExternalUri(resource, options);
                 if (result) {
-                    this._resolvedUriTargets.set(result.resolved, resource);
+                    if (!this._resolvedUriTargets.has(result.resolved)) {
+                        this._resolvedUriTargets.set(result.resolved, resource);
+                    }
                     return result;
                 }
             }

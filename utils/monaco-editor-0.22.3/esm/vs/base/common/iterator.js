@@ -38,6 +38,15 @@ export var Iterable;
         return false;
     }
     Iterable.some = some;
+    function find(iterable, predicate) {
+        for (const element of iterable) {
+            if (predicate(element)) {
+                return element;
+            }
+        }
+        return undefined;
+    }
+    Iterable.find = find;
     function* filter(iterable, predicate) {
         for (const element of iterable) {
             if (predicate(element)) {
@@ -68,21 +77,29 @@ export var Iterable;
         }
     }
     Iterable.concatNested = concatNested;
+    function reduce(iterable, reducer, initialValue) {
+        let value = initialValue;
+        for (const element of iterable) {
+            value = reducer(value, element);
+        }
+        return value;
+    }
+    Iterable.reduce = reduce;
     /**
      * Returns an iterable slice of the array, with the same semantics as `array.slice()`.
      */
-    function* slice(iterable, from, to = iterable.length) {
+    function* slice(arr, from, to = arr.length) {
         if (from < 0) {
-            from += iterable.length;
+            from += arr.length;
         }
         if (to < 0) {
-            to += iterable.length;
+            to += arr.length;
         }
-        else if (to > iterable.length) {
-            to = iterable.length;
+        else if (to > arr.length) {
+            to = arr.length;
         }
         for (; from < to; from++) {
-            yield iterable[from];
+            yield arr[from];
         }
     }
     Iterable.slice = slice;
@@ -106,4 +123,26 @@ export var Iterable;
         return [consumed, { [Symbol.iterator]() { return iterator; } }];
     }
     Iterable.consume = consume;
+    /**
+     * Returns whether the iterables are the same length and all items are
+     * equal using the comparator function.
+     */
+    function equals(a, b, comparator = (at, bt) => at === bt) {
+        const ai = a[Symbol.iterator]();
+        const bi = b[Symbol.iterator]();
+        while (true) {
+            const an = ai.next();
+            const bn = bi.next();
+            if (an.done !== bn.done) {
+                return false;
+            }
+            else if (an.done) {
+                return true;
+            }
+            else if (!comparator(an.value, bn.value)) {
+                return false;
+            }
+        }
+    }
+    Iterable.equals = equals;
 })(Iterable || (Iterable = {}));
