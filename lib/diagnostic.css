@@ -1,0 +1,25 @@
+@import url("https://cdn.jsdelivr.net/gh/miniprogram-analyzer/miniprogram-frontend/utils/JetBrainsMono.css");
+
+body {
+  background: #F3F3F3!important;
+}
+
+body.night {
+  background: #252526!important;
+}
+
+#container {
+  height: calc(100vh - 280px)
+}
+
+@media screen and (max-width:1024px) {
+  #container {
+    height: calc(100vh - 300px)
+  }
+}
+
+@media screen and (min-width:1520px) {
+  #container {
+    height: calc(100vh - 290px)
+  }
+}
