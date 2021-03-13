@@ -139,3 +139,9 @@ td.classify_item.current a {
   table.classify{width: 974px}
   table.classify-second {left:-432px}
 }
+
+.el-empty{-webkit-box-orient:vertical;-webkit-box-direction:normal;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-ms-flex-direction:column;flex-direction:column;text-align:center;box-sizing:border-box;padding:40px 0}.el-empty__image{width:160px}.el-empty__image svg{width:100%;height:100%;vertical-align:top;fill:#dcdde0;transition:all .2s ease}.el-empty__description{margin-top:20px}.el-empty__description p{margin:0;font-size:14px;color:#909399}.el-empty__bottom{margin-top:20px}
+
+body.night .el-empty__image svg{
+  filter: brightness(0.75);
+}

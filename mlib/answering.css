@@ -83,6 +83,10 @@
   html:not(.light) #nav a{
     border: 1px solid #404040;
   }
+
+  html:not(.light) .el-empty__image svg{
+    filter: brightness(0.75);
+  }
 }
 
 html.dark:not(.light) a {
@@ -105,4 +109,8 @@ html.dark:not(.light) .thread .title:not(:last-child) {
 
 html.dark:not(.light) #nav a{
   border: 1px solid #404040;
+}
+
+html.dark:not(.light) .el-empty__image svg{
+  filter: brightness(0.75);
 }
